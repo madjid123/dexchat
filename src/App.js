@@ -1,18 +1,20 @@
 
 import NavBar from './components/NavBar'
+import Contacts from './components/Contacts'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 function App() {
   return (
 
-    <div>
+    <>
       <NavBar ></NavBar>
-      <div className="App">
 
-      </div>
+      <Contacts style={{ height: '100%' }}></Contacts>
 
-    </div>
-  );
+
+
+    </>
+  )
 }
 
 export default App;
