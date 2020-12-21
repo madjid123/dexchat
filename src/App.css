@@ -31,3 +31,12 @@ html, body, #app, #app>div {
    padding: 18px 20px;
    display: inline-block;
  }
+ body .msgForm{
+   display :flex;
+   align-items: center;
+   justify-content: center;
+ }
+ .msgForm{
+   
+   right: 50%;
+ }
