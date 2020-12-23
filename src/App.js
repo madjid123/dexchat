@@ -9,9 +9,9 @@ function App() {
 
     <>
       <NavBar ></NavBar>
-      <Conversation></Conversation>
-      <Contacts style={{ height: '100%' }}></Contacts>
 
+      <Contacts ></Contacts>
+      <Conversation></Conversation>
 
 
     </>

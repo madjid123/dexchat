@@ -7,7 +7,7 @@ import React from 'react';
 function Contacts() {
     return (
         <>
-            <ProSidebar>
+            <ProSidebar className="sidebar">
                 <SidebarHeader>
                     <h1> Contact</h1>
                 </SidebarHeader>

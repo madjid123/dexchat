@@ -32,11 +32,22 @@ html, body, #app, #app>div {
    display: inline-block;
  }
  body .msgForm{
-   display :flex;
+   width : 70%;
+   margin : 0 auto;
+ 
    align-items: center;
    justify-content: center;
  }
  .msgForm{
-   
-   right: 50%;
+   margin-left : 50%;
+   width : 50%;
+   right: 0;
+ }
+ .sidebar{
+   display: flex;
+   z-index: 999;
+   width: 50%;
+ }
+ .pro-sidebar-inner{
+   width:70%;
  }
