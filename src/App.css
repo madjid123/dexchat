@@ -40,6 +40,7 @@ html, body, #app, #app>div {
  .msgForm{
    position: fixed;
   bottom: 0px;
+  height: 20%;
    
 
  }
@@ -50,12 +51,19 @@ html, body, #app, #app>div {
  }
  .pro-sidebar-inner{
   width: 100%;
+  background-color: #343a40;
  }
 .msgForm input{
   margin-left: 30%;
   width : 70%;
+  height: 40%;
 
 }
 .pro-sidebar .sidebar{
   width : 30%;
+ 
+}
+.pro-sidebar > .pro-sidebar-inner{
+  text-align: center;
+  background-color: #343a40;
 }
