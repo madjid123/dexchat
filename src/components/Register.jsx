@@ -1,69 +1,52 @@
-import React, { useState, setValue } from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
+import Url from '../URL'
+
 
 function Register(props) {
-    const [state, setState] = useState({ feilds: {}, errors: {} })
 
+    const [state, setState] = useState({ feilds: {} })
 
-
-
-    const handleValidation = () => {
-        let fields = state.feilds;
-        let errors = {};
-        let formIsValid = true;
-
-        //Name
-        if (!fields["name"]) {
-            formIsValid = false;
-            errors["name"] = "Cannot be empty";
-        }
-
-        if (typeof fields["name"] !== "undefined") {
-            if (!fields["name"].match(/^[a-zA-Z]+$/)) {
-                formIsValid = false;
-                errors["name"] = "Only letters";
-            }
-        }
-
-        //Email
-        if (!fields["email"]) {
-            formIsValid = false;
-            errors["email"] = "Cannot be empty";
-        }
-
-        if (typeof fields["email"] !== "undefined") {
-            let lastAtPos = fields["email"].lastIndexOf('@');
-            let lastDotPos = fields["email"].lastIndexOf('.');
-
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
-                formIsValid = false;
-                errors["email"] = "Email is not valid";
-            }
-        }
-
-        setState({ errors: errors });
-        return formIsValid;
-    }
-
-    const contactSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (handleValidation()) {
-
-            alert("Form submitted");
-        } else {
-            alert("Form has errors.")
-        }
+        axios.post(Url.APP_URL + '/register', { ...state.fields })
 
     }
-
-    const handleChange = (field, e) => {
-        let fields = state.feilds;
-        fields[field] = e.target.value;
-        setState({ fields, errors: state.errors });
+    const handleChange = (e) => {
+        var fields = { ...state.feilds };
+        fields[e.target.name] = e.target.value;
+        setState({ fields });
     }
+
     return (
-        
+        <form >
+            <h3>Register</h3>
+
+            <div className="form-group">
+                <label>Name</label>
+                <input name="name" type="text" className="form-control" placeholder="Name" onChange={handleChange} />
+            </div>
+
+
+
+            <div className="form-group">
+                <label>Email</label>
+                <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={handleChange} />
+            </div>
+
+            <div className="form-group">
+                <label>Password</label>
+                <input name="password" type="password" className="form-control" placeholder="Enter password" onChange={handleChange} />
+            </div>
+
+            <button type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
+            <p className="forgot-password text-right">
+                Already registered <a href="#">log in?</a>
+            </p>
+
+        </form>
     )
+
 }
 
 export default Register;

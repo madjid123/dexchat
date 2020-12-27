@@ -16,7 +16,7 @@ function NavBar() {
 
                 </Nav>
 
-                <Button variant="login" className="">Login</Button>
+                <Button variant="login" className="" href="/login">Login</Button>
 
 
             </Navbar.Collapse>
