@@ -19,7 +19,7 @@ function Register(props) {
     }
 
     return (
-        <form >
+        <form onSubmit={handleSubmit}>
             <h3>Register</h3>
 
             <div className="form-group">
