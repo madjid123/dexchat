@@ -5,19 +5,27 @@ import Url from '../URL'
 
 function Register(props) {
 
-    const [state, setState] = useState({ feilds: {} })
+    const [state, setState] = useState({})
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(Url.APP_URL + '/register', { ...state.fields })
+        const data = { ...state }
+        console.log(data)
+        console.log(Url.API_URL)
+        axios.post("http://localhost:5000" + '/register', data)
+            .then((response) => { console.log(response.data) })
+            .catch((error) => { console.log(error) })
 
     }
     const handleChange = (e) => {
-        var fields = { ...state.feilds };
-        fields[e.target.name] = e.target.value;
-        setState({ fields });
-    }
+        var fields = { ...state };
+        fields = { ...fields }
+        console.log(fields)
+        fields[e.target.name] = e.target.value
 
+        setState(fields);
+    }
+    console.log(state)
     return (
         <form onSubmit={handleSubmit}>
             <h3>Register</h3>
