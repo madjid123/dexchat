@@ -2,6 +2,7 @@
 import NavBar from './components/NavBar'
 import Contacts from './components/Contacts'
 import Conversation from './components/Conversation'
+import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 function App() {
@@ -9,7 +10,7 @@ function App() {
 
     <>
       <NavBar ></NavBar>
-
+      <Login></Login>
       <Contacts ></Contacts>
       <Conversation></Conversation>
 
