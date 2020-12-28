@@ -31,8 +31,8 @@ function App() {
       <Router>
 
         <Switch>
-          <Route path="/login" component={Login} ><Login></Login></Route>
-          <Route path="/register" component={Register}><Register changeUser={changeUser}> </Register></Route>
+          <Route path="/login" component={Login} ><Login changeUser={changeUser}></Login></Route>
+          <Route path="/register" component={Register}><Register > </Register></Route>
         </Switch>
 
       </Router>
