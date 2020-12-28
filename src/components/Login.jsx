@@ -1,7 +1,16 @@
 import React from 'react';
 
-function Login() {
+function Login(props) {
 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+    }
+    const handleChange = (e) => {
+        e.preventDefault();
+
+    }
     return (
         <form >
 
@@ -9,17 +18,17 @@ function Login() {
 
             <div className="form-group">
                 <label>Email</label>
-                <input type="email" className="form-control" placeholder="Enter email" />
+                <input type="email" className="form-control" placeholder="Enter email" onChange={handleChange} required />
             </div>
 
             <div className="form-group">
                 <label>Password</label>
-                <input type="password" className="form-control" placeholder="Enter password" required={true} />
+                <input type="password" className="form-control" placeholder="Enter password" required onChange={handleChange} />
             </div>
 
             <div className="form-group">
                 <div className="custom-control custom-checkbox">
-                    <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                    <input type="checkbox" className="custom-control-input" id="customCheck1" required />
                     <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                 </div>
             </div>
