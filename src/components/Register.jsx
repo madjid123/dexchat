@@ -20,6 +20,7 @@ function Register(props) {
                     else {
                         let Errors = { ...errors }
                         Errors.server = response.data.msg
+                        setErrors(Errors)
                     }
                 }
 
@@ -58,6 +59,7 @@ function Register(props) {
         setErrors(Errors)
 
     }
+    console.log(errors)
     if (redirect === true) { return <Redirect to='/'></Redirect> }
     return (
 
@@ -66,8 +68,7 @@ function Register(props) {
         <form onSubmit={handleSubmit}>
 
             <h3>Register</h3>
-            <hr></hr>
-            <span> </span>
+            { errors.server.length > 0 && <hr></hr> && <span className="error text-danger"> {errors.server} </span>}
             <hr></hr>
             <div className="form-group">
                 <label>Name</label>
