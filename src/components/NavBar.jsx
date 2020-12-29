@@ -2,8 +2,8 @@ import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap'
 
 
-function NavBar() {
-
+function NavBar(props) {
+    console.log(props.username)
     return (
 
         <Navbar bg="dark" expand="lg" variant="dark">
@@ -11,7 +11,7 @@ function NavBar() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#home">Username</Nav.Link>
+                    <Nav.Link href="#home">{props.username}</Nav.Link>
 
 
                 </Nav>

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import Url from '../URL'
+import { Redirect } from 'react-router-dom'
+
 function Login(props) {
 
     const [data, setData] = useState({ email: "", password: "" })
@@ -8,15 +10,19 @@ function Login(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post(Url.API_URL + '/login', data).then((res) => {
-            console.log(res);
+
             if (res.status === 200) {
-                if (res.data.err !== false) { props.changeUser(res.data.name) }
+                if (res.data.name !== undefined) {
+                    console.log(res.data.name);
+                    props.changeUser(res.data.name)
+                    return <Redirect to="/"></Redirect>
+                }
                 else {
                     let Errors = { ...errors }
                     Errors.server = res.data.msg
                     setErrors(Errors)
                 }
-            }
+            } else { }
         })
     }
     const handleChange = (e) => {
@@ -26,7 +32,8 @@ function Login(props) {
         Data[name] = value
         setData(Data)
     }
-    console.log(errors)
+
+
     return (
 
         <form className="form" onSubmit={handleSubmit} >

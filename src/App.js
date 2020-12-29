@@ -21,8 +21,10 @@ function App() {
   const [username, setUsername] = useState("")
 
   const changeUser = (uname) => {
+    console.log("I reached this ")
     setUsername(uname)
   }
+  console.log(username)
   return (
     <>
       <NavBar username={username}></NavBar>
@@ -31,8 +33,8 @@ function App() {
       <Router>
 
         <Switch>
-          <Route path="/login" component={Login} ><Login changeUser={changeUser}></Login></Route>
-          <Route path="/register" component={Register}><Register > </Register></Route>
+          <Route path="/login"  ><Login changeUser={changeUser}></Login></Route>
+          <Route path="/register" ><Register > </Register></Route>
         </Switch>
 
       </Router>
