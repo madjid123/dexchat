@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap'
-
+import axios from 'axios'
 
 function NavBar(props) {
-    console.log(props.username)
+
     return (
 
         <Navbar bg="dark" expand="lg" variant="dark">
@@ -17,6 +17,7 @@ function NavBar(props) {
                 </Nav>
 
                 <Button variant="login" className="" href="/login">Login</Button>
+                <Button variant="login" className="" href="/register">Register</Button>
 
 
             </Navbar.Collapse>

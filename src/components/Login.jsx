@@ -15,14 +15,16 @@ function Login(props) {
                 if (res.data.name !== undefined) {
                     console.log(res.data.name);
                     props.changeUser(res.data.name)
-                    return <Redirect to="/"></Redirect>
+                    return <Redirect to='/'></Redirect>
                 }
                 else {
                     let Errors = { ...errors }
                     Errors.server = res.data.msg
                     setErrors(Errors)
                 }
-            } else { }
+            } else {
+                console.log("ldsjfkjdsfj")
+            }
         })
     }
     const handleChange = (e) => {
