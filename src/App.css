@@ -72,10 +72,10 @@ html, body, #app, #app>div {
 }
 .form-mad {
   
-  text-align: center;
+  
    margin: 20  auto; 
     display: flex;
-    width: 40%;
+ 
  
 }
 #form {

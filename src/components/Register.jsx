@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom'
 function Register(props) {
 
     const [state, setState] = useState({})
-    const [errors, setErrors] = useState({ name: "", email: "", password: " ", server: "" })
+    const [errors, setErrors] = useState({ name: "", email: "", password: "", server: "", exist: true })
     const [redirect, setRedirect] = useState(false)
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,7 +44,7 @@ function Register(props) {
         let Errors = { ...errors }
         switch (target.name) {
             case "name": {
-                Errors.name = target.value.length < 5 ? "Name must be at least 5 characters !" : " ";
+                Errors.name = target.value.length < 5 ? "Name must be at least 5 characters !" : "";
                 break
             }
             case "email": {
@@ -56,46 +56,52 @@ function Register(props) {
             }
             default: break
         }
+        if (Errors.name.length !== 0 || Errors.password.length !== 0 || Errors.email.length !== 0)
+            Errors.exist = true;
+        else {
+            Errors.exist = false;
+        }
         setErrors(Errors)
 
     }
-
+    console.log(errors)
     if (redirect === true) { return <Redirect to='/login'></Redirect> }
     return (
 
 
+        <div className='form-mad'>
+            <form id='form' onSubmit={handleSubmit}>
 
-        <form onSubmit={handleSubmit}>
-
-            <h3>Register</h3>
-            { errors.server.length > 0 && <hr></hr> && <span className="error text-danger"> {errors.server} </span>}
-            <hr></hr>
-            <div className="form-group">
-                <label>Name</label>
-                <input name="name" type="text" className="form-control" placeholder="Name" onChange={handleChange} required />
-                {errors.name.length > 0 && <span className="text-danger">{errors.name}</span>}
-            </div>
+                <h3>Register</h3>
+                {errors.server.length > 0 && <hr></hr> && <span className="error text-danger"> {errors.server} </span>}
+                <hr></hr>
+                <div className="form-group">
+                    <label>Name</label>
+                    <input name="name" type="text" className="form-control" placeholder="Name" onChange={handleChange} required />
+                    {errors.name.length > 0 && <span className="text-danger">{errors.name}</span>}
+                </div>
 
 
 
-            <div className="form-group">
-                <label>Email</label>
-                <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={handleChange} required />
-                {errors.email.length > 0 && <span className="text-danger">{errors.email}</span>}
-            </div>
+                <div className="form-group">
+                    <label>Email</label>
+                    <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={handleChange} required />
+                    {errors.email.length > 0 && <span className="text-danger">{errors.email}</span>}
+                </div>
 
-            <div className="form-group">
-                <label>Password</label>
-                <input name="password" type="password" className="form-control" placeholder="Enter password" onChange={handleChange} required />
-                {errors.password.length > 0 && <span className="text-danger">{errors.password}</span>}
-            </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input name="password" type="password" className="form-control" placeholder="Enter password" onChange={handleChange} required />
+                    {errors.password.length > 0 && <span className="text-danger">{errors.password}</span>}
+                </div>
 
-            <button disabled={ } type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
-            <p className="forgot-password text-right">
-                Already registered <a href="/login">log in?</a>
-            </p>
+                <button disabled={errors.exist} type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
+                <p className="forgot-password text-right">
+                    Already registered <a href="/login">log in?</a>
+                </p>
 
-        </form>
+            </form>
+        </div>
     )
 
 }
