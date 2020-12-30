@@ -4,10 +4,11 @@ import axios from 'axios'
 
 function NavBar(props) {
 
+
     return (
 
         <Navbar bg="dark" expand="lg" variant="dark">
-            <Navbar.Brand href="#home"> DexChatt </Navbar.Brand>
+            <Navbar.Brand href="/"> DexChatt </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
@@ -15,13 +16,17 @@ function NavBar(props) {
 
 
                 </Nav>
-
-                <Button variant="login" className="" href="/login">Login</Button>
-                <Button variant="login" className="" href="/register">Register</Button>
+                {props.username.length === 0 && (
+                    <Button variant="login" className="" href="/login">Login</Button> &&
+                    <Button variant="login" className="" href="/register">Register</Button>)
+                }
+                {
+                    props.username.length > 0 && < Button variant="login" className="" onClick={props.logout}>Logout</Button>
+                }
 
 
             </Navbar.Collapse>
-        </Navbar>
+        </Navbar >
 
     );
 }

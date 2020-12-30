@@ -1,4 +1,5 @@
 
+
 // React
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import { useState } from 'react'
@@ -13,6 +14,7 @@ import Login from './components/Login'
 // Styling 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
 
 // http 
 import axios from 'axios'
@@ -34,10 +36,14 @@ function App() {
     console.log("I reached this ")
     setUsername(uname)
   }
-  console.log(username)
+  const logout = () => {
+    axios.get(Url.API_URL + "/logout").then((response) => {
+      if (response.data) setUsername("")
+    })
+  }
   return (
     <>
-      <NavBar username={username}></NavBar>
+      <NavBar username={username} logout={logout}></NavBar>
 
 
       <Router>

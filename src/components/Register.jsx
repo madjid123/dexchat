@@ -59,8 +59,8 @@ function Register(props) {
         setErrors(Errors)
 
     }
-    console.log(errors)
-    if (redirect === true) { return <Redirect to='/'></Redirect> }
+
+    if (redirect === true) { return <Redirect to='/login'></Redirect> }
     return (
 
 
@@ -90,9 +90,9 @@ function Register(props) {
                 {errors.password.length > 0 && <span className="text-danger">{errors.password}</span>}
             </div>
 
-            <button type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
+            <button disabled={ } type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
             <p className="forgot-password text-right">
-                Already registered <a href="#">log in?</a>
+                Already registered <a href="/login">log in?</a>
             </p>
 
         </form>
