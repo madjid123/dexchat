@@ -23,6 +23,7 @@ html, body, #app, #app>div {
 }
 .btn-login{
   padding-inline: 14px;
+  margin-right : 10px;
   color:rgb(0, 226, 139);;
   background-color : rgba(0, 255, 106, 0);
   border: 1px solid;

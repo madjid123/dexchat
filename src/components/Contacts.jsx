@@ -13,13 +13,13 @@ function Contacts() {
                     <h1> Contact</h1>
                 </SidebarHeader>
                 <Menu iconShape="square">
-                    <MenuItem > <img src={Logo} size="small" width="16" height="16" /> Contact 1 </MenuItem>
-                    <MenuItem ><img src={Logo} size="small" width="16" height="16" /> Contact 2 </MenuItem>
-                    <MenuItem ><img src={Logo} size="small" width="16" height="16" /> Contact 3 </MenuItem>
-                    <MenuItem ><img src={Logo} size="small" width="16" height="16" /> Contact 1 </MenuItem>
-                    <MenuItem ><img src={Logo} size="small" width="16" height="16" /> Contact 1 </MenuItem>
-                    <MenuItem ><img src={Logo} size="small" width="16" height="16" /> Contact 1 </MenuItem>
-                    <MenuItem ><img src={Logo} size="small" width="16" height="16" /> Contact 1 </MenuItem>
+                    <MenuItem > <img src={"logo192.png"} size="small" width="16" height="16" /> Contact 1 </MenuItem>
+                    <MenuItem ><img src={"logo192.png"} size="small" width="16" height="16" /> Contact 2 </MenuItem>
+                    <MenuItem ><img src={"logo192.png"} size="small" width="16" height="16" /> Contact 3 </MenuItem>
+                    <MenuItem ><img src={"logo192.png"} size="small" width="16" height="16" /> Contact 1 </MenuItem>
+                    <MenuItem ><img src={"logo192.png"} size="small" width="16" height="16" /> Contact 1 </MenuItem>
+                    <MenuItem ><img src={"logo192.png"} size="small" width="16" height="16" /> Contact 1 </MenuItem>
+                    <MenuItem ><img src={"logo192.png"} size="small" width="16" height="16" /> Contact 1 </MenuItem>
                 </Menu>
             </ProSidebar>
         </>

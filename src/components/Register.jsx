@@ -34,7 +34,9 @@ function Register(props) {
         fields = { ...fields }
         fields[e.target.name] = e.target.value
         setState(fields);
+
         const { name, value } = e.target
+        console.log(name, value)
         ValidInput({ name, value })
 
     }
@@ -77,7 +79,7 @@ function Register(props) {
                 <hr></hr>
                 <div className="form-group">
                     <label>Name</label>
-                    <input name="name" type="text" className="form-control" placeholder="Name" onChange={handleChange} required />
+                    <input name="name" type="text" className="form-control" placeholder="Name" onChange={handleChange} required value={state.name} />
                     {errors.name.length > 0 && <span className="text-danger">{errors.name}</span>}
                 </div>
 

@@ -28,12 +28,13 @@ function App() {
   const [username, setUsername] = useState("")
   axios.defaults.withCredentials = true
   axios.get(Url.API_URL + '/loggedin').then((res) => {
-    if (res.data.err == undefined) {
-      setUsername(res.data)
+    if (res.data.name) {
+      setUsername(res.data.name)
     }
   }).catch((err) => { console.log(err) })
   const changeUser = (uname) => {
     console.log("I reached this ")
+
     setUsername(uname)
   }
   const logout = () => {
@@ -45,7 +46,7 @@ function App() {
     <>
       <NavBar username={username} logout={logout}></NavBar>
 
-
+      <Contacts></Contacts>
       <Router>
 
         <Switch>

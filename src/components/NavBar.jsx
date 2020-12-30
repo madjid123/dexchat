@@ -1,10 +1,8 @@
 import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap'
-import axios from 'axios'
+
 
 function NavBar(props) {
-
-
     return (
 
         <Navbar bg="dark" expand="lg" variant="dark">
@@ -16,9 +14,9 @@ function NavBar(props) {
 
 
                 </Nav>
-                {props.username.length === 0 && (
-                    <Button variant="login" className="" href="/login">Login</Button> &&
-                    <Button variant="login" className="" href="/register">Register</Button>)
+                {props.username.length === 0 && (<div>
+                    <Button variant="login" className="" href="/login" >Login</Button>
+                    <Button variant="login" className="" href="/register">Register</Button> </div>)
                 }
                 {
                     props.username.length > 0 && < Button variant="login" className="" onClick={props.logout}>Logout</Button>
