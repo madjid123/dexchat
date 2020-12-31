@@ -1,7 +1,7 @@
 
 
 // React
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import { useState } from 'react'
 
 // Components
@@ -10,7 +10,6 @@ import NavBar from './components/NavBar'
 import Contacts from './components/Contacts'
 import Conversation from './components/Conversation'
 import Login from './components/Login'
-
 // Styling 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -21,6 +20,7 @@ import axios from 'axios'
 
 //API
 import Url from "./URL"
+
 
 
 function App() {
@@ -46,7 +46,6 @@ function App() {
     <>
       <NavBar username={username} logout={logout}></NavBar>
 
-      <Contacts></Contacts>
       <Router>
 
         <Switch>

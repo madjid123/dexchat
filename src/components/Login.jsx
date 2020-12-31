@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Url from '../URL'
 import { Redirect } from 'react-router-dom'
 
@@ -7,6 +7,12 @@ function Login(props) {
 
     const [data, setData] = useState({ email: "", password: "" })
     const [errors, setErrors] = useState({ server: "" })
+    const [notEmpty, setNotEmpty] = useState(false)
+
+    useEffect(() => {
+        (data.email.length === 0 || data.password.length === 0) ? setNotEmpty(false) : setNotEmpty(true);
+    })
+
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post(Url.API_URL + '/login', data).then((res) => {
@@ -19,7 +25,7 @@ function Login(props) {
                 }
                 else {
                     let Errors = { ...errors }
-                    Errors.server = res.data.msg
+                    Errors.server = res.data
                     setErrors(Errors)
                 }
             } else {
@@ -37,7 +43,7 @@ function Login(props) {
 
 
     return (
-        <div classname='form-mad'>
+        <div className='form-mad'>
             <form id="form" onSubmit={handleSubmit} >
 
                 <h3>Log in</h3>
@@ -60,9 +66,9 @@ function Login(props) {
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
+                <button disabled={notEmpty === false} type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
                 <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
+                    Forgot password?
                 </p>
             </form>
         </div>

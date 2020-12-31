@@ -6,7 +6,9 @@ html, body, #app, #app>div {
 #root{
   background-color:  #f5f5f5;
 }
-
+html {
+  background-color: #f5f5f5;
+}
 .App {
   
   text-align: center;

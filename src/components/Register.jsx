@@ -1,17 +1,26 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Url from '../URL'
 import { Redirect } from 'react-router-dom'
 
 function Register(props) {
-
+    // State variable.  
     const [state, setState] = useState({})
-    const [errors, setErrors] = useState({ name: "", email: "", password: "", server: "", exist: true })
+    const [errors, setErrors] = useState({ name: "", email: "", password: "", server: "" })
     const [redirect, setRedirect] = useState(false)
+    const [Valid, setValid] = useState(false)
+
+    useEffect(() => {
+        isValid()
+    })
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = { ...state }
 
+
+        if (!Valid) return
         axios.post(Url.API_URL + '/register', data)
             .then((response) => {
                 console.log(response);
@@ -36,14 +45,16 @@ function Register(props) {
         setState(fields);
 
         const { name, value } = e.target
-        console.log(name, value)
+
         ValidInput({ name, value })
 
     }
-    const Regex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+    const Regex = RegExp(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
 
     const ValidInput = (target) => {
         let Errors = { ...errors }
+
+
         switch (target.name) {
             case "name": {
                 Errors.name = target.value.length < 5 ? "Name must be at least 5 characters !" : "";
@@ -58,15 +69,29 @@ function Register(props) {
             }
             default: break
         }
-        if (Errors.name.length !== 0 || Errors.password.length !== 0 || Errors.email.length !== 0)
-            Errors.exist = true;
-        else {
-            Errors.exist = false;
-        }
+
+
+
         setErrors(Errors)
 
+
     }
-    console.log(errors)
+    const isValid = () => {
+        return (errors.name.length === 0 && errors.email.length === 0 && errors.password.length === 0) ? setValid(true) : setValid(false)
+    }
+    const Submit = () => {
+        let Errors = { ...errors }
+        if (!state.name)
+            Errors.name = "You must provide a name "
+
+        if (!state.email)
+            Errors.email = "You must provide an email"
+
+        if (!state.password)
+            Errors.password = "You must provide a password"
+        setErrors(Errors)
+    }
+
     if (redirect === true) { return <Redirect to='/login'></Redirect> }
     return (
 
@@ -79,7 +104,7 @@ function Register(props) {
                 <hr></hr>
                 <div className="form-group">
                     <label>Name</label>
-                    <input name="name" type="text" className="form-control" placeholder="Name" onChange={handleChange} required value={state.name} />
+                    <input name="name" type="text" className="form-control" placeholder="Name" onChange={handleChange} value={state.name} onClick={handleChange} />
                     {errors.name.length > 0 && <span className="text-danger">{errors.name}</span>}
                 </div>
 
@@ -87,17 +112,17 @@ function Register(props) {
 
                 <div className="form-group">
                     <label>Email</label>
-                    <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={handleChange} required />
+                    <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={handleChange} onClick={handleChange} />
                     {errors.email.length > 0 && <span className="text-danger">{errors.email}</span>}
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input name="password" type="password" className="form-control" placeholder="Enter password" onChange={handleChange} required />
+                    <input name="password" type="password" className="form-control" placeholder="Enter password" onChange={handleChange} onClick={handleChange} />
                     {errors.password.length > 0 && <span className="text-danger">{errors.password}</span>}
                 </div>
 
-                <button disabled={errors.exist} type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
+                <button disabled={Valid === false} type="submit" className="btn btn-dark btn-lg btn-block" onClick={Submit} >Register</button>
                 <p className="forgot-password text-right">
                     Already registered <a href="/login">log in?</a>
                 </p>
