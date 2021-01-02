@@ -10,6 +10,7 @@ import NavBar from './components/NavBar'
 import Contacts from './components/Contacts'
 import Conversation from './components/Conversation'
 import Login from './components/Login'
+
 // Styling 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -20,6 +21,8 @@ import axios from 'axios'
 
 //API
 import Url from "./URL"
+import io from 'socket.io'
+
 
 
 
