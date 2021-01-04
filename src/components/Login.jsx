@@ -51,12 +51,12 @@ function Login(props) {
                 <hr></hr>
                 <div className="form-group">
                     <label>Email</label>
-                    <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={handleChange} required />
+                    <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={handleChange} value={data.email} required />
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input name='password' type="password" className="form-control" placeholder="Enter password" required onChange={handleChange} />
+                    <input name='password' type="password" className="form-control" placeholder="Enter password" required value={data.password} onChange={handleChange} />
                 </div>
 
                 <div className="form-group">
