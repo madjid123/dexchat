@@ -15,13 +15,13 @@ function Login(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!data) return;
         axios.post(Url.API_URL + '/login', data).then((res) => {
-
             if (res.status === 200) {
                 if (res.data.name !== undefined) {
-                    console.log(res.data.name);
+
                     props.changeUser(res.data.name)
-                    return (<Redirect to='/'></Redirect>);
+                    return (<Redirect to='/user'></Redirect>);
                 }
                 else {
                     let Errors = { ...errors }
@@ -29,7 +29,7 @@ function Login(props) {
                     setErrors(Errors)
                 }
             } else {
-                console.log("ldsjfkjdsfj")
+                console.log("Unhandled request")
             }
         })
     }

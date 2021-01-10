@@ -7,9 +7,8 @@ import { useState } from 'react'
 // Components
 import Register from "./components/Register"
 import NavBar from './components/NavBar'
-import Contacts from './components/Contacts'
-import Conversation from './components/Conversation'
 import Login from './components/Login'
+import UserSpace from './components/UserSpace';
 
 // Styling 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,7 +35,7 @@ function App() {
     }
   }).catch((err) => { console.log(err) })
   const changeUser = (uname) => {
-    console.log("I reached this ")
+
 
     setUsername(uname)
   }
@@ -52,7 +51,7 @@ function App() {
       <Router>
 
         <Switch>
-
+          {(username !== "") && <Route path='/user'> <UserSpace username={username}> </UserSpace></Route>}
           <Route path="/login"  ><Login changeUser={changeUser}></Login></Route>
           <Route path="/register" ><Register > </Register></Route>
         </Switch>
