@@ -20,23 +20,24 @@ import axios from 'axios'
 
 //API
 import Url from "./URL"
-import io from 'socket.io'
+import io from 'socket.io-client'
 
 
-
+const socket = io("http://localhost:5001", { transports: ['websocket'] })
 
 function App() {
 
+  socket.on("hello", (arg) => { console.log(arg) })
   const [username, setUsername] = useState("")
+
   axios.defaults.withCredentials = true
   axios.get(Url.API_URL + '/loggedin').then((res) => {
     if (res.data.name) {
       setUsername(res.data.name)
     }
   }).catch((err) => { console.log(err) })
+
   const changeUser = (uname) => {
-
-
     setUsername(uname)
   }
   const logout = () => {

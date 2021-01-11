@@ -11,7 +11,7 @@ function Login(props) {
 
     useEffect(() => {
         (data.email.length === 0 || data.password.length === 0) ? setNotEmpty(false) : setNotEmpty(true);
-    })
+    }, [data.email.length, data.password.length])
 
     const handleSubmit = (e) => {
         e.preventDefault();
