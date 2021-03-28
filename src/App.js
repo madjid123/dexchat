@@ -1,7 +1,7 @@
 
 
 // React
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
 import { useState } from 'react'
 
 // Components
@@ -50,9 +50,9 @@ function App() {
       <NavBar username={username} logout={logout}></NavBar>
 
       <Router>
-
+        {username !== "" && <Redirect to='/user'></Redirect>} <Redirect to='/login'></Redirect>
         <Switch>
-          {(username !== "") && <Route path='/user'> <UserSpace username={username}> </UserSpace></Route>}
+          <Route path='/user'> <UserSpace username={username}> </UserSpace></Route>
           <Route path="/login"  ><Login changeUser={changeUser}></Login></Route>
           <Route path="/register" ><Register > </Register></Route>
         </Switch>
