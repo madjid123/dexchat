@@ -92,4 +92,20 @@ html {
   margin-top:15px;
   
 }
+.pro-sidebar{
+  width:30%;
+}
+.box-flex{
+  display:flex;
+  height:100%
+}
+.conversation{
+  background-color:  #393f46;
+  width:70%
+}
+.navbar {
 
+}
+.bg-dark{
+  background-color: #2a2e33;
+}
