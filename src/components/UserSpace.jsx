@@ -5,11 +5,11 @@ import Conversation from './Conversation'
 
 import React from 'react';
 
-function UserSpace() {
+function UserSpace(props) {
 
     return (
         <>
-            <Contacts></Contacts>
+            <Contacts id={props.id}></Contacts>
             <Conversation></Conversation>
         </>
     );

@@ -22,7 +22,8 @@ function Login(props) {
             if (res.status === 200) {
                 if (res.data.name !== undefined) {
                     console.log("reached this ", res.data.name)
-                    props.changeUser(res.data.name)
+                    props.changeUser(res.data.name, res.data.id)
+
 
                     return (<><Redirect to='/user'></Redirect> </>);
                 }

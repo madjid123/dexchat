@@ -1,8 +1,15 @@
-import React from 'react';
+import { React } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap'
-
+import { withRouter } from 'react-router'
 
 function NavBar(props) {
+
+    const Logout = () => {
+        props.logout()
+        const newPath = "/login"
+        props.history.push(newPath)
+
+    }
     return (
 
         <Navbar bg="dark" expand="lg" variant="dark">
@@ -19,7 +26,7 @@ function NavBar(props) {
                     <Button variant="login" className="" href="/register">Register</Button> </div>)
                 }
                 {
-                    props.username.length > 0 && < Button variant="login" className="" onClick={props.logout}>Logout</Button>
+                    props.username.length > 0 && < Button variant="login" className="" onClick={() => Logout()}> Logout</Button>
                 }
 
 
@@ -29,4 +36,4 @@ function NavBar(props) {
     );
 }
 
-export default NavBar;
+export default withRouter(NavBar);
