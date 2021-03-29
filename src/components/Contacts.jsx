@@ -20,9 +20,7 @@ function Contacts(props) {
                     <h1> Contact</h1>
                 </SidebarHeader>
                 <Menu iconShape="square">
-                    {contacts.map((value) => <MenuItem onClick={ }> <img src={"logo192.png"} size="small" width="16" height="16" alt='' /> {value.name} </MenuItem>)}
-
-
+                    {contacts.map((value) => <MenuItem onClick={() => { props.setName(value.name) }} > <img src={"logo192.png"} size="small" width="16" height="16" alt='' /> {value.name} </MenuItem>)}
                 </Menu>
             </ProSidebar>
         </>

@@ -3,14 +3,22 @@ import Contacts from './Contacts'
 import Conversation from './Conversation'
 
 
-import React from 'react';
+import { React, useState } from 'react';
+
 
 function UserSpace(props) {
+    const [name, setName] = useState("")
 
+    const getName = (Name) => {
+        setName(Name)
+        console.log(name)
+    }
     return (
         <>
-            <Contacts id={props.id}></Contacts>
-            <Conversation></Conversation>
+            <div className="box-flex">
+                <Contacts id={props.id} setName={getName}></Contacts>
+                <Conversation name={name}></Conversation>
+            </div>
         </>
     );
 }

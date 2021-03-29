@@ -3,8 +3,8 @@ import React from 'react';
 function Conversation(props) {
     return (
         <>
-            <div className=''>
-                <a>{props.name}</a>
+            <div className='conversation' >
+                <h1>{props.name}</h1>
             </div>
         </>
     )
