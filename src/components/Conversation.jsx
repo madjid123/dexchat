@@ -10,16 +10,19 @@ function Conversation(props) {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
 
-    socket.on("sendmsg", (data) => {
-        if (data.id !== props.user.id) return;
+    socket.emit('sendusr', { me: props.me })
+    socket.once("getmsg", (data) => {
+        console.log(data)
         const msgs = messages
-        msgs.push({ name: data.username, id: data.message })
+        msgs.push({ sender: data.username, message: data.message })
+        setMessages(msgs)
     })
     const onMessage = () => {
         if (message === '') return;
-        socket.emit('getmsg', {
+        console.log(props.user.id)
+        socket.emit('sendmsg', {
             name: props.user.name,
-            id: props.user.id,
+            toid: props.user.id,
             msg: message
         })
         const msgs = messages
@@ -27,20 +30,22 @@ function Conversation(props) {
         setMessages(msgs)
         setMessage("")
     }
-    console.log(messages)
+    console.log("messages", messages)
     return (
         <div className='conversation'>
             { props.user.name &&
                 <div style={{ height: 'inherit' }} >
                     <h1>{props.user.name}</h1>
-                    {messages.map((msg) => {
-                        <div>
+                    <div style={{ color: '#fff' }}>
+                        {messages.map((msg) => {
+                            console.log(msg);
+                            <>
+                                <a>{msg.sender}</a>
+                                <a>{msg.message}</a>
+                            </>
 
-                            <p>msg.sender</p>
-                            <p>msg.message</p>
-
-                        </div>
-                    })}
+                            return;
+                        })} </div>
                     <div className='footer'>
                         <input className='footer-input' type='text' onChange={(e) => { setMessage(e.target.value) }} value={message}></input>
                         <Button onClick={() => { onMessage() }} >send</Button>

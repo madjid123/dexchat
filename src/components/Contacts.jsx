@@ -7,7 +7,6 @@ import { React, useState } from 'react';
 
 function Contacts(props) {
     const [contacts, setContacts] = useState([])
-    console.log(props.username)
     if (contacts.length === 0) {
         axios.get(Url.API_URL + '/user/contacts/' + props.id).then((res) => {
             if (res.status === 200) {

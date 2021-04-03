@@ -47,7 +47,6 @@ function App() {
     })
 
   }
-  console.log(__filename, id)
   return (
     <>
 

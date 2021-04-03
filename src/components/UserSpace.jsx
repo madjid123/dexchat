@@ -4,10 +4,13 @@ import Conversation from './Conversation'
 
 
 import { React, useState } from 'react';
+import { Redirect } from 'react-router';
 
 
 function UserSpace(props) {
     const [user, setUser] = useState({})
+    if (props.id === "" && props.username === "") { return (<Redirect to="/login"></Redirect>) };
+
 
     const getUser = (user) => {
         setUser(user)
