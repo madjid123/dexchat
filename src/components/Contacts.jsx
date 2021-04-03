@@ -4,15 +4,24 @@ import axios from 'axios';
 import Url from '../URL'
 import { React, useState } from 'react';
 
+
 function Contacts(props) {
     const [contacts, setContacts] = useState([])
-    axios.get(Url.API_URL + '/user/' + props.id).then((res) => {
-        if (res.status === 200) {
+    console.log(props.username)
+    if (contacts.length === 0) {
+        axios.get(Url.API_URL + '/user/contacts/' + props.id).then((res) => {
+            if (res.status === 200) {
 
-            if (res.data.Contacts)
-                setContacts(res.data.Contacts)
-        }
-    }).catch(err => console.error(err))
+                if (res.data.Contacts) {
+                    setContacts(res.data.Contacts)
+                }
+            }
+            else {
+                console.log(res)
+                return;
+            }
+        }).catch(err => console.error(err))
+    }
     return (
         <>
             <ProSidebar className="sidebar">
@@ -20,7 +29,9 @@ function Contacts(props) {
                     <h1> Contact</h1>
                 </SidebarHeader>
                 <Menu iconShape="square">
-                    {contacts.map((value) => <MenuItem onClick={() => { props.setName(value.name) }} > <img src={"logo192.png"} size="small" width="16" height="16" alt='' /> {value.name} </MenuItem>)}
+                    {contacts.map((value) => <MenuItem id={value.id} onClick={() => { props.setUser({ name: value.name, id: value.id }) }} > <img id={value.id} src={"logo192.png"} size="small" width="16" height="16" alt='' /> {value.name} </MenuItem>)}
+
+
                 </Menu>
             </ProSidebar>
         </>

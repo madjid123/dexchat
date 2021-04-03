@@ -21,21 +21,20 @@ import Url from "./URL"
 import io from 'socket.io-client'
 
 
-const socket = io("http://localhost:5001", { transports: ['websocket'] })
 
 function App() {
 
-  socket.on("hello", (arg) => { console.log(arg) })
   const [username, setUsername] = useState("")
   const [id, setId] = useState("")
   const History = useHistory()
   axios.defaults.withCredentials = true
-  axios.get(Url.API_URL + '/loggedin').then((res) => {
-    if (res.data.name) {
-      setUsername(res.data.name)
-      setId(res.data.id)
-    }
-  }).catch((err) => { console.log(err) })
+  if (id !== '')
+    axios.get(Url.API_URL + '/loggedin').then((res) => {
+      if (res.data.name) {
+        setUsername(res.data.name)
+        setId(res.data.id)
+      }
+    }).catch((err) => { console.log(err) })
 
   const changeUser = (uname, Id) => {
     setUsername(uname)
@@ -43,21 +42,22 @@ function App() {
   }
   const logout = () => {
     axios.get(Url.API_URL + "/logout").then((response) => {
-      if (response.data) setUsername("")
+      if (response.data) { setUsername(""); setId("") }
 
     })
 
   }
+  console.log(__filename, id)
   return (
     <>
 
 
       <Router history={History}>
         <NavBar username={username} logout={logout} history={History}></NavBar>
-        {username !== "" && <Redirect to='/user'></Redirect>} <Redirect to='/login'></Redirect>
+        {username !== "" && <Redirect to='/user'></Redirect>}
         <Switch>
           <Route path='/user'> <UserSpace username={username} id={id}> </UserSpace></Route>
-          <Route path="/login"  ><Login changeUser={changeUser}></Login></Route>
+          <Route path="/login"  ><Login changeUser={(user, id) => { changeUser(user, id) }}></Login></Route>
           <Route path="/register" ><Register > </Register></Route>
         </Switch>
 

@@ -15,15 +15,12 @@ function Login(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!data) return;
 
         axios.post(Url.API_URL + '/login', data).then((res) => {
 
             if (res.status === 200) {
                 if (res.data.name !== undefined) {
-                    console.log("reached this ", res.data.name)
                     props.changeUser(res.data.name, res.data.id)
-
 
                     return (<><Redirect to='/user'></Redirect> </>);
                 }

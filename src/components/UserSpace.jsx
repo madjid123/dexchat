@@ -7,17 +7,17 @@ import { React, useState } from 'react';
 
 
 function UserSpace(props) {
-    const [name, setName] = useState("")
+    const [user, setUser] = useState({})
 
-    const getName = (Name) => {
-        setName(Name)
-        console.log(name)
+    const getUser = (user) => {
+        setUser(user)
     }
+    console.log(__filename, props.id)
     return (
         <>
             <div className="box-flex">
-                <Contacts id={props.id} setName={getName}></Contacts>
-                <Conversation name={name}></Conversation>
+                <Contacts id={props.id} setUser={getUser}></Contacts>
+                <Conversation user={user} me={{ username: props.username, id: props.id }}></Conversation>
             </div>
         </>
     );
