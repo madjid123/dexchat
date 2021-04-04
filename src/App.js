@@ -21,13 +21,13 @@ import Url from "./URL"
 import io from 'socket.io-client'
 
 
-
+axios.defaults.withCredentials = true
 function App() {
 
   const [username, setUsername] = useState("")
   const [id, setId] = useState("")
   const History = useHistory()
-  axios.defaults.withCredentials = true
+
   if (id !== '')
     axios.get(Url.API_URL + '/loggedin').then((res) => {
       if (res.data.name) {

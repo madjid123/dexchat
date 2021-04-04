@@ -114,15 +114,15 @@ html {
 }
 .footer{
   position: absolute;
-  right: 0px;
+  right: 0%;
   bottom: 0%;
-  width:inherit;
+  width:calc(70%);
   height: 5%;
   display: flex;
 
 }
 .footer   input{
   width:100%;
-  height:100%;
+  height:90%;
   
 }
