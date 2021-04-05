@@ -28,7 +28,14 @@ function Contacts(props) {
                     <h1> Contact</h1>
                 </SidebarHeader>
                 <Menu iconShape="square">
-                    {contacts.map((value) => <MenuItem id={value.id} onClick={() => { props.setUser({ name: value.name, id: value.id }) }} > <img id={value.id} src={"logo192.png"} size="small" width="16" height="16" alt='' /> {value.name} </MenuItem>)}
+                    {contacts.map((value, index) =>
+                        <MenuItem id={index} onClick={() => {
+                            props.setUser({ name: value.name, id: value.id });
+                            if (props.user && props.user.name !== value.name)
+                                props.clearMessages()
+                        }} >
+                            <img id={index} src={"logo192.png"} size="small" width="16" height="16" alt='' /> {value.name}
+                        </MenuItem>)}
 
 
                 </Menu>

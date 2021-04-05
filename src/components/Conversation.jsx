@@ -10,15 +10,16 @@ function Conversation(props) {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
 
+
     socket.emit('sendusr', { me: props.me })
     socket.once("getmsg", (data) => {
         const msgs = messages
         msgs.push({ sender: data.username, message: data.message })
         setMessages(msgs)
     })
+
     const onMessage = () => {
         if (message === '') return;
-        console.log(props.user.id)
         socket.emit('sendmsg', {
             name: props.user.name,
             toid: props.user.id,
@@ -29,10 +30,11 @@ function Conversation(props) {
         setMessages(msgs)
         setMessage("")
     }
+    if (props.clearMsgs() === true) { setMessages([]) }
     return (
         <div className='conversation'>
             { props.user.name &&
-                <div style={{ height: 'inherit', overflowY: 'auto', overflowX: 'hidden', scrollBehavior: 'smoth' }} >
+                <div style={{ height: '95%', overflowY: 'auto', overflowX: 'hidden', scrollBehavior: 'smoth' }} >
                     <h1>{props.user.name}</h1>
                     <Menu >
 
