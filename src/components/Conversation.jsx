@@ -1,15 +1,13 @@
 import e from 'cors';
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client'
 import { Menu, MenuItem } from 'react-pro-sidebar'
 var socket = io("localhost:5001", { transports: ['websocket'] })
 socket.connect()
 function Conversation(props) {
-
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
-
 
     socket.emit('sendusr', { me: props.me })
     socket.once("getmsg", (data) => {
@@ -20,6 +18,7 @@ function Conversation(props) {
 
     const onMessage = () => {
         if (message === '') return;
+
         socket.emit('sendmsg', {
             name: props.user.name,
             toid: props.user.id,
@@ -30,7 +29,13 @@ function Conversation(props) {
         setMessages(msgs)
         setMessage("")
     }
-    if (props.clearMsgs() === true) { setMessages([]) }
+    useEffect(() => {
+        if (!props.clearMsgs) return;
+        props.setClearMsgs(false);
+        console.log(props.clearMsgs)
+        setMessages([]);
+
+    }, [props.clearMsgs === true])
     return (
         <div className='conversation'>
             { props.user.name &&
@@ -40,7 +45,7 @@ function Conversation(props) {
 
                         {messages.map((msg, index) => {
                             return (
-                                <MenuItem id={index}  >
+                                <MenuItem key={index}  >
                                     <h5>{msg.sender}</h5>
                                     <br></br>
                                     <a>{msg.message}</a>

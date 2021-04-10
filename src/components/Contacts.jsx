@@ -29,12 +29,11 @@ function Contacts(props) {
                 </SidebarHeader>
                 <Menu iconShape="square">
                     {contacts.map((value, index) =>
-                        <MenuItem id={index} onClick={() => {
+                        <MenuItem key={index} onClick={() => {
                             props.setUser({ name: value.name, id: value.id });
-                            if (props.user && props.user.name !== value.name)
-                                props.clearMessages()
-                        }} >
-                            <img id={index} src={"logo192.png"} size="small" width="16" height="16" alt='' /> {value.name}
+                            if (props.user && props.user.name !== value.name) props.clearMessages()
+                        }}>
+                            <img key={index} src={"logo192.png"} size="small" width="16" height="16" alt='' /> {value.name}
                         </MenuItem>)}
 
 
