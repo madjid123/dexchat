@@ -11,6 +11,7 @@ function Conversation(props) {
 
     socket.emit('sendusr', { me: props.me })
     socket.once("getmsg", (data) => {
+        if (data.toid !== props.user.id) return;
         const msgs = messages
         msgs.push({ sender: data.username, message: data.message })
         setMessages(msgs)
@@ -20,6 +21,7 @@ function Conversation(props) {
         if (message === '') return;
 
         socket.emit('sendmsg', {
+            from: props.id,
             name: props.user.name,
             toid: props.user.id,
             msg: message
@@ -32,7 +34,6 @@ function Conversation(props) {
     useEffect(() => {
         if (!props.clearMsgs) return;
         props.setClearMsgs(false);
-        console.log(props.clearMsgs)
         setMessages([]);
 
     }, [props.clearMsgs === true])
