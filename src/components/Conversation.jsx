@@ -3,9 +3,14 @@ import { React, useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import io from 'socket.io-client'
 import { Menu, MenuItem } from 'react-pro-sidebar'
+
+
+
 var socket = io("localhost:5001", { transports: ['websocket'] })
 socket.connect()
+
 function Conversation(props) {
+
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
 
@@ -19,9 +24,9 @@ function Conversation(props) {
 
     const onMessage = () => {
         if (message === '') return;
-
+        console.log(props.user)
         socket.emit('sendmsg', {
-            from: props.id,
+            from: props.me.id,
             name: props.user.name,
             toid: props.user.id,
             msg: message
@@ -31,18 +36,20 @@ function Conversation(props) {
         setMessages(msgs)
         setMessage("")
     }
+
     useEffect(() => {
         if (!props.clearMsgs) return;
         props.setClearMsgs(false);
         setMessages([]);
 
     }, [props.clearMsgs === true])
+
     return (
         <div className='conversation'>
             { props.user.name &&
                 <div style={{ height: '95%', overflowY: 'auto', overflowX: 'hidden', scrollBehavior: 'smoth' }} >
                     <h1>{props.user.name}</h1>
-                    <Menu >
+                    <Menu iconshape='square'>
 
                         {messages.map((msg, index) => {
                             return (
