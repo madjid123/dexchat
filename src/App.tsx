@@ -1,12 +1,12 @@
 // React
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Redirect,
+  Route,
+  Switch,
   useHistory,
 } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Components
 import Register from "./components/Auth/Register";
@@ -19,7 +19,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 // http
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 //API
 import Url from "./URL";
@@ -30,29 +30,26 @@ const App = () => {
   const [id, setId] = useState("");
   const History = useHistory();
 
-
   useEffect(() => {
-    let isAuth = localStorage.getItem("isAuth")
+    let isAuth = localStorage.getItem("isAuth");
     let RawUser = localStorage.getItem("user");
-    let user = (isAuth === 'true' && RawUser) ? JSON.parse(RawUser) : undefined
+    let user = (isAuth === "true" && RawUser) ? JSON.parse(RawUser) : undefined;
     axios.get(Url.API_URL + "/loggedin")
-      .then((data) => {
-
+      .then((data: AxiosResponse<any>) => {
+        console.log(data);
       })
-      .catch(err => console.error(err))
+      .catch((err: Error) => console.error(err));
     if (user) {
-      setUsername(user.name)
-      setId(user.id)
+      setUsername(user.name);
+      setId(user.id);
     }
-  }
-
-    , [id, username])
+  }, [id, username]);
   const changeUser = (uname: string, Id: string) => {
     setUsername(uname);
     setId(Id);
   };
   const logout = () => {
-    axios.get(Url.API_URL + "/logout").then((response) => {
+    axios.get(Url.API_URL + "/logout").then((response: AxiosResponse<any>) => {
       if (response.data) {
         setUsername("");
         setId("");
@@ -61,7 +58,7 @@ const App = () => {
   };
   return (
     <>
-      <Router >
+      <Router>
         <NavBar username={username} logout={logout} history={History}></NavBar>
         {username !== "" && <Redirect to="/user"></Redirect>}
         <Switch>
@@ -73,15 +70,16 @@ const App = () => {
               changeUser={(user: string, id: string) => {
                 changeUser(user, id);
               }}
-            ></Login>
+            >
+            </Login>
           </Route>
           <Route path="/register">
-            <Register> </Register>
+            <Register></Register>
           </Route>
         </Switch>
       </Router>
     </>
   );
-}
+};
 
 export default App;
