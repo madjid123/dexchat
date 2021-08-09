@@ -33,14 +33,16 @@ const App = () => {
   useEffect(() => {
     let isAuth = localStorage.getItem("isAuth");
     let RawUser = localStorage.getItem("user");
-    let user = (isAuth === "true" && RawUser) ? JSON.parse(RawUser) : undefined;
-    axios.get(Url.API_URL + "/loggedin")
+    let user = isAuth === "true" && RawUser ? JSON.parse(RawUser) : "";
+    console.log(user)
+    axios
+      .get(Url + "/loggedin")
       .then((data: AxiosResponse<any>) => {
         console.log(data);
       })
       .catch((err: Error) => console.error(err));
     if (user) {
-      setUsername(user.name);
+      setUsername(user.username);
       setId(user.id);
     }
   }, [id, username]);
@@ -49,13 +51,14 @@ const App = () => {
     setId(Id);
   };
   const logout = () => {
-    axios.get(Url.API_URL + "/logout").then((response: AxiosResponse<any>) => {
+    axios.get(Url + "/logout").then((response: AxiosResponse<any>) => {
       if (response.data) {
         setUsername("");
         setId("");
       }
     });
   };
+  console.log(username)
   return (
     <>
       <Router>
@@ -70,8 +73,7 @@ const App = () => {
               changeUser={(user: string, id: string) => {
                 changeUser(user, id);
               }}
-            >
-            </Login>
+            ></Login>
           </Route>
           <Route path="/register">
             <Register></Register>
