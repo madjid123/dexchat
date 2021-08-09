@@ -6,7 +6,8 @@ import { Redirect } from "react-router-dom";
 type RegisterState = {
   [key: string]: any;
 };
-function Register(props: any) {
+type RegisterProps = any
+const Register = (props: RegisterProps) =>{
   // State variable.
   const [state, setState] = useState({} as RegisterState);
   const [errors, setErrors] = useState({

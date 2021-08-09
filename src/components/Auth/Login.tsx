@@ -31,12 +31,7 @@ const Login = (props: any) => {
         //  <Redirect to="/user"></Redirect>{" "}
         //</>
       //);
-    } else {
-      let Errors = { ...errors };
-      Errors.server = error.message;
-      setErrors(Errors);
-    }
-  };
+    }   };
   const handleChange = (e: React.SyntheticEvent) => {
     e.preventDefault();
     let Data = { ...data };
@@ -52,8 +47,8 @@ const Login = (props: any) => {
     <div className="form-mad">
       <form id="form" onSubmit={handleSubmit}>
         <h3>Log in</h3>
-        {errors.server.length > 0 && <hr></hr> && (
-          <span className="error text-danger"> {errors.server} </span>
+        {error.message.length> 0 && <hr></hr> && (
+          <span className="error text-danger"> {error.message} </span>
         )}
         <hr></hr>
         <div className="form-group">
