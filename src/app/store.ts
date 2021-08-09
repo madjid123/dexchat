@@ -1,7 +1,8 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import AuthReducer from "../features/user/authSlice";
 export const store = configureStore({
   reducer: {
+    AuthReducer,
   },
 });
 
@@ -13,4 +14,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
-

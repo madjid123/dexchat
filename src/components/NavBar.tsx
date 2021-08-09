@@ -1,22 +1,26 @@
 import React, { } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap'
 import { withRouter } from 'react-router'
+import {logout, AuthSelector} from '../features/user/authSlice'
+import {useDispatch , useSelector} from "react-redux"
 
 type Props = any
 function NavBar(props: Props) {
-
+    const dispatch = useDispatch()
+    const {currentUser , error , isAuth , isLoading} = useSelector(AuthSelector)
     const Logout = () => {
-        props.logout()
+        dispatch(logout())
         const newPath = "/login"
-        localStorage.removeItem("user")
+        //localStorage.removeItem("user")
         props.history.push(newPath)
 
     }
+    console.log(currentUser)
     return (
 
-        <Navbar bg="mydark" expand="lg" variant="dark"  >
-            <Navbar.Brand href="/"> DexChatt </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+            <Navbar>
+
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto m-auto">
                     <Nav.Link href="#home">{props.username}</Nav.Link>
