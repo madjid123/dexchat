@@ -3,7 +3,7 @@ import Contacts from './Contacts'
 import Conversation from './Conversation'
 
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface User {
     id?: string,
@@ -22,7 +22,7 @@ const UserSpace = (props: any) => {
         <>
             <div className="box-flex">
                 <Contacts id={props.id} setUser={getUser} clearMessages={() => { setClearMsgs(true) }} user={user}></Contacts>
-                <Conversation user={user} me={{ username: props.username, id: props.id }} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
+                <Conversation user={user} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
             </div>
         </>
     );

@@ -1,7 +1,4 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import Url from "../../URL";
-import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, AuthSelector } from "../../features/user/authSlice";
 
@@ -10,10 +7,9 @@ type LoginData = {
 };
 const Login = (props: any) => {
   const [data, setData] = useState({ email: "", password: "" } as LoginData);
-  const [errors, setErrors] = useState({ server: "" });
   const [notEmpty, setNotEmpty] = useState(false);
   const dispatch = useDispatch();
-  const { currentUser, isLoading, isAuth, error } = useSelector(AuthSelector);
+  const { currentUser, isAuth, error } = useSelector(AuthSelector);
 
   useEffect(() => {
     data.email.length === 0 || data.password.length === 0
@@ -23,15 +19,16 @@ const Login = (props: any) => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(login(data));
+    dispatch(login({ email: data.email, password: data.password }));
     if (isAuth) {
       console.log(currentUser);
       //return (
-       // <>
-        //  <Redirect to="/user"></Redirect>{" "}
-        //</>
+      // <>
+      //  <Redirect to="/user"></Redirect>{" "}
+      //</>
       //);
-    }   };
+    }
+  };
   const handleChange = (e: React.SyntheticEvent) => {
     e.preventDefault();
     let Data = { ...data };
@@ -41,13 +38,12 @@ const Login = (props: any) => {
     Data[name] = value;
     setData(Data);
   };
-  console.log(currentUser)
 
   return (
     <div className="form-mad">
       <form id="form" onSubmit={handleSubmit}>
         <h3>Log in</h3>
-        {error.message.length> 0 && <hr></hr> && (
+        {error.message.length > 0 && <hr></hr> && (
           <span className="error text-danger"> {error.message} </span>
         )}
         <hr></hr>

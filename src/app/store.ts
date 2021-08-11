@@ -14,3 +14,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+function add(a : number , b: number): number{
+  return a + b;}

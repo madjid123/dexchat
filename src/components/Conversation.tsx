@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { io } from 'socket.io-client'
 import { Menu, MenuItem } from 'react-pro-sidebar'
+import { useSelector } from 'react-redux';
+import { AuthSelector } from '../features/user/authSlice';
 
 
 
@@ -9,11 +11,11 @@ var socket = io("localhost:5001", { transports: ['websocket'] })
 socket.connect()
 
 function Conversation(props: any) {
-
+    const { currentUser, isAuth } = useSelector(AuthSelector)
     const [message, setMessage] = useState("" as string)
     const [messages, setMessages] = useState([] as any[])
 
-    socket.emit('sendusr', { me: props.me })
+    socket.emit('sendusr', { currentUser: currentUser })
     socket.once("getmsg", (data: any) => {
         if (data.toid !== props.user.id) return;
         const msgs = messages

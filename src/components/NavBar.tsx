@@ -1,42 +1,39 @@
-import React, { } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap'
-import { withRouter } from 'react-router'
-import {logout, AuthSelector} from '../features/user/authSlice'
-import {useDispatch , useSelector} from "react-redux"
+import { RouteProps, withRouter } from 'react-router'
+import { logout, AuthSelector } from '../features/user/authSlice'
+import { useDispatch, useSelector } from "react-redux"
 
-type Props = any
-function NavBar(props: Props) {
+const NavBar: React.FunctionComponent<RouteProps & any> = ({ history }: any) => {
     const dispatch = useDispatch()
-    const {currentUser , error , isAuth , isLoading} = useSelector(AuthSelector)
+    const { currentUser, isAuth } = useSelector(AuthSelector)
     const Logout = () => {
         dispatch(logout())
-        const newPath = "/login"
-        //localStorage.removeItem("user")
-        props.history.push(newPath)
+        const newPath = "/"
+        history.push(newPath)
 
     }
-    console.log(currentUser)
+    let buttons = <> </>;
+
+    if (isAuth) {
+        buttons = (<Button variant="login" className="" onClick={() => Logout()}> Logout</Button>)
+    }
+    else {
+        buttons = (<div>
+            <Button variant="login" className="" href="/login" >Login</Button>
+            <Button variant="login" className="" href="/register">Register</Button>
+        </div>)
+    }
+
+
     return (
-
-
-            <Navbar>
-
+        <Navbar bg="dark" >
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto m-auto">
-                    <Nav.Link href="#home">{props.username}</Nav.Link>
+                    {currentUser !== undefined && <Nav.Link className="text-white" href="#home" >{currentUser.name}</Nav.Link>}
                 </Nav>
                 {
-                    props.username.length === 0 && (
-                        <div>
-                            <Button variant="login" className="" href="/login" >Login</Button>
-                            <Button variant="login" className="" href="/register">Register</Button>
-                        </div>)
+                    buttons
                 }
-                {
-                    props.username.length > 0 && < Button variant="login" className="" onClick={() => Logout()}> Logout</Button>
-                }
-
-
             </Navbar.Collapse>
         </Navbar >
 

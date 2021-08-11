@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Url from "../../URL";
+import API_URL from "../../URL";
 import { Redirect } from "react-router-dom";
 
 type RegisterState = {
   [key: string]: any;
 };
 type RegisterProps = any
-const Register = (props: RegisterProps) =>{
+const Register = (props: RegisterProps) => {
   // State variable.
   const [state, setState] = useState({} as RegisterState);
   const [errors, setErrors] = useState({
@@ -29,7 +29,7 @@ const Register = (props: RegisterProps) =>{
 
     if (!Valid) return;
     axios
-      .post(Url + "/register", data)
+      .post(API_URL + "/register", data)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
