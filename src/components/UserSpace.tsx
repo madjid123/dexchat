@@ -14,17 +14,12 @@ const UserSpace = (props: any) => {
 
     const [clearMsgs, setClearMsgs] = useState(false);
 
-    const getUser = (user: User) => {
-        setUser(user)
-    }
     const SetClearMsgs = (b: boolean) => { setClearMsgs(b) }
     return (
-        <>
-            <div className="box-flex">
-                <Contacts id={props.id} setUser={getUser} clearMessages={() => { setClearMsgs(true) }} user={user}></Contacts>
-                <Conversation user={user} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
-            </div>
-        </>
+        <div className="box-flex" style={{ "height": "100%" }}>
+            <Contacts ></Contacts>
+            <Conversation user={user} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
+        </div>
     );
 }
 
