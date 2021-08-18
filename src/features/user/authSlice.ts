@@ -26,6 +26,45 @@ export interface AuthState {
 interface AuthError {
   message: string;
 }
+
+
+const initialState = {
+  isLoading: false,
+  isAuth: false,
+  currentUser: undefined,
+  error: { message: "" },
+} as AuthState;
+
+const AuthReducer = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.fulfilled, (state, { payload }) => {
+        console.log("fulfilled");
+        state.currentUser = payload;
+        state.isAuth = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.error.message = action.payload as string;
+      })
+      .addCase(logout.fulfilled, (state, { payload }) => {
+        return initialState;
+      })
+      .addCase(logout.rejected, (state, { payload }) => {
+        console.log("falied to logout");
+      }).addCase(CheckisAuth.fulfilled, (state, { payload }) => {
+        if (!payload.name) return initialState;
+        state.isAuth = true;
+        state.currentUser = payload as CurrentUser
+      }).addCase(CheckisAuth.rejected, (state, { payload }) => {
+        state.isAuth = false
+        return initialState
+      })
+
+  },
+});
 // implement the login logic for our chat app using thunks in redux 
 export const login = createAsyncThunk(
   "users/Login",
@@ -88,44 +127,5 @@ export const CheckisAuth = createAsyncThunk("users/isAauth", async (opt, thunkAP
 
   }
 })
-
-const initialState = {
-  isLoading: false,
-  isAuth: false,
-  currentUser: undefined,
-  error: { message: "" },
-} as AuthState;
-
-const AuthReducer = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(login.fulfilled, (state, { payload }) => {
-        console.log("fulfilled");
-        state.currentUser = payload;
-        state.isAuth = true;
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.error.message = action.payload as string;
-      })
-      .addCase(logout.fulfilled, (state, { payload }) => {
-        return initialState;
-      })
-      .addCase(logout.rejected, (state, { payload }) => {
-        console.log("falied to logout");
-      }).addCase(CheckisAuth.fulfilled, (state, { payload }) => {
-        if (!payload.name) return initialState;
-        state.isAuth = true;
-        state.currentUser = payload as CurrentUser
-      }).addCase(CheckisAuth.rejected, (state, { payload }) => {
-        state.isAuth = false
-        return initialState
-      })
-
-  },
-});
-
 export const AuthSelector = (state: RootState) => state.AuthReducer;
 export default AuthReducer.reducer as Reducer<typeof initialState>;
