@@ -13,6 +13,7 @@ interface Member {
 	name: string,
 	_id: string,
 
+
 }
 interface Room {
 	members: Member[];
@@ -25,6 +26,21 @@ interface RoomsState {
 	rooms: Room[];
 	error: RoomError;
 }
+export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, thunkAPI) => {
+	try {
+		const _id = id
+		console.log(_id)
+		const response = await axios.get(URL + `/user/contacts/${_id}`, { withCredentials: true })
+		if (response.status === 200) {
+			console.log("kdlfjls")
+			return response.data.Rooms
+		}
+
+	} catch (err) {
+		console.log(err)
+		thunkAPI.rejectWithValue(`Failed to get Rooms : ${err.message} `);
+	}
+})
 const initialState: RoomsState = {
 	rooms: [],
 	error: {
@@ -46,17 +62,6 @@ const RoomsReducer = createSlice({
 		});
 	}
 })
-export const getRooms = createAsyncThunk("users/getRooms", async (id: any, thunkAPI) => {
-	try {
-		const response = await axios.get(URL + "/user/contacts/" + id, { withCredentials: true })
-		if (response.status === 200) {
-			return response.data.Rooms
-		}
 
-	} catch (err) {
-		console.log(err)
-		thunkAPI.rejectWithValue(`Failed to get Rooms : ${err.message} `);
-	}
-})
 export const RoomsSelector = (state: RootState) => state.RoomsReducer;
 export default RoomsReducer.reducer as Reducer<typeof initialState>

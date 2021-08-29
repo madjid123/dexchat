@@ -13,9 +13,10 @@ export interface Room {
   members: any[2];
 }
 const Rooms = (props: any) => {
-  const [rooms, setRooms] = useState(props.rooms)
-  const { currentUser, isAuth } = useSelector(AuthSelector)
 
+  const { rooms } = useSelector(RoomsSelector)
+
+  const { currentUser, isAuth } = useSelector(AuthSelector)
   return (
     <>
       <ProSidebar className="sidebar">
@@ -29,7 +30,7 @@ const Rooms = (props: any) => {
               return (
                 <MenuItem
                   key={index}
-                  onClick={() => { console.log("MenuItem clikced ") }}
+                  onClick={() => { props.setConversation(index) }}
                 >
                   <img
                     key={index}

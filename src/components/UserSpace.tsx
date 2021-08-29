@@ -14,7 +14,7 @@ interface User {
     name: string
 }
 const UserSpace = (props: any) => {
-    const [user, setUser] = useState({} as User)
+    const [Member, setMember] = useState({} as any)
     const dispatch = useDispatch();
     const { currentUser, isAuth } = useSelector(AuthSelector)
     const [clearMsgs, setClearMsgs] = useState(false);
@@ -23,17 +23,29 @@ const UserSpace = (props: any) => {
         let id = undefined
         if (currentUser !== undefined) {
             id = currentUser._id
-            dispatch(getRooms(id))
+            dispatch(getRooms({ id: id }))
         }
 
     }, [currentUser, isAuth])
-
     const { rooms } = useSelector(RoomsSelector)
+    const setConversation = (index: number) => {
+        const room = rooms[index]
+
+        room.members.forEach(member => {
+
+            if (member._id !== currentUser?._id) {
+                console.log(member._id)
+                setMember(member)
+                return;
+            }
+        })
+
+    }
     const SetClearMsgs = (b: boolean) => { setClearMsgs(b) }
     return (
         <div className="box-flex" style={{ "height": "100%" }}>
-            <Rooms rooms={rooms}  ></Rooms>
-            <Conversation user={user} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
+            <Rooms setConversation={setConversation}  ></Rooms>
+            <Conversation member={Member} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
         </div>
     );
 }
