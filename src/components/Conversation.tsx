@@ -2,49 +2,87 @@ import { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { io, Socket } from 'socket.io-client'
 import { Menu, MenuItem } from 'react-pro-sidebar'
-import { useSelector } from 'react-redux';
+import { useSelector, useStore, } from 'react-redux';
 import { AuthSelector } from '../features/user/authSlice';
-import { current } from '@reduxjs/toolkit';
-//import { socket } from "../utils/io"
+import { MessagesSelector, Message, addMessage, clearAllMessages } from "../features/Conversation/MessagesSlice"
 
-
-
+import "./Conversation.css"
+import "react-bootstrap"
+import { useCallback } from 'react';
+const socket = io("localhost:5001", {
+    transports: ['websocket']
+})
+socket.connect()
 function Conversation(props: any) {
     const { currentUser, isAuth } = useSelector(AuthSelector)
-    const [socket, setSocket] = useState(io("localhost:5001", {
-        query: { id: currentUser?._id },
-        transports: ['websocket']
-    }))
-    const [ComingMessage, setComingMessage] = useState({} as any)
+    const { messages } = useSelector(MessagesSelector)
+    const [member, setMember] = useState(props.member)
     const [message, setMessage] = useState("" as string)
-    const [messages, setMessages] = useState([] as any[])
+    //const [messages, setMessages] = useState([] as any[])
+
+    const getMessage = useCallback(() => {
+        socket.on("getmsg", (data) => {
+            const message: Message = {
+                to: {
+                    name: data.name,
+                    id: data.toid,
+                },
+                from: {
+                    name: data.from,
+                    id: data.fromId
+
+                },
+                content: data.msg
+            }
+            addMessage(message)
+            console.log(messages)
+            // msgs.push({ sender: data?.from, message: data?.message })
+            // setMessages(msgs)
+        })
 
 
+    }, [])
 
     const onMessage = () => {
         if (message === '') return;
-        if (socket) {
+        if (socket.connected && currentUser !== undefined) {
+
+            const { _id, name } = currentUser;
+            const _message: Message = {
+                to: {
+                    name: member.name,
+                    id: member._id
+                },
+                from: {
+                    name: name,
+                    id: _id
+                },
+                content: message
+            }
             socket.emit('sendmsg', {
                 from: currentUser?.name,
-                name: props.member.name,
-                toid: props.member._id,
+                fromId: currentUser?._id,
+                name: member.name,
+                toid: member._id,
                 msg: message,
                 roomId: socket.id
             })
-            const msgs = messages
-            msgs.push({ sender: currentUser?.name, message: message })
-            setMessages(msgs)
+            //const msgs = messages;
+            //messages.push({ sender: currentUser?.name, message: message })
+            //setMessages(msgs)
+            addMessage(_message)
             setMessage("")
         }
     }
     useEffect(() => {
-        //        const newsocket = ;
-        // setSocket(newsocket)
-        if (!props.clearMsgs) return;
-        props.setClearMsgs(false);
-        setMessages([]);
-        return () => { socket.close() }
-    }, [currentUser?._id, props, socket])
+        setMember(props.member)
+        if (props.clearMsgs === true) {
+            props.setClearMsgs(false);
+            clearAllMessages(null)
+            //setMessages([]);
+        }
+    }, [props.member, props])
+
     useEffect(() => {
         if (currentUser !== undefined) {
             let user = {
@@ -52,24 +90,11 @@ function Conversation(props: any) {
                 id: currentUser._id.toString()
             }
             socket.emit('sendusr', { user: user, roomId: socket.id })
-
         }
-
-    }, [currentUser, message, props.member, socket])
+    })
     useEffect(() => {
-        socket.on("getmsg", (data: any) => {
-            console.log(props.member, data)
-            setComingMessage(data)
-        })
-    }, [message, props.member, socket])
-    useEffect(() => {
-        console.log(ComingMessage)
-        ComingMessage && (setMessages((msgs: any) => {
-            msgs.push({ sender: ComingMessage?.from, message: ComingMessage?.message })
-            console.log(msgs)
-            return msgs
-        }))
-    }, [ComingMessage])
+        getMessage()
+    }, [getMessage, messages])
 
     return (
         <div className='conversation'>
@@ -80,19 +105,25 @@ function Conversation(props: any) {
                         {
                             messages.map((msg, index) => {
                                 return (
-                                    <MenuItem key={index}  >
-                                        <h5>{msg.sender}</h5>
-                                        <br></br>
-                                        <label>{msg.message}</label>
-                                        <hr style={{ color: '#fff' }}></hr>
+                                    <MenuItem key={index} className="MessageItem"  >
+                                        <div className="message">
+                                            <div className={(msg.from.name === currentUser?.name) ? "my-message-bull" : "other-message-bull"}>
+                                                <label>{msg.content}</label>
+                                            </div>
+                                            <div className="sender">
+                                                <small>{msg.from.name}</small>
+                                            </div>
+                                        </div>
                                     </MenuItem>
                                 );
 
                             })}
                     </Menu>
-                    <div className='footer'>
-                        <input className='footer-input' type='text' onChange={(e) => { setMessage(e.target.value) }} value={message}></input>
-                        <Button onClick={() => { onMessage() }} >send</Button>
+                    <div className='footer '>
+                        <div className="footer-input ">
+                            <input className='' type='text' onChange={(e) => { setMessage(e.target.value) }} value={message}></input>
+                        </div>
+                        <Button style={{ margin: "auto" }} onClick={() => { onMessage() }} >send</Button>
                     </div>
 
                 </div >

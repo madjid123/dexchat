@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import AuthReducer from "../features/user/authSlice";
 import RoomsReducer from "../features/user/RoomsSlice"
+import MessagesReducer from "../features/Conversation/MessagesSlice"
 export const store = configureStore({
   reducer: {
     AuthReducer,
-    RoomsReducer
+    RoomsReducer,
+    MessagesReducer
   },
 });
 
@@ -16,6 +18,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
-function add(a: number, b: number): number {
-  return a + b;
-}
+

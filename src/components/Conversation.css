@@ -1,0 +1,39 @@
+.message .sender{
+	display: flex;
+	padding-inline: 3rem;
+	padding-block: 0.5rem;
+	position: relative;
+	left: 3rem;
+	margin: auto;
+	margin-left: 3rem;
+
+}
+.sender{
+	display: flex;left: 3rem;
+	margin: auto;
+	margin-left: 3rem
+}
+.message .my-message-bull{
+	position: relative;
+	left: 0;
+	width: fit-content;
+	background-color: rgb(52, 146, 146);
+	padding-inline: 1rem;
+	padding-block: 0.5rem;
+	border-radius: 2rem;
+}
+li.MessageItem{
+	list-style: none;
+}
+.message .other-message-bull{
+	position:relative;
+	right: 0px;
+	width: fit-content;
+	margin: auto;
+	margin-right: 0;
+	margin-bottom: 1rem;
+	background-color: rgb(140, 151, 151);
+	padding-inline: 1rem;
+	padding-block: 0.5rem;
+	border-radius: 2rem;
+}

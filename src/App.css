@@ -112,17 +112,32 @@ html {
   background-color: #30353a;
 
 }
-.footer{
-  position: absolute;
+.conversation > .footer{
+  position: fixed;
   right: 0%;
   bottom: 0%;
-  width:calc(70%);
+  margin: auto;
+  width:inherit;
   height: 5%;
   display: flex;
 
 }
-.footer   input{
-  width:100%;
+ .footer {
+  display: flex;
+  position: relative;
+  margin: auto;
+  margin-bottom: 0;
+  
+  width: 100%; 
+  right: 0%;
+  bottom: 0%
+}
+.footer-input{
+  width: inherit;
+  margin: auto;
+}
+.footer-input input{
+  width:inherit;
   height:90%;
   
 }
