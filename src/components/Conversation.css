@@ -9,9 +9,18 @@
 
 }
 .sender{
-	display: flex;left: 3rem;
+	position: relative;
+	display: flex;
+	left: 0;
 	margin: auto;
-	margin-left: 3rem
+	margin-left: 0
+}
+.receiver{
+	position: relative;
+	display: flex;
+	right: 0;
+	margin: auto;
+	margin-left: 0 
 }
 .message .my-message-bull{
 	position: relative;
@@ -27,6 +36,7 @@ li.MessageItem{
 }
 .message .other-message-bull{
 	position:relative;
+	
 	right: 0px;
 	width: fit-content;
 	margin: auto;

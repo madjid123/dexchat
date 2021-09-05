@@ -114,30 +114,29 @@ html {
 }
 .conversation > .footer{
   position: fixed;
-  right: 0%;
+  right: 0;
+left: 30%;
   bottom: 0%;
-  margin: auto;
-  width:inherit;
+  width:100%;
   height: 5%;
   display: flex;
 
 }
  .footer {
   display: flex;
-  position: relative;
-  margin: auto;
-  margin-bottom: 0;
-  
+  position: fixed;
   width: 100%; 
-  right: 0%;
-  bottom: 0%
+  right: 0;
+  bottom: 0
 }
 .footer-input{
-  width: inherit;
-  margin: auto;
+  width: 70%;
 }
-.footer-input input{
-  width:inherit;
+.footer-input {
+  position: fixed;
+  display: flex;
+  width: 70%;
+  right: 0;
   height:90%;
   
 }

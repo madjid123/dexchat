@@ -5,7 +5,7 @@ import { Menu, MenuItem } from 'react-pro-sidebar'
 import { useSelector, useStore, } from 'react-redux';
 import { AuthSelector } from '../features/user/authSlice';
 import { MessagesSelector, Message, addMessage, clearAllMessages } from "../features/Conversation/MessagesSlice"
-
+import { useAppDispatch } from '../app/hooks';
 import "./Conversation.css"
 import "react-bootstrap"
 import { useCallback } from 'react';
@@ -13,18 +13,24 @@ const socket = io("localhost:5001", {
     transports: ['websocket']
 })
 socket.connect()
-function Conversation(props: any) {
-    const { currentUser, isAuth } = useSelector(AuthSelector)
+interface ConversationProps {
+    clearMsgs: boolean;
+    setClearMsgs(arg0: boolean): void;
+    member: any,
+}
+function Conversation(props: ConversationProps) {
+    const { currentUser } = useSelector(AuthSelector)
     const { messages } = useSelector(MessagesSelector)
     const [member, setMember] = useState(props.member)
     const [message, setMessage] = useState("" as string)
-    //const [messages, setMessages] = useState([] as any[])
+    const dispatch = useAppDispatch()
 
     const getMessage = useCallback(() => {
         socket.on("getmsg", (data) => {
+            console.log(data)
             const message: Message = {
                 to: {
-                    name: data.name,
+                    name: data.username,
                     id: data.toid,
                 },
                 from: {
@@ -32,12 +38,10 @@ function Conversation(props: any) {
                     id: data.fromId
 
                 },
-                content: data.msg
+                content: data.message
             }
-            addMessage(message)
+            dispatch(addMessage(message))
             console.log(messages)
-            // msgs.push({ sender: data?.from, message: data?.message })
-            // setMessages(msgs)
         })
 
 
@@ -67,10 +71,7 @@ function Conversation(props: any) {
                 msg: message,
                 roomId: socket.id
             })
-            //const msgs = messages;
-            //messages.push({ sender: currentUser?.name, message: message })
-            //setMessages(msgs)
-            addMessage(_message)
+            dispatch(addMessage(_message))
             setMessage("")
         }
     }
@@ -79,7 +80,6 @@ function Conversation(props: any) {
         if (props.clearMsgs === true) {
             props.setClearMsgs(false);
             clearAllMessages(null)
-            //setMessages([]);
         }
     }, [props.member, props])
 
@@ -94,7 +94,7 @@ function Conversation(props: any) {
     })
     useEffect(() => {
         getMessage()
-    }, [getMessage, messages])
+    }, [getMessage])
 
     return (
         <div className='conversation'>
@@ -108,22 +108,20 @@ function Conversation(props: any) {
                                     <MenuItem key={index} className="MessageItem"  >
                                         <div className="message">
                                             <div className={(msg.from.name === currentUser?.name) ? "my-message-bull" : "other-message-bull"}>
+                                                <div></div>
                                                 <label>{msg.content}</label>
+
                                             </div>
-                                            <div className="sender">
-                                                <small>{msg.from.name}</small>
-                                            </div>
+
                                         </div>
                                     </MenuItem>
                                 );
 
                             })}
                     </Menu>
-                    <div className='footer '>
-                        <div className="footer-input ">
-                            <input className='' type='text' onChange={(e) => { setMessage(e.target.value) }} value={message}></input>
-                        </div>
-                        <Button style={{ margin: "auto" }} onClick={() => { onMessage() }} >send</Button>
+                    <div className='footer'>
+                        <input className='' type='text' onChange={(e) => { setMessage(e.target.value) }} value={message}></input>
+                        <Button style={{}} onClick={() => { onMessage() }} >send</Button >
                     </div>
 
                 </div >
