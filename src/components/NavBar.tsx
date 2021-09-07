@@ -1,6 +1,6 @@
-import { Navbar, Nav, Button } from 'react-bootstrap'
-import { RouteProps, withRouter } from 'react-router'
-import { logout, AuthSelector } from '../features/user/authSlice'
+import { Navbar, Nav, Button } from "react-bootstrap"
+import { RouteProps, withRouter } from "react-router"
+import { logout, AuthSelector } from "../features/user/authSlice"
 import { useDispatch, useSelector } from "react-redux"
 
 const NavBar: React.FunctionComponent<RouteProps & any> = ({ history }: any) => {

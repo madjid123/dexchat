@@ -6,20 +6,20 @@ import {
   Redirect,
   useHistory,
 } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect } from "react"
 
 //Redux
 import { useSelector, useDispatch } from "react-redux"
 // Components
-import Register from "./components/Auth/Register";
-import NavBar from "./components/NavBar";
-import Login from "./components/Auth/Login";
-import UserSpace from "./components/UserSpace";
+import Register from "./components/Auth/Register"
+import NavBar from "./components/NavBar"
+import Login from "./components/Auth/Login"
+import UserSpace from "./components/UserSpace"
 
 // Styling
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { AuthSelector, CheckisAuth } from "./features/user/authSlice";
+import { AuthSelector, CheckisAuth } from "./features/user/authSlice"
 
 
 
@@ -30,7 +30,7 @@ const App = () => {
   useEffect(() => {
     dispatch(CheckisAuth())
 
-  }, [!isAuth])
+  }, [isAuth])
 
 
   return (

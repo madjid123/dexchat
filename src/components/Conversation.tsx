@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
-import { io, Socket } from 'socket.io-client'
-import { Menu, MenuItem } from 'react-pro-sidebar'
-import { useSelector, useStore, } from 'react-redux';
-import { AuthSelector } from '../features/user/authSlice';
+import { useState, useEffect } from "react"
+import { Button } from "react-bootstrap"
+import { io } from "socket.io-client"
+import { Menu, MenuItem } from "react-pro-sidebar"
+import { useSelector } from "react-redux"
+import { AuthSelector } from "../features/user/authSlice"
 import { MessagesSelector, Message, addMessage, clearAllMessages } from "../features/Conversation/MessagesSlice"
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch } from "../app/hooks"
 import "./Conversation.css"
 import "react-bootstrap"
-import { useCallback } from 'react';
+import { useCallback } from "react"
 const socket = io("localhost:5001", {
     transports: ['websocket']
 })
@@ -28,7 +28,7 @@ function Conversation(props: ConversationProps) {
     const getMessage = useCallback(() => {
         socket.on("getmsg", (data) => {
             console.log(data)
-            const message: Message = {
+            const _message: Message = {
                 to: {
                     name: data.username,
                     id: data.toid,
@@ -40,7 +40,7 @@ function Conversation(props: ConversationProps) {
                 },
                 content: data.message
             }
-            dispatch(addMessage(message))
+            dispatch(addMessage(_message))
             console.log(messages)
         })
 
@@ -97,13 +97,19 @@ function Conversation(props: ConversationProps) {
     }, [getMessage])
 
     return (
-        <div className='conversation'>
+        <div className='conversation' onKeyPress={(e) => {
+            if (e.key === "Enter") {
+                onMessage()
+                console.log("Enter")
+            }
+
+        }}>
             {props.member.name &&
                 <div style={{ height: '95%', overflowY: 'auto', overflowX: 'hidden', scrollBehavior: 'smooth' }} >
                     <h1>{props.member.name}</h1>
                     <Menu iconShape='square'>
                         {
-                            messages.map((msg, index) => {
+                            messages.map((msg: Message, index) => {
                                 return (
                                     <MenuItem key={index} className="MessageItem"  >
                                         <div className="message">
@@ -112,6 +118,7 @@ function Conversation(props: ConversationProps) {
                                                 <label>{msg.content}</label>
 
                                             </div>
+                                            <br></br>
 
                                         </div>
                                     </MenuItem>
@@ -119,10 +126,14 @@ function Conversation(props: ConversationProps) {
 
                             })}
                     </Menu>
-                    <div className='footer'>
-                        <input className='' type='text' onChange={(e) => { setMessage(e.target.value) }} value={message}></input>
-                        <Button style={{}} onClick={() => { onMessage() }} >send</Button >
-                    </div>
+                    <footer className='footer'>
+                        <div style={{ width: "100%" }} className="footer">
+                            <input className='footer-input' type='text' onChange={(e) => { setMessage(e.target.value) }} value={message}></input>
+                            <Button className="footer-button form-input" style={{}}
+                                onClick={() => { onMessage() }}
+                            >Send</Button >
+                        </div>
+                    </footer>
 
                 </div >
             }

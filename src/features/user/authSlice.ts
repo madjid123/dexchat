@@ -52,7 +52,7 @@ export const login = createAsyncThunk(
         return response.data;
       }
     }
-    catch (err) {
+    catch (err: any) {
       console.log(err.response.data);
       return thunkAPI.rejectWithValue(err.response.data as string);
     }
@@ -67,7 +67,7 @@ export const logout = createAsyncThunk("users/logout", async (opt, thunk) => {
       localStorage.removeItem("isAuth");
       return initialState;
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
     thunk.rejectWithValue(err.response.data)
 
@@ -84,7 +84,7 @@ export const CheckisAuth = createAsyncThunk("users/isAauth", async (opt, thunkAP
     else {
       return thunkAPI.rejectWithValue(initialState)
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(err)
     return thunkAPI.rejectWithValue(initialState)
 

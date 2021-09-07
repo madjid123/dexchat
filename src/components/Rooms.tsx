@@ -1,11 +1,9 @@
 /* eslint-disable array-callback-return */
-import { ProSidebar, Menu, MenuItem, SidebarHeader } from "react-pro-sidebar";
-import "react-pro-sidebar/dist/css/styles.css";
-import axios from "axios";
-import URL from "../URL";
-import { useState, useEffect, SetStateAction } from "react";
-import { useSelector } from "react-redux";
-import { AuthSelector } from "../features/user/authSlice";
+import { ProSidebar, Menu, MenuItem, SidebarHeader } from "react-pro-sidebar"
+import { Nav } from "react-bootstrap"
+import "react-pro-sidebar/dist/css/styles.css"
+import { useSelector } from "react-redux"
+import { AuthSelector } from "../features/user/authSlice"
 import { RoomsSelector } from "../features/user/RoomsSlice"
 
 
@@ -16,37 +14,37 @@ const Rooms = (props: any) => {
 
   const { rooms } = useSelector(RoomsSelector)
 
-  const { currentUser, isAuth } = useSelector(AuthSelector)
+  const { currentUser } = useSelector(AuthSelector)
   return (
     <>
-      <ProSidebar className="sidebar">
-        <SidebarHeader>
+      <Nav className="sidebar flex-column" >
+        <Nav.Item>
           <h1> Rooms</h1>
           <br></br>
-        </SidebarHeader>
-        <Menu iconShape="square" >
+        </Nav.Item>
+        <Nav.Link >
           {
             rooms.map((room: any, index: number) => {
               return (
-                <MenuItem
+                <Nav.Item
                   key={index}
                   onClick={() => { props.setConversation(index) }}
                 >
-                  <img
-                    key={index}
-                    src={"logo192.png"}
-                    width="16"
-                    height="16"
-                    alt=""
-                  />
                   <div>
+                    <img
+                      key={index}
+                      src={"logo192.png"}
+                      width="16"
+                      height="16"
+                      alt=""
+                    />
                     {room.members.map((member: any) => { if (currentUser && member._id !== currentUser._id) return member.name; })}
                   </div>
-                </MenuItem>)
+                </Nav.Item>)
             })
           }
-        </Menu>
-      </ProSidebar>
+        </Nav.Link>
+      </Nav>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import AuthReducer from "../features/user/authSlice";
+import AuthReducer from "../features/user/authSlice"
 import RoomsReducer from "../features/user/RoomsSlice"
 import MessagesReducer from "../features/Conversation/MessagesSlice"
 export const store = configureStore({

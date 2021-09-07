@@ -1,18 +1,18 @@
 
-import Rooms, { Room } from './Rooms'
-import Conversation from './Conversation'
+import Rooms from "./Rooms"
+import Conversation from "./Conversation"
 
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react"
 
-import { useSelector, useDispatch } from "react-redux";
-import { AuthSelector } from "../features/user/authSlice";
+import { useSelector, useDispatch } from "react-redux"
+import { AuthSelector } from "../features/user/authSlice"
 import { RoomsSelector, getRooms } from "../features/user/RoomsSlice"
 
-interface User {
-    _id: string,
-    name: string
-}
+// interface User {
+//     _id: string,
+//     name: string
+// }
 const UserSpace = (props: any) => {
     const [Member, setMember] = useState({} as any)
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const UserSpace = (props: any) => {
             dispatch(getRooms({ id: id }))
         }
 
-    }, [currentUser, isAuth])
+    }, [currentUser, dispatch, isAuth])
     const { rooms } = useSelector(RoomsSelector)
     const setConversation = (index: number) => {
         const room = rooms[index]

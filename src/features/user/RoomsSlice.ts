@@ -36,7 +36,7 @@ export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, t
 			return response.data.Rooms
 		}
 
-	} catch (err) {
+	} catch (err: any) {
 		console.log(err)
 		thunkAPI.rejectWithValue(`Failed to get Rooms : ${err.message} `);
 	}
