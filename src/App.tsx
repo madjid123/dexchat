@@ -20,6 +20,8 @@ import UserSpace from "./components/UserSpace"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { AuthSelector, CheckisAuth } from "./features/user/authSlice"
+import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
+import { MessageEndPointApi } from "./services/MessageApi";
 
 
 
@@ -34,24 +36,22 @@ const App = () => {
 
 
   return (
-    <>
-      <Router >
-        <NavBar history={History} ></NavBar>
-        {isAuth && <Redirect to="/user"></Redirect>}
-        <Switch>
-          <Route path="/user">
-            <UserSpace  ></UserSpace>
-          </Route>
-          <Route path="/login">
-            <Login
-            ></Login>
-          </Route>
-          <Route path="/register">
-            <Register> </Register>
-          </Route>
-        </Switch>
-      </Router>
-    </>
+    <Router >
+      <NavBar history={History} ></NavBar>
+      {isAuth && <Redirect to="/user"></Redirect>}
+      <Switch>
+        <Route path="/user">
+          <UserSpace  ></UserSpace>
+        </Route>
+        <Route path="/login">
+          <Login
+          ></Login>
+        </Route>
+        <Route path="/register">
+          <Register> </Register>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

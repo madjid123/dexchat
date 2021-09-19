@@ -2,9 +2,10 @@
 import { ProSidebar, Menu, MenuItem, SidebarHeader } from "react-pro-sidebar"
 import { Nav } from "react-bootstrap"
 import "react-pro-sidebar/dist/css/styles.css"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { AuthSelector } from "../features/user/authSlice"
 import { RoomsSelector } from "../features/user/RoomsSlice"
+import { clearAllMessages } from "../features/Conversation/MessagesSlice"
 
 
 export interface Room {
@@ -13,7 +14,7 @@ export interface Room {
 const Rooms = (props: any) => {
 
   const { rooms } = useSelector(RoomsSelector)
-
+  const dispatch = useDispatch()
   const { currentUser } = useSelector(AuthSelector)
   return (
     <>
@@ -24,11 +25,14 @@ const Rooms = (props: any) => {
         </Nav.Item>
         <Nav.Link >
           {
-            rooms.map((room: any, index: number) => {
+            rooms.map((room, index: number) => {
               return (
                 <Nav.Item
                   key={index}
-                  onClick={() => { props.setConversation(index) }}
+                  onClick={() => {
+                    console.log("inspecting weird behaviour")
+                    props.setConversation(index); if (room._id !== props.currentRoomId) dispatch(clearAllMessages(""))
+                  }}
                 >
                   <div>
                     <img

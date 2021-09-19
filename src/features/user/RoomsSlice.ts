@@ -17,6 +17,7 @@ interface Member {
 }
 interface Room {
 	members: Member[];
+	_id: string
 }
 interface RoomError {
 	exist: boolean;
@@ -29,7 +30,6 @@ interface RoomsState {
 export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, thunkAPI) => {
 	try {
 		const _id = id
-		console.log(_id)
 		const response = await axios.get(URL + `/user/contacts/${_id}`, { withCredentials: true })
 		if (response.status === 200) {
 			console.log("kdlfjls")

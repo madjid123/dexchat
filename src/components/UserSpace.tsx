@@ -17,6 +17,7 @@ const UserSpace = (props: any) => {
     const [Member, setMember] = useState({} as any)
     const dispatch = useDispatch();
     const { currentUser, isAuth } = useSelector(AuthSelector)
+    const [CurrentRoomId, setCurrentRoomId] = useState("")
     const [clearMsgs, setClearMsgs] = useState(false);
 
     useEffect(() => {
@@ -34,7 +35,7 @@ const UserSpace = (props: any) => {
         room.members.forEach(member => {
 
             if (member._id !== currentUser?._id) {
-                console.log(member._id)
+                setCurrentRoomId(room._id)
                 setMember(member)
                 return;
             }
@@ -44,8 +45,8 @@ const UserSpace = (props: any) => {
     const SetClearMsgs = (b: boolean) => { setClearMsgs(b) }
     return (
         <div className="box-flex" style={{ "height": "100%" }}>
-            <Rooms setConversation={setConversation}  ></Rooms>
-            <Conversation member={Member} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
+            <Rooms setConversation={setConversation} currentRoomId={CurrentRoomId}  ></Rooms>
+            <Conversation CurrentRoomId={CurrentRoomId} member={Member} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
         </div>
     );
 }

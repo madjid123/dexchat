@@ -8,13 +8,13 @@ type RegisterState = {
 };
 type RegisterProps = any
 const Register = (props: RegisterProps) => {
-  // State variable.
+  // State variablee
   const [state, setState] = useState({} as RegisterState);
   const [errors, setErrors] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
-    server: "",
+    server: [] as any[],
   });
   const [redirect, setRedirect] = useState(false);
   const [Valid, setValid] = useState(false);
@@ -33,21 +33,28 @@ const Register = (props: RegisterProps) => {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          if (response.data.err === false) setRedirect(true);
+          if (response.data.response !== undefined) setRedirect(true);
           else {
-            let Errors = { ...errors };
-            Errors.server = response.data.msg;
-            setErrors(Errors);
+            ;
           }
         }
       })
       .catch((error) => {
+
+        error.response.data.errors.filter((error: any) => {
+          let Errors = { ...errors };
+          Errors.server.push(error.msg)
+          setErrors(Errors);
+          return null;
+        })
         console.log(error);
+
       });
   };
   const handleChange = (e: React.SyntheticEvent) => {
     var fields = { ...state };
     fields = { ...fields };
+
     const target = e.target as HTMLTextAreaElement;
     fields[target.name] = target.value;
     setState(fields);
@@ -63,9 +70,9 @@ const Register = (props: RegisterProps) => {
   const ValidInput = (target: any) => {
     let Errors = { ...errors };
 
-    switch (target.name) {
-      case "name": {
-        Errors.name =
+    switch (target.username) {
+      case "username": {
+        Errors.username =
           target.value.length < 5 ? "Name must be at least 5 characters !" : "";
         break;
       }
@@ -89,15 +96,16 @@ const Register = (props: RegisterProps) => {
     setErrors(Errors);
   };
   const isValid = () => {
-    return errors.name.length === 0 &&
+    return errors.username.length === 0 &&
       errors.email.length === 0 &&
       errors.password.length === 0
+      && errors.server.length === 0
       ? setValid(true)
       : setValid(false);
   };
   const Submit = () => {
     let Errors = { ...errors };
-    if (!state.name) Errors.name = "You must provide a name ";
+    if (!state.username) Errors.username = "You must provide a username ";
 
     if (!state.email) Errors.email = "You must provide an email";
 
@@ -119,16 +127,16 @@ const Register = (props: RegisterProps) => {
         <div className="form-group">
           <label>Name</label>
           <input
-            name="name"
+            name="username"
             type="text"
             className="form-control"
             placeholder="Name"
             onChange={handleChange}
-            value={state.name}
+            value={state.username}
             onClick={handleChange}
           />
-          {errors.name.length > 0 && (
-            <span className="text-danger">{errors.name}</span>
+          {errors.username.length > 0 && (
+            <span className="text-danger">{errors.username}</span>
           )}
         </div>
 

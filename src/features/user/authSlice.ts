@@ -24,7 +24,7 @@ export interface AuthState {
   currentUser?: CurrentUser;
 }
 interface AuthError {
-  message: string;
+  messages: string[];
 }
 
 
@@ -51,10 +51,11 @@ export const login = createAsyncThunk(
         localStorage.setItem("isAuth", "true");
         return response.data;
       }
+
     }
     catch (err: any) {
       console.log(err.response.data);
-      return thunkAPI.rejectWithValue(err.response.data as string);
+      return thunkAPI.rejectWithValue(err.response.data as any);
     }
   }
 );
@@ -94,13 +95,20 @@ const initialState = {
   isLoading: false,
   isAuth: false,
   currentUser: undefined,
-  error: { message: "" },
+  error: { messages: [] },
 } as AuthState;
 
 const AuthReducer = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    clearErrors: (state, action) => {
+      state.error.messages = []
+    },
+    getAuth: (state, action) => {
+      return state
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, { payload }) => {
@@ -109,7 +117,8 @@ const AuthReducer = createSlice({
         state.isAuth = true;
       })
       .addCase(login.rejected, (state, action) => {
-        state.error.message = action.payload as string;
+        const messages = action.payload as string[]
+        state.error.messages = [...action.payload as any[]]
       })
       .addCase(logout.fulfilled, (state, { payload }) => {
         return initialState;
@@ -127,5 +136,7 @@ const AuthReducer = createSlice({
 
   },
 });
+const { actions, reducer } = AuthReducer
+export const { clearErrors, getAuth } = actions
 export const AuthSelector = (state: RootState) => state.AuthReducer;
 export default AuthReducer.reducer as Reducer<typeof initialState>;
