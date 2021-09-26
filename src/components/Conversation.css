@@ -66,6 +66,8 @@ width: 100%;
   position: relative;
   left: 0;
   width: fit-content;
+    width:   -moz-fit-content;
+
   background-color: rgb(52, 146, 146);
   padding-inline: 1rem;
   padding-block: 0.5rem;
@@ -79,6 +81,7 @@ li.MessageItem {
 
   right: 0px;
   width: fit-content;
+  width:   -moz-fit-content;
   margin: auto;
   margin-right: 0;
   margin-bottom: 1rem;

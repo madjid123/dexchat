@@ -9,12 +9,12 @@ import axios, { AxiosError } from "axios"
 import URL from "../../URL"
 import { type } from "os"
 import { buildHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks"
-axios({
-	headers: {
-		'Content-Type': 'application/json',
-	},
-	withCredentials: true
-})
+// axios({
+// 	headers: {
+// 		'Content-Type': 'application/json',
+// 	},
+// 	withCredentials: true
+// })
 export interface Message {
 	Sender: {
 		id: string,

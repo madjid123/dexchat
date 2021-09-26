@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import { ProSidebar, Menu, MenuItem, SidebarHeader } from "react-pro-sidebar"
-import { Nav } from "react-bootstrap"
+import { Nav, Navbar } from "react-bootstrap"
 import "react-pro-sidebar/dist/css/styles.css"
 import { useDispatch, useSelector } from "react-redux"
 import { AuthSelector } from "../features/user/authSlice"
@@ -18,7 +18,7 @@ const Rooms = (props: any) => {
   const { currentUser } = useSelector(AuthSelector)
   return (
     <>
-      <Nav className="sidebar flex-column" >
+      <Navbar className="sidebar flex-column" >
         <Nav.Item>
           <h1> Rooms</h1>
           <br></br>
@@ -48,7 +48,7 @@ const Rooms = (props: any) => {
             })
           }
         </Nav.Link>
-      </Nav>
+      </Navbar>
     </>
   );
 };
