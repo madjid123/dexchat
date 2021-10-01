@@ -26,10 +26,10 @@ const NavBar: React.FunctionComponent<RouteProps & any> = ({ history }: any) => 
 
 
     return (
-        <Navbar bg="dark" >
+        <Navbar bg="dark" className="Navbar " >
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto m-auto">
-                    {currentUser !== undefined && <Nav.Link className="text-white" href="#home" >{currentUser.name}</Nav.Link>}
+                    {currentUser !== undefined && <Nav.Link className="text-white" href="#home" >{currentUser.username}</Nav.Link>}
                 </Nav>
                 {
                     buttons
