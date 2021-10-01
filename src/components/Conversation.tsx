@@ -46,24 +46,22 @@ function Conversation(props: ConversationProps) {
 
     const getMessage = useCallback(() => {
         socket.on("getmsg", (data) => {
-            console.log(data);
             const _message: Message = data.message;
 
             dispatch(addMessage(_message));
-            console.log(messages);
         });
     }, []);
     const onMessage = () => {
         if (message === "") return;
         if (socket.connected && currentUser !== undefined) {
-            const { _id, name } = currentUser;
+            const { _id, username } = currentUser;
             const _message: Message = {
                 Receiver: {
-                    username: member.name,
+                    username: member.username,
                     id: member._id,
                 },
                 Sender: {
-                    username: name,
+                    username: username,
                     id: _id,
                 },
                 Room: {
@@ -100,7 +98,6 @@ function Conversation(props: ConversationProps) {
             };
             socket.emit("sendusr", { user: user, roomId: socket.id });
             // dispatch(LoadMessages(props.CurrentRoomId as string))
-            console.log(props.CurrentRoomId);
             dispatch(
                 MessageEndPointApi.endpoints.getMessagesByRoomId.initiate(
                     { room_id: props.CurrentRoomId, page: 1 },
@@ -124,15 +121,10 @@ function Conversation(props: ConversationProps) {
     const fetchMessages = () => {
         let ScroDiv = document.getElementById("scrollableDiv")
         if (ScroDiv?.scrollTop !== undefined) {
-            console.log(ScroDiv.scrollTop)
-            console.log(scrollPos)
             setScrollPos(ScroDiv?.scrollTop)
         }
         setTimeout(() => {
-            console.log({
-                room_id: props.CurrentRoomId,
-                page: messagesResponse.page + 1,
-            });
+
             let page = messagesResponse.page;
             if (page + 1 > messagesResponse.pages) return;
             else page += 1;
@@ -143,9 +135,9 @@ function Conversation(props: ConversationProps) {
     };
     useEffect(() => {
         let ScroDiv = document.getElementById("scrollableDiv")
-        console.log(scrollPos)
         ScroDiv?.scrollTo({
-            top: scrollPos
+            top: scrollPos,
+            left: 0
         })
 
     }, [messagesResponse.messages.length, scrollPos])
@@ -155,11 +147,10 @@ function Conversation(props: ConversationProps) {
             onKeyPress={(e) => {
                 if (e.key === "Enter") {
                     onMessage();
-                    console.log("Enter");
                 }
             }}
         >
-            <h1>{props.member.name}</h1>
+            <h1 style={{ position: "sticky" }}>{props.member.username}</h1>
 
             <div
                 id="scrollableDiv"
@@ -168,9 +159,9 @@ function Conversation(props: ConversationProps) {
                     overflowY: "scroll",
                     display: "flex",
                     flexDirection: "column-reverse",
-                    scrollBehavior: "smooth",
                 }}
                 onScroll={(e) => {
+                    e.preventDefault()
 
                 }}
             // ref={ScrollableDivRef}
@@ -192,7 +183,7 @@ function Conversation(props: ConversationProps) {
                             <Spinner animation="grow" variant="light" />
                         </div>
                     }
-                    initialScrollY={-10}
+                    //initialScrollY={-10}
                     endMessage={
                         <div>
                             {" "}
@@ -202,13 +193,10 @@ function Conversation(props: ConversationProps) {
                     scrollableTarget="scrollableDiv"
                     style={{ display: "flex", flexDirection: "column-reverse" }}
                     inverse={true}
-                    //height="auto"
                     scrollThreshold={"80%"}
                     onScroll={(e) => {
-                        const event = e;
-
-
-
+                        e.preventDefault()
+                        e.stopPropagation()
                     }}
                 >
 
@@ -217,21 +205,20 @@ function Conversation(props: ConversationProps) {
                         {messagesResponse.messages.map((msg: Message, index) => {
                             return (
                                 <ListGroup.Item
+                                    bsPrefix={"alksdjf"}
                                     variant="dark"
                                     key={index}
                                     className="MessageItem"
-                                    style={{ backgroundColor: "inherit" }}
+                                    style={{ backgroundColor: "inherit", border: "none" }}
+
                                 >
-                                    <div className="message" onScroll={
-                                        (e) => {
-                                            console.log(e.currentTarget.getBoundingClientRect())
-                                        }
-                                    }>
+                                    <div className="message"
+                                    >
                                         <div
                                             className={
-                                                msg.Sender.username === currentUser?.name
-                                                    ? "my-message-bull"
-                                                    : "other-message-bull"
+                                                msg.Sender.username === currentUser?.username
+                                                    ? "message-bull user-bull"
+                                                    : "message-bull member-bull"
                                             }
                                         >
                                             <div></div>
@@ -245,7 +232,7 @@ function Conversation(props: ConversationProps) {
                     </ListGroup>
                 </InfiniteScroll>
             </div>
-            <footer className="footer">
+            <footer className="footer my-0">
                 <div style={{ width: "100%" }} className="footer">
                     <input
                         className="footer-input"
@@ -256,8 +243,7 @@ function Conversation(props: ConversationProps) {
                         value={message}
                     ></input>
                     <Button
-                        className="footer-button form-input"
-                        style={{}}
+                        className="footer-button form-input px-3 mx-2"
                         onClick={() => {
                             onMessage();
                         }}

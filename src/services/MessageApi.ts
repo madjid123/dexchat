@@ -5,7 +5,7 @@ import URL from "../URL"
 import { store } from "../app/store"
 import { _socket } from "../components/Conversation"
 import socket from "../utils/socket"
-
+socket.connect()
 export const MessageEndPointApi = createApi({
 	reducerPath: "messagesApi",
 	baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include", }),
@@ -31,7 +31,6 @@ export const MessageEndPointApi = createApi({
 				try {
 
 					const { data } = await api.queryFulfilled
-					console.log("onQuery", data)
 
 
 				} catch (err) {
@@ -42,12 +41,15 @@ export const MessageEndPointApi = createApi({
 			onCacheEntryAdded: async (arg, api) => {
 				// create a websocket connection when the cache subscription starts
 				try {
+					socket.connect()
+					console.log(_socket, socket)
 					// wait for the initial query to resolve before proceeding
 					await api.cacheDataLoaded
 
 					// when data is received from the socket connection to the server,
 					// if it is a message and for the appropriate channel,
 					// update our query result with the received message
+					console.log("getMsg")
 					const listener = (data: Message) => {
 						console.log("GETMSG", data)
 						api.updateCachedData((draft) => {
@@ -56,7 +58,7 @@ export const MessageEndPointApi = createApi({
 							return draft
 						})
 					}
-					_socket.on("getmsg", listener)
+					socket.on("getmsg", listener)
 
 				} catch (e) {
 					console.log((e as Error).message)

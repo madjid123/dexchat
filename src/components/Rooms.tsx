@@ -20,7 +20,7 @@ const Rooms = (props: any) => {
     <>
       <Navbar className="sidebar flex-column" >
         <Nav.Item>
-          <h1> Rooms</h1>
+          <label> Rooms</label>
           <br></br>
         </Nav.Item>
         <Nav.Link >
@@ -42,7 +42,7 @@ const Rooms = (props: any) => {
                       height="16"
                       alt=""
                     />
-                    {room.members.map((member: any) => { if (currentUser && member._id !== currentUser._id) return member.name; })}
+                    {room.members.map((member: any) => { if (currentUser && member._id !== currentUser._id) return member.username; })}
                   </div>
                 </Nav.Item>)
             })

@@ -43,11 +43,17 @@ const UserSpace = (props: any) => {
 
     }
     const SetClearMsgs = (b: boolean) => { setClearMsgs(b) }
+
     return (
-        <div className="box-flex" style={{ "height": "100%" }}>
-            <Rooms setConversation={setConversation} currentRoomId={CurrentRoomId}  ></Rooms>
-            <Conversation CurrentRoomId={CurrentRoomId} member={Member} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
-        </div>
+        (currentUser !== undefined) ?
+            <div className="box-flex" style={{ "height": "100%" }}>
+                <Rooms setConversation={setConversation} currentRoomId={CurrentRoomId}  ></Rooms>
+                {(Member._id !== undefined) ?
+                    <Conversation CurrentRoomId={CurrentRoomId} member={Member} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
+                    : <div></div>
+                }
+
+            </div> : <div></div>
     );
 }
 

@@ -6,7 +6,7 @@ type LoginData = {
   [key: string]: string | any,
 };
 const Login = (props: any) => {
-  const [data, setData] = useState({ email: "", password: "" } as LoginData);
+  const [data, setData] = useState({ username: "", password: "" } as LoginData);
   const [notEmpty, setNotEmpty] = useState(false);
   const [isformChanged, setIsFormChanged] = useState(false)
   const dispatch = useDispatch();
@@ -14,13 +14,13 @@ const Login = (props: any) => {
   const { currentUser, isAuth, error } = useSelector(AuthSelector);
 
   const isFormValid = useCallback((): boolean => {
-    if (data.email.length > 0 && data.password.length > 0) {
+    if (data.username.length > 0 && data.password.length > 0) {
       return true
     }
 
     return false
 
-  }, [data.email.length, data.password.length])
+  }, [data.username.length, data.password.length])
   useEffect(() => {
     isFormValid() === true && isformChanged
       ? setNotEmpty(true)
@@ -31,7 +31,7 @@ const Login = (props: any) => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(login({ email: data.email, password: data.password }));
+    dispatch(login({ username: data.username, password: data.password }));
     setIsFormChanged(false)
     setNotEmpty(false)
 
@@ -58,14 +58,14 @@ const Login = (props: any) => {
         )}
         <hr></hr>
         <div className="form-group">
-          <label>Email</label>
+          <label>Username</label>
           <input
-            name="email"
-            type="email"
+            name="username"
+            type="text"
             className="form-control"
-            placeholder="Enter email"
+            placeholder="Enter username"
             onChange={handleChange}
-            value={data.email}
+            value={data.username}
             required
           />
         </div>

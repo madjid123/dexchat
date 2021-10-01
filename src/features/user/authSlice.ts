@@ -10,7 +10,7 @@ import API_URL from "../../URL";
 
 interface CurrentUser {
   _id: string;
-  name: string;
+  username: string;
   email: string;
   password: string;
   createdAt: string;
@@ -27,25 +27,27 @@ interface AuthError {
   messages: string[];
 }
 
+axios({
+  withCredentials: true
+})
 
 // implement the login logic for our chat app using thunks in redux 
 export const login = createAsyncThunk(
   "users/Login",
-  async ({ email, password }: any, thunkAPI) => {
+  async ({ username, password }: any, thunkAPI) => {
     try {
       const response = await axios({
         method: 'post',
-        url: `${API_URL}/login`,
+        url: `${API_URL}/auth/login`,
         headers: {
           'Content-Type': 'application/json',
         },
+        withCredentials: true,
         data: {
-          email: email,
+          username: username,
           password: password,
         },
-        withCredentials: true
       })
-      console.log(response)
       if (response.status === 200) {
         localStorage.setItem("user", JSON.stringify(response.data));
         localStorage.setItem("isAuth", "true");
@@ -77,7 +79,7 @@ export const logout = createAsyncThunk("users/logout", async (opt, thunk) => {
 
 export const CheckisAuth = createAsyncThunk("users/isAauth", async (opt, thunkAPI) => {
   try {
-    const response = await axios.get(API_URL + "/login", { withCredentials: true })
+    const response = await axios.get(API_URL + "/auth/login", { withCredentials: true })
     if (response.status === 200) {
       console.log(response)
       return response.data
@@ -126,7 +128,7 @@ const AuthReducer = createSlice({
       .addCase(logout.rejected, (state, { payload }) => {
         console.log("falied to logout");
       }).addCase(CheckisAuth.fulfilled, (state, { payload }) => {
-        if (!payload.name) return initialState;
+        if (!payload.username) return initialState;
         state.isAuth = true;
         state.currentUser = payload as CurrentUser
       }).addCase(CheckisAuth.rejected, (state, { payload }) => {
