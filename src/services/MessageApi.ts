@@ -42,7 +42,6 @@ export const MessageEndPointApi = createApi({
 				// create a websocket connection when the cache subscription starts
 				try {
 					socket.connect()
-					console.log(_socket, socket)
 					// wait for the initial query to resolve before proceeding
 					await api.cacheDataLoaded
 

@@ -27,9 +27,9 @@ interface AuthError {
   messages: string[];
 }
 
-axios({
-  withCredentials: true
-})
+// axios({
+//   withCredentials: true
+// })
 
 // implement the login logic for our chat app using thunks in redux 
 export const login = createAsyncThunk(

@@ -94,7 +94,7 @@ function Conversation(props: ConversationProps) {
         if (currentUser !== undefined) {
             let user = {
                 ...currentUser,
-                id: currentUser._id.toString(),
+                id: currentUser?._id.toString(),
             };
             socket.emit("sendusr", { user: user, roomId: socket.id });
             // dispatch(LoadMessages(props.CurrentRoomId as string))
@@ -111,12 +111,19 @@ function Conversation(props: ConversationProps) {
             })
 
 
-            //trigger(props.CurrentRoomId)
         }
-    }, [currentUser, dispatch, props.CurrentRoomId]);
+
+    }, [currentUser, dispatch, props.CurrentRoomId, socket]);
     useEffect(() => {
         getMessage();
-    }, [getMessage]);
+        socket.on("typing", (args: string) => {
+            console.log(args, "is typing")
+        })
+    }, [getMessage])
+    useEffect(() => {
+
+        socket.volatile.emit("typing", { Sender: currentUser?.username, Receiver: member._id })
+    }, [currentUser?.username, member._id, message])
 
     const fetchMessages = () => {
         let ScroDiv = document.getElementById("scrollableDiv")
@@ -149,8 +156,10 @@ function Conversation(props: ConversationProps) {
                     onMessage();
                 }
             }}
-        >
-            <h1 style={{ position: "sticky" }}>{props.member.username}</h1>
+        >   <div className="conversation-header" style={{ boxShadow: "0 0 30px 5px #0006", padding: "0.5rem", borderRadius: "1.5rem 1.5rem 0.5rem 0.5rem" }}>
+                <h2 style={{ position: "sticky" }}>{props.member.username}</h2>
+            </div>
+
 
             <div
                 id="scrollableDiv"
@@ -232,27 +241,30 @@ function Conversation(props: ConversationProps) {
                     </ListGroup>
                 </InfiniteScroll>
             </div>
-            <footer className="footer my-0">
-                <div style={{ width: "100%" }} className="footer">
-                    <input
-                        className="footer-input"
-                        type="text"
-                        onChange={(e) => {
-                            setMessage(e.target.value);
-                        }}
-                        value={message}
-                    ></input>
-                    <Button
-                        className="footer-button form-input px-3 mx-2"
-                        onClick={() => {
-                            onMessage();
-                        }}
-                    >
-                        Send
-                    </Button>
-                </div>
-            </footer>
-        </div>
+
+
+
+            <footer className="footer">
+
+
+                <input
+                    className="footer-input "
+                    onChange={(e) => {
+                        setMessage(e.target.value);
+
+                    }}
+                    value={message}
+                ></input>
+                <Button
+                    className="footer-button form-input px-3 mx-2"
+                    onClick={() => {
+                        onMessage();
+                    }}
+                >
+                    Send
+                </Button>
+            </footer >
+        </div >
     );
 }
 export default Conversation;
