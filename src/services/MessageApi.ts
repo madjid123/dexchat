@@ -3,7 +3,7 @@ import { io } from "socket.io-client"
 import { Message, MessagesResponse, setMessagesState } from "../features/Conversation/MessagesSlice"
 import URL from "../URL"
 import { store } from "../app/store"
-import { _socket } from "../components/Conversation"
+import { _socket } from "../components/Userspace/Conversation/Conversation"
 import socket from "../utils/socket"
 socket.connect()
 export const MessageEndPointApi = createApi({

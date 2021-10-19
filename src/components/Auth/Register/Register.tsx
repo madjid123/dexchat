@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import API_URL from "../../URL";
+import API_URL from "../../../URL";
 import { Redirect } from "react-router-dom";
-
+import "./Register.css"
 type RegisterState = {
   [key: string]: any;
 };

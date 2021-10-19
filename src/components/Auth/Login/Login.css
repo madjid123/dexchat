@@ -1,0 +1,30 @@
+body .msgForm {
+  width: 100%;
+  margin: 0 auto;
+}
+.msgForm {
+  position: fixed;
+  bottom: 0px;
+  height: 20%;
+}
+
+.msgForm input {
+  margin-left: 30%;
+  width: 70%;
+  height: 40%;
+}
+
+.form-mad {
+  margin: 20 auto;
+  display: flex;
+}
+#form {
+  box-shadow: 10px, 10px, #31363b;
+  background-color: rgb(63, 63, 63);
+  padding: 70px 30px;
+  width: 50%;
+  margin: auto;
+  min-width: 270px;
+  align-items: center;
+  margin-top: 15px;
+}

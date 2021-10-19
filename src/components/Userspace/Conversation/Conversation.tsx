@@ -3,7 +3,7 @@ import { Button, ListGroup, Spinner } from "react-bootstrap";
 import { io } from "socket.io-client";
 import { Menu, MenuItem } from "react-pro-sidebar";
 import { useSelector } from "react-redux";
-import { AuthSelector } from "../features/user/authSlice";
+import { AuthSelector } from "../../../features/user/authSlice";
 import {
     MessagesSelector,
     Message,
@@ -12,19 +12,19 @@ import {
     setMessagesState,
     SendMessageToApi,
     LoadMessages,
-} from "../features/Conversation/MessagesSlice";
-import { useAppDispatch } from "../app/hooks";
+} from "../../../features/Conversation/MessagesSlice";
+import { useAppDispatch } from "../../../app/hooks";
 import {
     MessageEndPointApi,
     useGetMessagesByRoomIdQuery,
     useLazyGetMessagesByRoomIdQuery,
-} from "../services/MessageApi";
+} from "../../../services/MessageApi";
 import "./Conversation.css";
 import "react-bootstrap";
 import { useCallback } from "react";
-import socket from "../utils/socket";
+import socket from "../../../utils/socket";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useFetchMessages } from "../hooks/useFetchMessages";
+import { useFetchMessages } from "../../../hooks/useFetchMessages";
 import { reactHooksModuleName } from "@reduxjs/toolkit/dist/query/react/module";
 interface ConversationProps {
     clearMsgs: boolean;

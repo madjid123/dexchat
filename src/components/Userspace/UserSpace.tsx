@@ -1,14 +1,15 @@
 
-import Rooms from "./Rooms"
-import Conversation from "./Conversation"
+import Rooms from "./Rooms/Rooms"
+import Conversation from "./Conversation/Conversation"
 
 
 import { useState, useEffect } from "react"
 
 import { useSelector, useDispatch } from "react-redux"
-import { AuthSelector } from "../features/user/authSlice"
-import { RoomsSelector, getRooms } from "../features/user/RoomsSlice"
+import { AuthSelector } from "../../features/user/authSlice"
+import { RoomsSelector, getRooms } from "../../features/user/RoomsSlice"
 
+import "./UserSpace.css"
 // interface User {
 //     _id: string,
 //     name: string
