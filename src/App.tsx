@@ -11,10 +11,10 @@ import { useEffect } from "react"
 //Redux
 import { useSelector, useDispatch } from "react-redux"
 // Components
-import Register from "./components/Auth/Register/Register"
+import Register from "./pages/Auth/Register/Register"
 import NavBar from "./components/Navbar/NavBar"
-import Login from "./components/Auth/Login/Login"
-import UserSpace from "./components/Userspace/UserSpace"
+import Login from "./pages/Auth/Login/Login"
+import UserSpace from "./pages/Userspace/UserSpace"
 
 // Styling
 import "bootstrap/dist/css/bootstrap.min.css";

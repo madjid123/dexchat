@@ -1,6 +1,6 @@
 
 import Rooms from "./Rooms/Rooms"
-import Conversation from "./Conversation/Conversation"
+import Conversation from "../../components/Conversation/Conversation"
 
 
 import { useState, useEffect } from "react"

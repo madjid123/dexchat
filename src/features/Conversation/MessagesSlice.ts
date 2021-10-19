@@ -69,20 +69,7 @@ export const SendMessageToApi = createAsyncThunk<void, { message: Message, room_
 
 }
 )
-export const LoadMessages = createAsyncThunk("messages/loadmessages", async (room_id: string, thunkAPI) => {
-	try {
-		const response = await axios.get(`${URL}/messages/room/${room_id}`, { withCredentials: true })
-		return response.data.messages as Message[]
-	} catch (err) {
-		const error = err as AxiosError || err as Error
-		console.error(error)
-		if (error.response) {
-			thunkAPI.rejectWithValue(error.response.data as string)
-			console.log(error.response.data as string)
-		}
-	}
 
-})
 const MessagesReducer = createSlice({
 	name: "messages",
 	initialState,
@@ -110,10 +97,7 @@ const MessagesReducer = createSlice({
 	},
 	extraReducers: (bulider) => {
 
-		// bulider.addCase(LoadMessages.fulfilled, (state, { payload }: { payload: Message[] | undefined }) => {
-		// 	if (payload !== undefined)
-		// 		state.messages = payload
-		// })
+
 		bulider.addMatcher(MessageEndPointApi.endpoints.getMessagesByRoomId.matchFulfilled,
 			(state, action) => {
 				if (state.messagesResponse.messages.length === 0)
