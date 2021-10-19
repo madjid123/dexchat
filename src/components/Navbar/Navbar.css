@@ -1,0 +1,17 @@
+
+.navbar-brand {
+  padding: 18px 20px;
+  display: inline-block;
+}
+.btn-dex:hover {
+  background-color: rgb(0, 226, 139);
+  color: #fff;
+}
+.btn-dex {
+  padding-inline: 14px;
+  margin-right: 10px;
+  color: rgb(0, 226, 139) !important    ;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid;
+  border-color: rgb(0, 226, 139) !important;
+}
