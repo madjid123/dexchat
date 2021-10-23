@@ -3,9 +3,19 @@ import React, { useEffect, useState } from "react";
 import API_URL from "../../../URL";
 import { Redirect } from "react-router-dom";
 import "./Register.css"
+
+// Email Regular expression
+const EmailRegEx = RegExp(
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+);
+
+
 type RegisterState = {
   [key: string]: any;
 };
+type RegisterError = {
+  [key: string]: any
+}
 type RegisterProps = any
 const Register = (props: RegisterProps) => {
   // State variablee
@@ -15,7 +25,7 @@ const Register = (props: RegisterProps) => {
     email: "",
     password: "",
     server: [] as any[],
-  });
+  } as RegisterError);
   const [redirect, setRedirect] = useState(false);
   const [Valid, setValid] = useState(false);
 
@@ -62,10 +72,13 @@ const Register = (props: RegisterProps) => {
     const { name, value } = target;
 
     ValidInput({ name, value });
+    setErrors((errs) => {
+      errs[target.name] = ""
+      return errs
+    });
+    isValid()
   };
-  const Regex = RegExp(
-    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
-  );
+
 
   const ValidInput = (target: any) => {
     let Errors = { ...errors };
@@ -77,7 +90,7 @@ const Register = (props: RegisterProps) => {
         break;
       }
       case "email": {
-        Errors.email = Regex.test(target.value)
+        Errors.email = EmailRegEx.test(target.value)
           ? ""
           : "Incorrect email foramat !";
         break;
@@ -92,8 +105,9 @@ const Register = (props: RegisterProps) => {
       default:
         break;
     }
-
     setErrors(Errors);
+    isValid()
+
   };
   const isValid = () => {
     return errors.username.length === 0 &&

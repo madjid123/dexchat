@@ -22,8 +22,19 @@ import "./App.css";
 import { AuthSelector, CheckisAuth } from "./features/user/authSlice"
 import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 import { MessageEndPointApi } from "./services/MessageApi";
+import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material";
 
 
+const Theme = createTheme({
+  palette: {
+    mode: "dark",
+    background: {
+      default: "#A05656",
+      paper: "#1C1D22"
+    }
+  },
+
+})
 
 const App = () => {
   const dispatch = useDispatch()
@@ -36,22 +47,24 @@ const App = () => {
 
 
   return (
-    <Router >
-      <NavBar history={History} ></NavBar>
-      {isAuth && <Redirect to="/user"></Redirect>}
-      <Switch>
-        <Route path="/user">
-          <UserSpace  ></UserSpace>
-        </Route>
-        <Route path="/login">
-          <Login
-          ></Login>
-        </Route>
-        <Route path="/register">
-          <Register> </Register>
-        </Route>
-      </Switch>
-    </Router>
+    <ThemeProvider theme={Theme}>
+      <Router >
+        <NavBar history={History} ></NavBar>
+        {isAuth && <Redirect to="/user"></Redirect>}
+        <Switch>
+          <Route path="/user">
+            <UserSpace  ></UserSpace>
+          </Route>
+          <Route path="/login">
+            <Login
+            ></Login>
+          </Route>
+          <Route path="/register">
+            <Register> </Register>
+          </Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 
