@@ -15,3 +15,11 @@
   border: 1px solid;
   border-color: rgb(0, 226, 139) !important;
 }
+.Navbar {
+  margin: 0.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 0 20px 5px hsla(0, 0%, 0%, 0.5);
+  border-radius: 1.5rem;
+  background-color: #11111100 !important;
+  backdrop-filter: blur(5rem);
+}

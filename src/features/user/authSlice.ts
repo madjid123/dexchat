@@ -3,7 +3,7 @@ import {
   createAsyncThunk,
   Reducer,
 } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { RootState } from "../../app/store";
 // API URL of our app usually localhost:5000
 import API_URL from "../../URL";
@@ -55,9 +55,12 @@ export const login = createAsyncThunk(
       }
 
     }
-    catch (err: any) {
-      console.log(err.response.data);
-      return thunkAPI.rejectWithValue(err.response.data as any);
+    catch (e) {
+      const err = e as AxiosError
+      if (err.response)
+        return thunkAPI.rejectWithValue([...err.response.data] as string[]);
+      else
+        return thunkAPI.rejectWithValue([err.message] as string[]);
     }
   }
 );
@@ -114,13 +117,14 @@ const AuthReducer = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, { payload }) => {
-        console.log("fulfilled");
         state.currentUser = payload;
         state.isAuth = true;
       })
-      .addCase(login.rejected, (state, action) => {
-        const messages = action.payload as string[]
-        state.error.messages = [...action.payload as any[]]
+      .addCase(login.rejected, (state, { payload }) => {
+        console.log(payload);
+        const ErrorMessages: any[] = []
+        ErrorMessages.push(payload as any[])
+        state.error.messages = [...ErrorMessages]
       })
       .addCase(logout.fulfilled, (state, { payload }) => {
         return initialState;

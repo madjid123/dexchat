@@ -1,5 +1,5 @@
 import { Navbar, Nav } from "react-bootstrap"
-import { Button } from "@mui/material"
+import { Button } from "../button"
 import { RouteProps, withRouter } from "react-router"
 import { logout, AuthSelector } from "../../features/user/authSlice"
 import { useDispatch, useSelector } from "react-redux"
@@ -16,12 +16,12 @@ const NavBar: React.FunctionComponent<RouteProps & any> = ({ history }: any) => 
     let buttons = <> </>;
 
     if (isAuth) {
-        buttons = (<Button className="" onClick={() => Logout()}> Logout</Button>)
+        buttons = (<Button className="" onClick={() => Logout()}> <a> Logout</a></Button>)
     }
     else {
         buttons = (<div>
 
-            <Button className="" href="/login" >Login</Button>
+            <Button className="" href="/login" ><a>Login </a></Button>
             <Button className="" href="/register">Register</Button>
         </div>)
     }

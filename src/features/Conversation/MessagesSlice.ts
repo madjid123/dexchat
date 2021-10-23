@@ -91,9 +91,6 @@ const MessagesReducer = createSlice({
 			state.messagesResponse.messages = payload
 		}
 
-
-
-
 	},
 	extraReducers: (bulider) => {
 
@@ -116,12 +113,8 @@ const MessagesReducer = createSlice({
 			console.log(action)
 			if (action.error.message !== undefined)
 				state.errors.push(action.error.message)
-
-
 		})
 	}
-
-
 })
 
 const { actions, reducer } = MessagesReducer

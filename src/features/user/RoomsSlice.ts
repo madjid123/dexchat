@@ -32,7 +32,6 @@ export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, t
 		const _id = id
 		const response = await axios.get(URL + `/user/contacts/${_id}`, { withCredentials: true })
 		if (response.status === 200) {
-			console.log("kdlfjls")
 			return response.data.Rooms
 		}
 
