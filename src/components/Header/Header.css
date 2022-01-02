@@ -9,15 +9,18 @@
 }
 .btn-dex {
   padding-inline: 14px;
-  margin-right: 10px;
+  margin-right: 1rem;
   color: rgb(0, 226, 139) !important    ;
   background-color: rgba(0, 0, 0, 0);
   border: 1px solid;
   border-color: rgb(0, 226, 139) !important;
 }
 .Navbar {
-  margin: 0.5rem;
+  color: white;
+  margin: auto;
   margin-top: 1rem;
+  text-align: center;
+  align-items: center;
   box-shadow: 0 0 20px 5px hsla(0, 0%, 0%, 0.5);
   border-radius: 1.5rem;
   background-color: #11111100 !important;

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Button, ListGroup, Spinner } from "react-bootstrap";
 import { io } from "socket.io-client";
-import { Menu, MenuItem } from "react-pro-sidebar";
 import { useSelector } from "react-redux";
 import { AuthSelector } from "../../features/user/authSlice";
 import {
@@ -11,6 +10,7 @@ import {
     clearAllMessages,
     setMessagesState,
     SendMessageToApi,
+    MessagesResponse,
 } from "../../features/Conversation/MessagesSlice";
 import { useAppDispatch } from "../../app/hooks";
 import {
@@ -35,21 +35,23 @@ interface ConversationProps {
 function Conversation(props: ConversationProps) {
     const { currentUser } = useSelector(AuthSelector);
     const { messagesResponse } = useSelector(MessagesSelector);
-    const { messages } = messagesResponse;
     const [member, setMember] = useState(props.member);
     const [message, setMessage] = useState("" as string);
     const [scrollPos, setScrollPos] = useState(0)
     const dispatch = useAppDispatch();
-    const [trigger, result, LastPromiseIngo] =
+    const [trigger, result, LastPromiseInfo] =
         MessageEndPointApi.endpoints.getMessagesByRoomId.useLazyQuery({});
+    // if (result.data !== undefined) {
+        // messagesResponse = result.data
+        // console.log(messagesResponse)
+    // }
+    // const getMessage = useCallback(() => {
+    //     socket.on("getmsg", (data) => {
+    //         const _message: Message = data.message;
 
-    const getMessage = useCallback(() => {
-        socket.on("getmsg", (data) => {
-            const _message: Message = data.message;
-
-            dispatch(addMessage(_message));
-        });
-    }, []);
+    //         dispatch(addMessage(_message));
+    //     });
+    // }, []);
     const onMessage = () => {
         if (message === "") return;
         if (socket.connected && currentUser !== undefined) {
@@ -93,9 +95,9 @@ function Conversation(props: ConversationProps) {
         if (currentUser !== undefined) {
             let user = {
                 ...currentUser,
-                id: currentUser?._id.toString(),
+                id: currentUser?._id,
             };
-            socket.emit("sendusr", { user: user, roomId: socket.id });
+
             dispatch(
                 MessageEndPointApi.endpoints.getMessagesByRoomId.initiate(
                     { room_id: props.CurrentRoomId, page: 1 },
@@ -113,11 +115,12 @@ function Conversation(props: ConversationProps) {
 
     }, [currentUser, dispatch, props.CurrentRoomId, socket]);
     useEffect(() => {
-        getMessage();
+        //getMessage();
+        trigger({ room_id: props.CurrentRoomId, page: 1 })
         socket.on("typing", (args: string) => {
             console.log(args, "is typing")
         })
-    }, [getMessage])
+    }, [])
     useEffect(() => {
 
         socket.volatile.emit("typing", { Sender: currentUser?.username, Receiver: member._id })
@@ -129,12 +132,15 @@ function Conversation(props: ConversationProps) {
             setScrollPos(ScroDiv?.scrollTop)
         }
         setTimeout(() => {
+            if (result.data !== undefined) {
 
-            let page = messagesResponse.page;
-            if (page + 1 > messagesResponse.pages) return;
-            else page += 1;
+                let page = result.data.page;
 
-            trigger({ room_id: props.CurrentRoomId, page: page });
+                if (page !== undefined && page + 1 > result.data.pages) return;
+                else page += 1;
+
+                trigger({ room_id: props.CurrentRoomId, page: page });
+            }
         }, 1000)
 
     };
@@ -145,7 +151,7 @@ function Conversation(props: ConversationProps) {
             left: 0
         })
 
-    }, [messagesResponse.messages.length, scrollPos])
+    }, [result.data?.messages.length, scrollPos])
     return (
         <div
             className="conversation"
@@ -157,8 +163,6 @@ function Conversation(props: ConversationProps) {
         >   <div className="conversation-header" style={{ boxShadow: "0 0 30px 5px #0006", padding: "0.5rem", borderRadius: "1.5rem 1.5rem 0.5rem 0.5rem" }}>
                 <h2 style={{ position: "sticky" }}>{props.member.username}</h2>
             </div>
-
-
             <div
                 id="scrollableDiv"
                 style={{

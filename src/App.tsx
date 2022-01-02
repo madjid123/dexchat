@@ -12,7 +12,7 @@ import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 // Components
 import Register from "./pages/Auth/Register/Register"
-import NavBar from "./components/Navbar/NavBar"
+import NavBar from "./components/Header/Header"
 import Login from "./pages/Auth/Login/Login"
 import UserSpace from "./pages/Userspace/UserSpace"
 
@@ -22,7 +22,8 @@ import "./App.css";
 import { AuthSelector, CheckisAuth } from "./features/user/authSlice"
 import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 import { MessageEndPointApi } from "./services/MessageApi";
-import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material";
+import { Box, createTheme, ThemeOptions, ThemeProvider, Toolbar } from "@mui/material";
+import { SideBar } from "./components/Footer/Footer";
 
 
 const Theme = createTheme({
@@ -33,9 +34,11 @@ const Theme = createTheme({
       paper: "#1C1D22"
     }
   },
+  typography: {
+    fontFamily: "Poppins"
+  }
 
 })
-
 const App = () => {
   const dispatch = useDispatch()
   const History = useHistory();
@@ -45,10 +48,9 @@ const App = () => {
 
   }, [isAuth])
 
-
   return (
     <ThemeProvider theme={Theme}>
-      <Router >
+      <Router>
         <NavBar history={History} ></NavBar>
         {isAuth && <Redirect to="/user"></Redirect>}
         <Switch>
@@ -64,6 +66,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
+
     </ThemeProvider>
   );
 }

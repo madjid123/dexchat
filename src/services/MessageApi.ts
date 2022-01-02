@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { io } from "socket.io-client"
-import { Message, MessagesResponse, setMessagesState } from "../features/Conversation/MessagesSlice"
+import MessagesSlice, { Message, MessagesResponse, setMessagesState ,addMessage} from "../features/Conversation/MessagesSlice"
 import URL from "../URL"
 import { store } from "../app/store"
-import { _socket } from "../components/Conversation/Conversation"
 import socket from "../utils/socket"
-socket.connect()
+import { useAppDispatch } from "../app/hooks"
 export const MessageEndPointApi = createApi({
 	reducerPath: "messagesApi",
 	baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include", }),
@@ -21,7 +20,7 @@ export const MessageEndPointApi = createApi({
 			}),
 			transformResponse: (rawResult, meta) => {
 				const result = (rawResult as MessagesResponse)
-				//console.log(result)
+				console.log(result)
 				return result
 
 			},
@@ -49,11 +48,12 @@ export const MessageEndPointApi = createApi({
 					// if it is a message and for the appropriate channel,
 					// update our query result with the received message
 					console.log("getMsg")
-					const listener = (data: Message) => {
+					const listener = (data:any) => {
 						console.log("GETMSG", data)
+						
 						api.updateCachedData((draft) => {
-
-							draft.messages.push(data)
+							draft.messages.push(data.message)
+							store.dispatch(addMessage(data.message))
 							return draft
 						})
 					}
@@ -61,8 +61,6 @@ export const MessageEndPointApi = createApi({
 
 				} catch (e) {
 					console.log((e as Error).message)
-					// no-op in case `cacheEntryRemoved` resolves before `cacheDataLoaded`,
-					// in which case `cacheDataLoaded` will throw
 				}
 				// cacheEntryRemoved will resolve when the cache subscription is no longer active
 				await api.cacheEntryRemoved
@@ -71,17 +69,7 @@ export const MessageEndPointApi = createApi({
 					console.log("cache", draft)
 				})
 			},
-
-
-
-
-
-
 		}),
-
-
-
 	})
-
 })
 export const { useGetMessagesByRoomIdQuery, useLazyGetMessagesByRoomIdQuery } = MessageEndPointApi

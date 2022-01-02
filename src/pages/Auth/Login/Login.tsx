@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, AuthSelector, clearErrors } from "../../../features/user/authSlice";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import Header from "../../../components/Header/Header"
+import { login, AuthSelector, } from "../../../features/user/authSlice";
+import { useAppDispatch, } from "../../../app/hooks"
 import "./Login.css"
 type LoginData = {
   [key: string]: string | any,
@@ -50,6 +51,7 @@ const Login = (props: any) => {
 
   return (
     <div className="form-mad">
+      <Header> </Header>
       <form id="form" onSubmit={handleSubmit}>
         <h3>Log in</h3>
         {error.messages.length > 0 && <hr></hr> && (

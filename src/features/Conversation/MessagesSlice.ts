@@ -74,10 +74,10 @@ const MessagesReducer = createSlice({
 	name: "messages",
 	initialState,
 	reducers: {
-		addMessage: (state, { payload }) => {
-			console.log(payload)
+		addMessage: (state, { payload }: { payload: Message }) => {
+			console.log(typeof payload)
 			state.messagesResponse.messages = [...state.messagesResponse.messages, payload]
-
+			console.log(state.messagesResponse.messages)
 
 		},
 		clearAllMessages: (state, { payload }) => {

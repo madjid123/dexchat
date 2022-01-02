@@ -1,14 +1,32 @@
-import styled from "@emotion/styled";
-import MuiButton, { ButtonProps } from "@mui/material/Button"
+import React from "react";
+import styled from "styled-components";
+import { Button } from "react-bootstrap"
+// import MuiButton, { ButtonProps } from "@mui/material/Button"
 
+const borderColor = "#30c982"
 // export const Button: React.FC<ButtonProps> = (props) => {
-//     const borderColor = "#30C982"
 
 //     return (<MuiButton {...props} sx={{ border: "1px solid", borderColor: borderColor, borderRadius: "1.5rem", color: "white", ":hover": { backgroundColor: borderColor } }} />);
 
 // }
 
+//i am not sure if this is a dumb way to acheive styles but i don't care
+// i am sick and tired from finding the right way.. XD
+export default styled(Button)`
+&&{
 
-export const Button = styled(MuiButton)`
-color : #243545
+&:hover {
+    //I case for the future.
+    background-color : ${(props) => props.primary ? '' : borderColor};
+    color : white;
+    border : solid #00000000;
+}
+color : ${borderColor};
+background-color : #00000000;
+
+border-radius : 1rem 0.5rem 1rem 0.5rem ;
+border : 1px solid;
+}
 `;
+
+// i always feels like i am doing it the wrong way. what's wrong why do i even have to think like this

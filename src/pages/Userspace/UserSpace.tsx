@@ -8,8 +8,11 @@ import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { AuthSelector } from "../../features/user/authSlice"
 import { RoomsSelector, getRooms } from "../../features/user/RoomsSlice"
+import Footer, { SideBar, FooterHeight } from "../../components/Footer/Footer"
 
 import "./UserSpace.css"
+import socket from "../../utils/socket"
+import Header from "../../components/Header/Header"
 // interface User {
 //     _id: string,
 //     name: string
@@ -20,7 +23,15 @@ const UserSpace = (props: any) => {
     const { currentUser, isAuth } = useSelector(AuthSelector)
     const [CurrentRoomId, setCurrentRoomId] = useState("")
     const [clearMsgs, setClearMsgs] = useState(false);
+    const [showed, setShowed] = useState(true);
 
+    useEffect(() => {
+        socket.connect()
+        if(socket.connected)
+        socket.emit("sendusr", { user: currentUser, roomId: socket.id });
+        else 
+        console.log("socket not connected")
+    })
     useEffect(() => {
         let id = undefined
         if (currentUser !== undefined) {
@@ -28,7 +39,17 @@ const UserSpace = (props: any) => {
             dispatch(getRooms({ id: id }))
         }
 
+
     }, [currentUser, dispatch, isAuth])
+    useEffect(() => {
+        window.addEventListener("resize", (e) => {
+
+
+            if (window.screen.width < 500) setShowed(false)
+            else setShowed(true)
+
+        })
+    })
     const { rooms } = useSelector(RoomsSelector)
     const setConversation = (index: number) => {
         const room = rooms[index]
@@ -47,14 +68,22 @@ const UserSpace = (props: any) => {
 
     return (
         (currentUser !== undefined) ?
-            <div className="box-flex" style={{ "height": "100%" }}>
-                <Rooms setConversation={setConversation} currentRoomId={CurrentRoomId}  ></Rooms>
-                {(Member._id !== undefined) ?
-                    <Conversation CurrentRoomId={CurrentRoomId} member={Member} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
-                    : <div></div>
-                }
+            <div style={{ height: `${100 - FooterHeight}%` }}>
+                <div className="" style={{
+                    display: "flex",
+                    height: "94vh"
+                }}>
 
-            </div> : <div></div>
+                    {(showed) ? <Rooms setConversation={setConversation} currentRoomId={CurrentRoomId}   ></Rooms> : <></>}
+                    {(Member._id !== undefined) ?
+
+                        <Conversation CurrentRoomId={CurrentRoomId} member={Member} clearMsgs={clearMsgs} setClearMsgs={SetClearMsgs}></Conversation>
+                        : <div></div>
+                    }
+
+                </div>
+                <Footer></Footer>
+            </div > : <div></div>
     );
 }
 
