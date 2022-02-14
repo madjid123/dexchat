@@ -100,7 +100,6 @@ const MessagesReducer = createSlice({
 				if (state.messagesResponse.messages.length === 0)
 					state.messagesResponse = action.payload;
 				else {
-					console.log(action.payload)
 					state.messagesResponse = {
 						messages: [...action.payload.messages, ...state.messagesResponse.messages,],
 						page: action.payload.page,

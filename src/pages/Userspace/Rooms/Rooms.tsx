@@ -8,7 +8,6 @@ import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Rooms.css";
 
 import { useState } from "react";
-// -----------------------------
 
 export interface Room {
   members: any[2];
@@ -34,7 +33,7 @@ const Rooms = (props: any) => {
               <div className="flex-row">
                 <input
                   placeholder="Search for new contact"
-                  style={{ width: "50%" }}
+                  style={{ width: "50%m" }}
                 />
                 <input type="submit" />
               </div>

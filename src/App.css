@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
 html,
 body,
 #app,
 #app > div {
   height: 100%;
   overflow: hidden;
- /* background: url("C:\Users\madjid\Pictures\Backs\win11-img21.jpg"), #ffffff; */
- background: rgb(53, 53, 53);
- background-size:cover;
- font-family: Poppins, sans-serif;
- font-weight: 100;
+  /* background: url("C:\Users\madjid\Pictures\Backs\win11-img21.jpg"), #ffffff; */
+  background: rgb(35, 35, 44);
+  background-size: cover;
+  font-family: Poppins, sans-serif;
+  font-weight: 100;
 }
 /* #root {
   background-color: #444f55;
@@ -23,8 +23,6 @@ html {
   justify-content: center;
 }
 
-
-
 .pro-sidebar {
   width: 30%;
 }
@@ -32,7 +30,6 @@ html {
   display: flex;
   height: 89%;
 }
-
 
 .bg-mydark {
   background-color: #30353a;

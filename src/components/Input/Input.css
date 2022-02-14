@@ -1,0 +1,28 @@
+.footer-input {
+  flex-direction: column;
+  width: 100%;
+}
+.footer-input input {
+  padding-block: 0.5rem;
+  margin: 2.5rem;
+  border: 1px #fff;
+  border-radius: 1.5rem;
+  width: 100%;
+}
+.footer-input {
+  margin: 0.25rem;
+  border-radius: 1.5rem;
+  padding-block: 0.25rem;
+  background-color: rgba(0, 0, 0, 0.323);
+  color: #fff;
+  padding-inline: 0.5rem;
+  border-color: #0000;
+}
+input:focus.footer-input {
+  border-color: none;
+  outline: none;
+  width: 100%;
+}
+.footer-input input:active {
+  border: none;
+}

@@ -20,7 +20,6 @@ export const MessageEndPointApi = createApi({
 			}),
 			transformResponse: (rawResult, meta) => {
 				const result = (rawResult as MessagesResponse)
-				console.log(result)
 				return result
 
 			},
