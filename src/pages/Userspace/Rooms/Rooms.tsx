@@ -8,6 +8,8 @@ import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Rooms.css";
 
 import { useState } from "react";
+import Input from "../../../components/Input/Input";
+import Button from "../../../components/Button/Button";
 
 export interface Room {
   members: any[2];
@@ -31,11 +33,12 @@ const Rooms = (props: any) => {
           <Nav className="flex-column">
             <Nav.Item>
               <div className="flex-row">
-                <input
+                <Input
                   placeholder="Search for new contact"
-                  style={{ width: "50%m" }}
+                  style={{ width: "90%", fontSize: "12px" }}
+                  variant="light"
                 />
-                <input type="submit" />
+                {/* <Button type="submit" /> */}
               </div>
             </Nav.Item>
             <Nav.Link>

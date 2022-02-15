@@ -26,7 +26,7 @@ import socket from "../../../utils/socket";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useFetchMessages } from "../../../hooks/useFetchMessages";
 import { reactHooksModuleName } from "@reduxjs/toolkit/dist/query/react/module";
-import { Input } from "../../../components/Input/Input";
+import Input from "../../../components/Input/Input";
 interface ConversationProps {
   clearMsgs: boolean;
   setClearMsgs(arg0: boolean): void;

@@ -1,7 +1,7 @@
 import { Navbar, Nav } from "react-bootstrap";
 import Button from "../Button/Button";
 import { useState } from "react";
-import { RouteProps, withRouter } from "react-router";
+import { Redirect, RouteProps, withRouter } from "react-router";
 import { logout, AuthSelector } from "../../features/user/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
@@ -16,14 +16,15 @@ const NavBar: React.FunctionComponent<RouteProps & any> = ({
 
   const Logout = () => {
     dispatch(logout());
-    const newPath = "/";
+    const newPath = "/login";
     history.push(newPath);
+    // <Redirect to="/login"></Redirect>;
   };
   let buttons = <> </>;
 
   if (isAuth) {
     buttons = (
-      <Button className="mx-2 btn-dex" onClick={() => Logout()}>
+      <Button className="mx-2 " onClick={() => Logout()}>
         {" "}
         <a> Logout</a>
       </Button>

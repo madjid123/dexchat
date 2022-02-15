@@ -58,38 +58,43 @@ const UserSpace = (props: any) => {
     setClearMsgs(b);
   };
 
-  return currentUser !== undefined ? (
-    <div style={{ height: `${100 - FooterHeight}%` }}>
-      <div
-        className=""
-        style={{
-          display: "flex",
-          height: "94vh",
-        }}
-      >
-        {showed ? (
-          <Rooms
-            setConversation={setConversation}
-            currentRoomId={CurrentRoomId}
-          ></Rooms>
-        ) : (
-          <></>
-        )}
-        {Member._id !== undefined ? (
-          <Conversation
-            CurrentRoomId={CurrentRoomId}
-            member={Member}
-            clearMsgs={clearMsgs}
-            setClearMsgs={SetClearMsgs}
-          ></Conversation>
-        ) : (
-          <div></div>
-        )}
-      </div>
-      <Footer></Footer>
-    </div>
-  ) : (
-    <div></div>
+  return (
+    <>
+      <Header history={props.history}></Header>
+      {currentUser !== undefined ? (
+        <div style={{ height: `${100 - FooterHeight}%` }}>
+          <div
+            className=""
+            style={{
+              display: "flex",
+              height: "94vh",
+            }}
+          >
+            {showed ? (
+              <Rooms
+                setConversation={setConversation}
+                currentRoomId={CurrentRoomId}
+              ></Rooms>
+            ) : (
+              <></>
+            )}
+            {Member._id !== undefined ? (
+              <Conversation
+                CurrentRoomId={CurrentRoomId}
+                member={Member}
+                clearMsgs={clearMsgs}
+                setClearMsgs={SetClearMsgs}
+              ></Conversation>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <Footer></Footer>
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 };
 

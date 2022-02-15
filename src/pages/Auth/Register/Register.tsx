@@ -2,21 +2,21 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import API_URL from "../../../URL";
 import { Redirect } from "react-router-dom";
-import "./Register.css"
+import "./Register.css";
+import Header from "../../../components/Header/Header";
 
 // Email Regular expression
 const EmailRegEx = RegExp(
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
 );
 
-
 type RegisterState = {
   [key: string]: any;
 };
 type RegisterError = {
-  [key: string]: any
-}
-type RegisterProps = any
+  [key: string]: any;
+};
+type RegisterProps = any;
 const Register = (props: RegisterProps) => {
   // State variablee
   const [state, setState] = useState({} as RegisterState);
@@ -45,20 +45,17 @@ const Register = (props: RegisterProps) => {
         if (response.status === 200) {
           if (response.data.response !== undefined) setRedirect(true);
           else {
-            ;
           }
         }
       })
       .catch((error) => {
-
         error.response.data.errors.filter((error: any) => {
           let Errors = { ...errors };
-          Errors.server.push(error.msg)
+          Errors.server.push(error.msg);
           setErrors(Errors);
           return null;
-        })
+        });
         console.log(error);
-
       });
   };
   const handleChange = (e: React.SyntheticEvent) => {
@@ -73,12 +70,11 @@ const Register = (props: RegisterProps) => {
 
     ValidInput({ name, value });
     setErrors((errs) => {
-      errs[target.name] = ""
-      return errs
+      errs[target.name] = "";
+      return errs;
     });
-    isValid()
+    isValid();
   };
-
 
   const ValidInput = (target: any) => {
     let Errors = { ...errors };
@@ -106,14 +102,13 @@ const Register = (props: RegisterProps) => {
         break;
     }
     setErrors(Errors);
-    isValid()
-
+    isValid();
   };
   const isValid = () => {
     return errors.username.length === 0 &&
       errors.email.length === 0 &&
-      errors.password.length === 0
-      && errors.server.length === 0
+      errors.password.length === 0 &&
+      errors.server.length === 0
       ? setValid(true)
       : setValid(false);
   };
@@ -131,74 +126,76 @@ const Register = (props: RegisterProps) => {
     return <Redirect to="/login"></Redirect>;
   }
   return (
-    <div className="form-mad">
-      <form id="form" onSubmit={handleSubmit}>
-        <h3>Register</h3>
-        {errors.server.length > 0 && <hr></hr> && (
-          <span className="error text-danger"> {errors.server} </span>
-        )}
-        <hr></hr>
-        <div className="form-group">
-          <label>Name</label>
-          <input
-            name="username"
-            type="text"
-            className="form-control"
-            placeholder="Name"
-            onChange={handleChange}
-            value={state.username}
-            onClick={handleChange}
-          />
-          {errors.username.length > 0 && (
-            <span className="text-danger">{errors.username}</span>
+    <>
+      <Header history={props.history}> </Header>
+      <div className="form-mad">
+        <form id="form" onSubmit={handleSubmit}>
+          <h3>Register</h3>
+          {errors.server.length > 0 && <hr></hr> && (
+            <span className="error text-danger"> {errors.server} </span>
           )}
-        </div>
+          <hr></hr>
+          <div className="form-group">
+            <label>Name</label>
+            <input
+              name="username"
+              type="text"
+              className="form-control"
+              placeholder="Name"
+              onChange={handleChange}
+              value={state.username}
+              onClick={handleChange}
+            />
+            {errors.username.length > 0 && (
+              <span className="text-danger">{errors.username}</span>
+            )}
+          </div>
 
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            name="email"
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            onChange={handleChange}
-            onClick={handleChange}
-          />
-          {errors.email.length > 0 && (
-            <span className="text-danger">{errors.email}</span>
-          )}
-        </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              name="email"
+              type="email"
+              className="form-control"
+              placeholder="Enter email"
+              onChange={handleChange}
+              onClick={handleChange}
+            />
+            {errors.email.length > 0 && (
+              <span className="text-danger">{errors.email}</span>
+            )}
+          </div>
 
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            name="password"
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            onChange={handleChange}
-            onClick={handleChange}
-          />
-          {errors.password.length > 0 && (
-            <span className="text-danger">{errors.password}</span>
-          )}
-        </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              name="password"
+              type="password"
+              className="form-control"
+              placeholder="Enter password"
+              onChange={handleChange}
+              onClick={handleChange}
+            />
+            {errors.password.length > 0 && (
+              <span className="text-danger">{errors.password}</span>
+            )}
+          </div>
 
-        <button
-          disabled={Valid === false}
-          type="submit"
-          className="btn btn-dark btn-lg btn-block"
-          onClick={Submit}
-        >
-          Register
-        </button>
-        <p className="forgot-password text-right">
-          Already registered <a href="/login">log in?</a>
-        </p>
-      </form>
-    </div>
+          <button
+            disabled={Valid === false}
+            type="submit"
+            className="btn btn-dark btn-lg btn-block"
+            onClick={Submit}
+          >
+            Register
+          </button>
+          <p className="forgot-password text-right">
+            Already registered <a href="/login">log in?</a>
+          </p>
+        </form>
+      </div>
+    </>
   );
-}
+};
 
 export default Register;
-
