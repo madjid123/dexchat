@@ -22,20 +22,26 @@ const UserSpace = (props: any) => {
   const [CurrentRoomId, setCurrentRoomId] = useState("");
   const [clearMsgs, setClearMsgs] = useState(false);
   const [showed, setShowed] = useState(true);
-
+  const { rooms } = useSelector(RoomsSelector);
   useEffect(() => {
     socket.connect();
-    if (socket.connected === true)
-      socket.emit("sendusr", { user: currentUser, roomId: socket.id });
-    else console.log("socket not connected");
-  }, [socket.connected]);
+    // if (socket.connected === true)
+    socket.emit("sendsocket", {
+      rooms: rooms.map((room) => {
+        return room._id;
+      }),
+      roomId: socket.id,
+      user: currentUser,
+    });
+    // else console.log("socket not connected");
+  }, [socket.disconnected, rooms]);
   useEffect(() => {
     let id = undefined;
     if (currentUser !== undefined) {
       id = currentUser._id;
       dispatch(getRooms({ id: id }));
     }
-  }, [currentUser, dispatch, isAuth]);
+  }, [isAuth]);
   useEffect(() => {
     window.addEventListener("resize", (e) => {
       if (window.screen.width < 500) setShowed(false);
@@ -43,7 +49,6 @@ const UserSpace = (props: any) => {
     });
   });
 
-  const { rooms } = useSelector(RoomsSelector);
   const setConversation = (index: number) => {
     const room = rooms[index];
     room.members.forEach((member) => {

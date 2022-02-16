@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { io } from "socket.io-client"
 import MessagesSlice, { Message, MessagesResponse, setMessagesState ,addMessage} from "../features/Conversation/MessagesSlice"
 import URL from "../URL"
 import { store } from "../app/store"
 import socket from "../utils/socket"
-import { useAppDispatch } from "../app/hooks"
+import { DRAFT_STATE } from "immer/dist/internal"
+import { io } from "socket.io-client"
 export const MessageEndPointApi = createApi({
 	reducerPath: "messagesApi",
 	baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include", }),
@@ -49,14 +49,16 @@ export const MessageEndPointApi = createApi({
 					console.log("getMsg")
 					const listener = (data:any) => {
 						console.log("GETMSG", data)
-						
+							
 						api.updateCachedData((draft) => {
+							if(draft.messages[0].Room.id !== data.room) return
 							draft.messages.push(data.message)
 							store.dispatch(addMessage(data.message))
 							return draft
 						})
 					}
 					socket.on("getmsg", listener)
+					socket.on("hh",(data)=>{console.log(data)})
 
 				} catch (e) {
 					console.log((e as Error).message)
