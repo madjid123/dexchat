@@ -2,37 +2,43 @@ import {
 	createSlice,
 	createAsyncThunk,
 	Reducer,
+	createEntityAdapter,
+	EntityState,
 } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../../app/store";
+import { RootState, store } from "../../app/store";
 // API URL of our app usually localhost:5000
 import URL from "../../URL";
-
+import { MessagesResponse } from "../Conversation/MessagesSlice";
 
 interface Member {
 	name: string,
 	_id: string,
-
-
 }
 interface Room {
 	members: Member[];
-	_id: string
+	_id: string,
+	messages : MessagesResponse[]
 }
 interface RoomError {
 	exist: boolean;
 	message: string
 }
-interface RoomsState {
-	rooms: Room[];
-	error: RoomError;
-}
+type RoomsState = 
+	EntityState<Room> & {error : RoomError}
+
+const RoomsAdapter = createEntityAdapter<Room>({
+	selectId : (roomState) => roomState._id,
+
+})
 export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, thunkAPI) => {
 	try {
 		const _id = id
 		const response = await axios.get(URL + `/user/contacts/${_id}`, { withCredentials: true })
 		if (response.status === 200) {
-			return response.data.Rooms
+			console.log(response.data)	
+			thunkAPI.dispatch(setAllRooms(response.data.Rooms))
+			// return response.data.Rooms
 		}
 
 	} catch (err: any) {
@@ -41,19 +47,32 @@ export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, t
 	}
 })
 const initialState: RoomsState = {
-	rooms: [],
+	ids :[],
+	entities : {},
 	error: {
 		exist: false,
 		message: ""
 	}
 }
 const RoomsReducer = createSlice({
-	name: "contacts",
-	initialState,
-	reducers: {},
+	name: "rooms",
+	initialState: RoomsAdapter.getInitialState({
+		error :{
+			exist : false,
+			message : ""
+		} as RoomError,
+		
+	}),
+	reducers: {
+		RoomUpdate : RoomsAdapter.updateOne,
+		setAllRooms : RoomsAdapter.setAll
+		
+
+	},
 	extraReducers: (builder) => {
-		builder.addCase(getRooms.fulfilled, (state, { payload }) => {
-			state.rooms = payload as Room[]
+		builder.addCase(getRooms.fulfilled, (state,  payload)  => {
+			state.error = {exist : false , message : ""}
+			// RoomsAdapter.setAll(state,payload)
 		}).addCase(getRooms.rejected, (state, { payload }) => {
 			state.error.exist = true;
 			state.error.message = payload as string
@@ -61,6 +80,7 @@ const RoomsReducer = createSlice({
 		});
 	}
 })
-
-export const RoomsSelector = (state: RootState) => state.RoomsReducer;
-export default RoomsReducer.reducer as Reducer<typeof initialState>
+export const {setAllRooms,RoomUpdate } = RoomsReducer.actions
+export const RoomsSelectors = RoomsAdapter.getSelectors<RootState
+>((state )=> state.RoomsReducer)
+export default RoomsReducer.reducer as Reducer<RoomsState>

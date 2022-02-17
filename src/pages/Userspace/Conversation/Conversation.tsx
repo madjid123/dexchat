@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactPropTypes } from "react";
 import { ListGroup, Spinner } from "react-bootstrap";
 import Button from "../../../components/Button/Button";
 import { io } from "socket.io-client";
@@ -32,6 +32,7 @@ interface ConversationProps {
   setClearMsgs(arg0: boolean): void;
   member: any;
   CurrentRoomId: string;
+  closeConversation(): void;
 }
 
 function Conversation(props: ConversationProps) {
@@ -158,7 +159,6 @@ function Conversation(props: ConversationProps) {
         }
       }}
     >
-      {" "}
       <div
         className="conversation-header"
         style={{
@@ -245,6 +245,13 @@ function Conversation(props: ConversationProps) {
         </InfiniteScroll>
       </div>
       <footer className="footer">
+        <button
+          style={{ position: "absolute", right: "0" }}
+          onClick={(e) => props.closeConversation()}
+          className="mx-3"
+        >
+          X
+        </button>
         <Input
           className="footer-input "
           onChange={(e: any) => {
@@ -254,7 +261,7 @@ function Conversation(props: ConversationProps) {
           variant="dark"
         ></Input>
         <Button
-          className="footer-button form-input px-3 mx-2"
+          className="footer-butto px-3 mx-2"
           onClick={() => {
             onMessage();
           }}

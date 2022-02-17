@@ -21,7 +21,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { AuthSelector, CheckisAuth } from "./features/user/authSlice";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { darkTheme } from "./components/Theme/Them";
+import { darkTheme } from "./components/Theme/Theme";
 
 const Theme = createTheme({
   palette: {

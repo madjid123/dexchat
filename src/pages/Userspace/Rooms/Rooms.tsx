@@ -2,7 +2,7 @@
 import { Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
-import { RoomsSelector } from "../../../features/user/RoomsSlice";
+import { RoomsSelectors, setAllRooms } from "../../../features/user/RoomsSlice";
 import { clearAllMessages } from "../../../features/Conversation/MessagesSlice";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Rooms.css";
@@ -10,13 +10,17 @@ import "./Rooms.css";
 import { useState } from "react";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
+import { store } from "../../../app/store";
 
 export interface Room {
   members: any[2];
 }
 const Rooms = (props: any) => {
-  const { rooms } = useSelector(RoomsSelector);
   const dispatch = useDispatch();
+  const rooms = useSelector(RoomsSelectors.selectAll);
+
+  // const { rooms, error } = useSelector(RoomsSelectors);
+  console.log(rooms);
   const { currentUser } = useSelector(AuthSelector);
 
   return (
@@ -48,6 +52,7 @@ const Rooms = (props: any) => {
                     key={index}
                     onClick={() => {
                       props.setConversation(index);
+
                       if (room._id !== props.currentRoomId)
                         dispatch(clearAllMessages(""));
                     }}
@@ -65,6 +70,7 @@ const Rooms = (props: any) => {
                           return member.username;
                       })}
                     </div>
+                    <br />
                   </Nav.Item>
                 );
               })}

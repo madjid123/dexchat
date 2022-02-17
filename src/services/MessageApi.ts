@@ -3,8 +3,7 @@ import MessagesSlice, { Message, MessagesResponse, setMessagesState ,addMessage}
 import URL from "../URL"
 import { store } from "../app/store"
 import socket from "../utils/socket"
-import { DRAFT_STATE } from "immer/dist/internal"
-import { io } from "socket.io-client"
+
 export const MessageEndPointApi = createApi({
 	reducerPath: "messagesApi",
 	baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include", }),
@@ -57,7 +56,7 @@ export const MessageEndPointApi = createApi({
 							return draft
 						})
 					}
-					socket.on("getmsg", listener)
+					socket.on(`getmsg`, listener)
 					socket.on("hh",(data)=>{console.log(data)})
 
 				} catch (e) {
