@@ -27,34 +27,31 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useFetchMessages } from "../../../hooks/useFetchMessages";
 import { reactHooksModuleName } from "@reduxjs/toolkit/dist/query/react/module";
 import Input from "../../../components/Input/Input";
+import {
+  Room,
+  RoomSelector,
+  RoomsSelectors,
+} from "../../../features/user/RoomsSlice";
+import { Dictionary } from "@reduxjs/toolkit";
 interface ConversationProps {
-  clearMsgs: boolean;
-  setClearMsgs(arg0: boolean): void;
-  member: any;
-  CurrentRoomId: string;
+  // clearMsgs: boolean;
+  // setClearMsgs(arg0: boolean): void;
+  // member: any;
+  // CurrentRoomId: string;
   closeConversation(): void;
 }
 
 function Conversation(props: ConversationProps) {
   const { currentUser } = useSelector(AuthSelector);
-  const { messagesResponse } = useSelector(MessagesSelector);
-  const [member, setMember] = useState(props.member);
+  const { messagesResponse, roomId } = useSelector(MessagesSelector);
+  const [member, setMember] = useState({} as any);
   const [message, setMessage] = useState("" as string);
   const [scrollPos, setScrollPos] = useState(0);
   const dispatch = useAppDispatch();
   const [trigger, result] =
     MessageEndPointApi.endpoints.getMessagesByRoomId.useLazyQuery({});
-  // if (result.data !== undefined) {
-  // messagesResponse = result.data
-  // console.log(messagesResponse)
-  // }
-  // const getMessage = useCallback(() => {
-  //     socket.on("getmsg", (data) => {
-  //         const _message: Message = data.message;
+  const rooms: Dictionary<Room> = useSelector(RoomsSelectors.selectEntities);
 
-  //         dispatch(addMessage(_message));
-  //     });
-  // }, []);
   const onMessage = () => {
     if (message === "") return;
     if (socket.connected && currentUser !== undefined) {
@@ -69,7 +66,7 @@ function Conversation(props: ConversationProps) {
           id: _id,
         },
         Room: {
-          id: props.CurrentRoomId,
+          id: roomId,
         },
         content: {
           text: message,
@@ -80,20 +77,19 @@ function Conversation(props: ConversationProps) {
         message: _message,
       });
       dispatch(addMessage(_message));
-      dispatch(
-        SendMessageToApi({ message: _message, room_id: props.CurrentRoomId })
-      );
+      dispatch(SendMessageToApi({ message: _message, room_id: roomId }));
       setMessage("");
     }
   };
 
   useEffect(() => {
-    setMember(props.member);
-    if (props.clearMsgs === true) {
-      props.setClearMsgs(false);
-      clearAllMessages(null);
+    if (rooms) {
+      console.log(rooms[roomId]);
+      rooms[roomId]?.members.map((member) => {
+        if (member._id !== currentUser?._id) setMember(member);
+      });
     }
-  }, [props.member, props]);
+  }, [roomId]);
   useEffect(() => {
     if (currentUser !== undefined) {
       let user = {
@@ -101,24 +97,34 @@ function Conversation(props: ConversationProps) {
         id: currentUser?._id,
       };
 
-      dispatch(
-        MessageEndPointApi.endpoints.getMessagesByRoomId.initiate(
-          { room_id: props.CurrentRoomId, page: 1 },
-          { forceRefetch: true }
-        )
-      );
+      // dispatch(
+      //   MessageEndPointApi.endpoints.getMessagesByRoomId.initiate(
+      //     { room_id: props.CurrentRoomId, page: 1 },
+      //     { forceRefetch: true }
+      //   )
+      // );
 
       let ScroDiv = document.getElementById("scrollableDiv");
       ScroDiv?.addEventListener("scroll", (e) => {});
     }
-  }, [currentUser, dispatch, props.CurrentRoomId, socket]);
+  }, [currentUser, dispatch, , socket]);
   useEffect(() => {
     //getMessage();
-    trigger({ room_id: props.CurrentRoomId, page: 1 });
+    let page = 1;
+    // const messages = rooms[props.CurrentRoomId]?.messages;
+    // if (messages && messages?.messages.length > 0) {
+    if (messagesResponse.messages.length > 0) {
+      // dispatch(setMessagesState(messages));
+      console.log("executed by a dictator Xd");
+    } else {
+      console.log(roomId);
+      trigger({ room_id: roomId, page: 1 });
+      console.log("here we are");
+    }
     socket.on("typing", (args: string) => {
       console.log(args, "is typing");
     });
-  }, []);
+  }, [roomId]);
   useEffect(() => {
     socket.volatile.emit("typing", {
       Sender: currentUser?.username,
@@ -132,14 +138,15 @@ function Conversation(props: ConversationProps) {
       setScrollPos(ScroDiv?.scrollTop);
     }
     setTimeout(() => {
-      if (result.data !== undefined) {
-        let page = result.data.page;
+      // if (result.data !== undefined) {
+      // let page = result.data.page;
+      let page = messagesResponse.page;
 
-        if (page !== undefined && page + 1 > result.data.pages) return;
-        else page += 1;
+      if (page !== undefined && page + 1 > messagesResponse.pages) return;
+      else page += 1;
 
-        trigger({ room_id: props.CurrentRoomId, page: page });
-      }
+      trigger({ room_id: roomId, page: page });
+      // }
     }, 1000);
   };
   useEffect(() => {
@@ -167,7 +174,21 @@ function Conversation(props: ConversationProps) {
           borderRadius: "1.5rem 1.5rem 0.5rem 0.5rem",
         }}
       >
-        <h2 style={{ position: "sticky" }}>{props.member.username}</h2>
+        <Button
+          style={{ position: "absolute", right: "0" }}
+          onClick={() => {
+            props.closeConversation();
+          }}
+          className="mx-3"
+          variant="danger"
+        >
+          X
+        </Button>
+        <h2
+          style={{ position: "sticky", width: "fit-content", margin: "auto" }}
+        >
+          {member.username}
+        </h2>
       </div>
       <div
         id="scrollableDiv"
@@ -245,13 +266,6 @@ function Conversation(props: ConversationProps) {
         </InfiniteScroll>
       </div>
       <footer className="footer">
-        <button
-          style={{ position: "absolute", right: "0" }}
-          onClick={(e) => props.closeConversation()}
-          className="mx-3"
-        >
-          X
-        </button>
         <Input
           className="footer-input "
           onChange={(e: any) => {

@@ -4,6 +4,7 @@ import {
 	Reducer,
 	createEntityAdapter,
 	EntityState,
+	PayloadAction,
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState, store } from "../../app/store";
@@ -15,20 +16,20 @@ interface Member {
 	name: string,
 	_id: string,
 }
-interface Room {
+export interface Room {
 	members: Member[];
 	_id: string,
-	messages : MessagesResponse[]
+	messages: MessagesResponse
 }
 interface RoomError {
 	exist: boolean;
 	message: string
 }
-type RoomsState = 
-	EntityState<Room> & {error : RoomError}
+type RoomsState =
+	EntityState<Room> & { error: RoomError }
 
 const RoomsAdapter = createEntityAdapter<Room>({
-	selectId : (roomState) => roomState._id,
+	selectId: (roomState) => roomState._id,
 
 })
 export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, thunkAPI) => {
@@ -36,7 +37,6 @@ export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, t
 		const _id = id
 		const response = await axios.get(URL + `/user/contacts/${_id}`, { withCredentials: true })
 		if (response.status === 200) {
-			console.log(response.data)	
 			thunkAPI.dispatch(setAllRooms(response.data.Rooms))
 			// return response.data.Rooms
 		}
@@ -47,8 +47,8 @@ export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, t
 	}
 })
 const initialState: RoomsState = {
-	ids :[],
-	entities : {},
+	ids: [],
+	entities: {},
 	error: {
 		exist: false,
 		message: ""
@@ -57,21 +57,34 @@ const initialState: RoomsState = {
 const RoomsReducer = createSlice({
 	name: "rooms",
 	initialState: RoomsAdapter.getInitialState({
-		error :{
-			exist : false,
-			message : ""
+		error: {
+			exist: false,
+			message: ""
 		} as RoomError,
-		
+
 	}),
 	reducers: {
-		RoomUpdate : RoomsAdapter.updateOne,
-		setAllRooms : RoomsAdapter.setAll
-		
+		RoomUpdate: RoomsAdapter.updateOne,
+		setAllRooms(state, action: PayloadAction<Room[]>) {
+			let rooms = action.payload
+			rooms = rooms.map((room) => {
+				return {
+					...room,
+					messages: {
+						messages: [],
+						page: 1,
+						pages: 1
+					},
+				}
+			})
+			RoomsAdapter.setAll(state, rooms)
+		}
+
 
 	},
 	extraReducers: (builder) => {
-		builder.addCase(getRooms.fulfilled, (state,  payload)  => {
-			state.error = {exist : false , message : ""}
+		builder.addCase(getRooms.fulfilled, (state, payload) => {
+			state.error = { exist: false, message: "" }
 			// RoomsAdapter.setAll(state,payload)
 		}).addCase(getRooms.rejected, (state, { payload }) => {
 			state.error.exist = true;
@@ -80,7 +93,10 @@ const RoomsReducer = createSlice({
 		});
 	}
 })
-export const {setAllRooms,RoomUpdate } = RoomsReducer.actions
+export const { setAllRooms, RoomUpdate } = RoomsReducer.actions
 export const RoomsSelectors = RoomsAdapter.getSelectors<RootState
->((state )=> state.RoomsReducer)
+>((state) => state.RoomsReducer)
+export const RoomErrorSelector = (state: RootState) => state.RoomsReducer.error
+export const RoomSelector = (state: RootState) => state.RoomsReducer
+
 export default RoomsReducer.reducer as Reducer<RoomsState>

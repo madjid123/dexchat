@@ -2,8 +2,19 @@
 import { Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
-import { RoomsSelectors, setAllRooms } from "../../../features/user/RoomsSlice";
-import { clearAllMessages } from "../../../features/Conversation/MessagesSlice";
+import {
+  RoomErrorSelector,
+  RoomSelector,
+  RoomsSelectors,
+  RoomUpdate,
+  setAllRooms,
+} from "../../../features/user/RoomsSlice";
+import {
+  clearAllMessages,
+  MessagesSelector,
+  setMessagesState,
+  setRoomId,
+} from "../../../features/Conversation/MessagesSlice";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Rooms.css";
 
@@ -18,11 +29,11 @@ export interface Room {
 const Rooms = (props: any) => {
   const dispatch = useDispatch();
   const rooms = useSelector(RoomsSelectors.selectAll);
-
-  // const { rooms, error } = useSelector(RoomsSelectors);
-  console.log(rooms);
+  const ids = useSelector(RoomsSelectors.selectIds);
+  const { roomId, messagesResponse } = useSelector(MessagesSelector);
+  const { error } = useSelector(RoomSelector);
   const { currentUser } = useSelector(AuthSelector);
-
+  console.log(ids);
   return (
     <>
       <Navbar
@@ -51,10 +62,29 @@ const Rooms = (props: any) => {
                   <Nav.Item
                     key={index}
                     onClick={() => {
-                      props.setConversation(index);
-
-                      if (room._id !== props.currentRoomId)
-                        dispatch(clearAllMessages(""));
+                      if (room._id !== roomId) {
+                        if (roomId === "") {
+                          dispatch(setRoomId(room._id));
+                          let currentRoom = rooms[ids.indexOf(room._id)];
+                          dispatch(setMessagesState(currentRoom.messages));
+                        } else {
+                          let currentRoom = rooms[ids.indexOf(roomId)];
+                          dispatch(
+                            RoomUpdate({
+                              id: roomId,
+                              changes: { messages: messagesResponse },
+                            })
+                          );
+                          dispatch(setRoomId(room._id));
+                          currentRoom = rooms[ids.indexOf(room._id)];
+                          dispatch(setMessagesState(currentRoom.messages));
+                          // if (currentRoom.messages.messages.length >0){
+                        }
+                        // }
+                        // else{
+                        // dispatch(clearAllMessages(""));
+                        // }
+                      }
                     }}
                   >
                     <div>

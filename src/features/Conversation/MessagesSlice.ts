@@ -89,8 +89,8 @@ const MessagesReducer = createSlice({
 				pages: 1
 			}
 		},
-		setMessagesState: (state, { payload }: { payload: Message[] }) => {
-			state.messagesResponse.messages = payload
+		setMessagesState: (state, { payload }: { payload: MessagesResponse  }) => {
+			state.messagesResponse= payload
 		},
 		setRoomId(state,{payload}:{payload : string}){
 			state.roomId = payload

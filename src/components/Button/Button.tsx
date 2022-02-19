@@ -12,7 +12,6 @@ const borderColor = "#30c982";
 
 //i am not sure if this is a dumb way to acheive styles but i don't care
 // i am sick and tired from finding the right way.. XD
-const DangerButton = styled()``;
 
 export default styled(Button)`
   && {

@@ -21,7 +21,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { AuthSelector, CheckisAuth } from "./features/user/authSlice";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { darkTheme } from "./components/Theme/Theme";
+import { darkTheme, lightTheme } from "./components/Theme/Theme";
 
 const Theme = createTheme({
   palette: {
@@ -44,7 +44,7 @@ const App = () => {
   }, [isAuth]);
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={lightTheme}>
       <Router>
         {/* <NavBar history={History}></NavBar> */}
         {isAuth && <Redirect to="/user"></Redirect>}
