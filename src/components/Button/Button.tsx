@@ -12,16 +12,20 @@ const borderColor = "#30c982";
 
 //i am not sure if this is a dumb way to acheive styles but i don't care
 // i am sick and tired from finding the right way.. XD
+const DangerButton = styled()``;
+
 export default styled(Button)`
   && {
     &:hover {
       //I case for the future.
-      background-color: ${(props) => (props.primary ? "" : borderColor)};
+      background-color: ${(props) =>
+        props.variant === "primary" ? "" : borderColor};
       color: white;
       /* border: solid #00000000; */
     }
     color: ${borderColor};
-    background-color: #00000000;
+    background-color: ${(props) =>
+      props.variant === "danger" ? "#fd5d57" : "#0000000E"};
 
     border-radius: 1rem 0.5rem 1rem 0.5rem;
     border: 1px solid;

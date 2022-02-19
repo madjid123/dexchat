@@ -1,18 +1,25 @@
-import Rooms, { Room } from "./Rooms/Rooms";
+import Rooms from "./Rooms/Rooms";
 import Conversation from "./Conversation/Conversation";
 
 import { useState, useEffect, useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { AuthSelector } from "../../features/user/authSlice";
-import { getRooms, RoomsSelectors } from "../../features/user/RoomsSlice";
+import {
+  getRooms,
+  RoomsSelectors,
+  RoomUpdate,
+} from "../../features/user/RoomsSlice";
 import Footer, { SideBar, FooterHeight } from "../../components/Footer/Footer";
 
 import "./UserSpace.css";
 import socket from "../../utils/socket";
 import Header from "../../components/Header/Header";
-import { setRoomId } from "../../features/Conversation/MessagesSlice";
-import { unmountComponentAtNode } from "react-dom";
+import {
+  clearAllMessages,
+  MessagesSelector,
+  setRoomId,
+} from "../../features/Conversation/MessagesSlice";
 // interface User {
 //     _id: string,
 //     name: string
@@ -25,6 +32,7 @@ const UserSpace = (props: any) => {
   const [clearMsgs, setClearMsgs] = useState(false);
   const [showed, setShowed] = useState(true);
   const rooms = useSelector(RoomsSelectors.selectAll);
+  const { messagesResponse, roomId } = useSelector(MessagesSelector);
   const conversation = useRef(null);
   useEffect(() => {
     socket.connect();
@@ -54,10 +62,16 @@ const UserSpace = (props: any) => {
 
   const setConversation = (index: number) => {
     const room = rooms[index];
-    dispatch(setRoomId(room._id));
     room.members.forEach((member: any) => {
       if (member._id !== currentUser?._id) {
-        setCurrentRoomId(room._id);
+        dispatch(
+          RoomUpdate({
+            id: CurrentRoomId,
+            changes: { messages: messagesResponse },
+          })
+        );
+        dispatch(setRoomId(room._id));
+        // setCurrentRoomId(room._id);
         setMember(member);
         return;
       }
@@ -67,11 +81,16 @@ const UserSpace = (props: any) => {
     setClearMsgs(b);
   };
   const closeConvrstion = () => {
-    console.log("cloooose");
     setMember({ _id: undefined });
     //should save messages in the specific toom here..
+    dispatch(
+      RoomUpdate({ id: CurrentRoomId, changes: { messages: messagesResponse } })
+    );
+    dispatch(clearAllMessages({}));
+    dispatch(setRoomId(""));
     setClearMsgs(true);
-    setCurrentRoomId("");
+    dispatch(setRoomId(""));
+    // setCurrentRoomId("");
   };
 
   return (
@@ -94,12 +113,12 @@ const UserSpace = (props: any) => {
             ) : (
               <></>
             )}
-            {Member._id !== undefined ? (
+            {roomId !== "" ? (
               <Conversation
-                CurrentRoomId={CurrentRoomId}
-                member={Member}
-                clearMsgs={clearMsgs}
-                setClearMsgs={SetClearMsgs}
+                // CurrentRoomId={CurrentRoomId}
+                // member={Member}
+                // clearMsgs={clearMsgs}
+                // setClearMsgs={SetClearMsgs}
                 closeConversation={closeConvrstion}
               ></Conversation>
             ) : (
