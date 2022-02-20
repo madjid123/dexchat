@@ -41,7 +41,7 @@ const UserSpace = (props: any) => {
       rooms: rooms.map((room) => {
         return room._id;
       }),
-      roomId: socket.id,
+      // roomId: socket.id,
       user: currentUser,
     });
     // else console.log("socket not connected");
