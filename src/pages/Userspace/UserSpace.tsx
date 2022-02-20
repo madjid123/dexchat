@@ -89,7 +89,6 @@ const UserSpace = (props: any) => {
     dispatch(clearAllMessages({}));
     dispatch(setRoomId(""));
     setClearMsgs(true);
-    dispatch(setRoomId(""));
     // setCurrentRoomId("");
   };
 
