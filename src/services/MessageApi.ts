@@ -56,8 +56,8 @@ export const MessageEndPointApi = createApi({
 							return draft
 						})
 					}
-					socket.on(`getmsg`, listener)
-					socket.on("hh",(data)=>{console.log(data)})
+					console.log(store.getState().MessagesReducer.roomId)
+					socket.on(`getmsg:${store.getState().MessagesReducer.roomId}`, listener)
 
 				} catch (e) {
 					console.log((e as Error).message)
@@ -65,10 +65,12 @@ export const MessageEndPointApi = createApi({
 				// cacheEntryRemoved will resolve when the cache subscription is no longer active
 				await api.cacheEntryRemoved
 				// perform cleanup steps once the `cacheEntryRemoved` promise resolves
+				socket.close()
 				api.updateCachedData((draft) => {
 					console.log("cache", draft)
 				})
 			},
+			
 		}),
 	})
 })
