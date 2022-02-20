@@ -2,6 +2,7 @@ import {
 	createSlice,
 	createAsyncThunk,
 	Reducer,
+	PayloadAction,
 } from "@reduxjs/toolkit"
 import { MessageEndPointApi, useGetMessagesByRoomIdQuery } from "../../services/MessageApi"
 import { RootState } from "../../app/store"
@@ -9,6 +10,7 @@ import axios, { AxiosError } from "axios"
 import URL from "../../URL"
 import { type } from "os"
 import { buildHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks"
+import socket from "../../utils/socket"
 // axios({
 // 	headers: {
 // 		'Content-Type': 'application/json',
@@ -92,8 +94,11 @@ const MessagesReducer = createSlice({
 		setMessagesState: (state, { payload }: { payload: MessagesResponse  }) => {
 			state.messagesResponse= payload
 		},
-		setRoomId(state,{payload}:{payload : string}){
-			state.roomId = payload
+		setRoomId(state,action : PayloadAction<string>){
+
+			state.messagesResponse = initialState.messagesResponse
+			state.roomId = action.payload
+            socket.removeListener("getmsg:" + state.roomId);
 		}
 
 	},
