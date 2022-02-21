@@ -20,6 +20,7 @@ import {
   MessagesSelector,
   setRoomId,
 } from "../../features/Conversation/MessagesSlice";
+import { Col, Nav, Row, Tab, Tabs } from "react-bootstrap";
 // interface User {
 //     _id: string,
 //     name: string
@@ -64,12 +65,12 @@ const UserSpace = (props: any) => {
     const room = rooms[index];
     room.members.forEach((member: any) => {
       if (member._id !== currentUser?._id) {
-        dispatch(
-          RoomUpdate({
-            id: CurrentRoomId,
-            changes: { messages: messagesResponse },
-          })
-        );
+        // dispatch(
+        //   RoomUpdate({
+        //     id: CurrentRoomId,
+        //     // changes: { messages: messagesResponse },
+        //   })
+        // );
         dispatch(setRoomId(room._id));
         // setCurrentRoomId(room._id);
         setMember(member);
@@ -83,9 +84,9 @@ const UserSpace = (props: any) => {
   const closeConvrstion = () => {
     setMember({ _id: undefined });
     //should save messages in the specific toom here..
-    dispatch(
-      RoomUpdate({ id: CurrentRoomId, changes: { messages: messagesResponse } })
-    );
+    // dispatch(
+    //   RoomUpdate({ id: CurrentRoomId, changes: { messages: messagesResponse } })
+    // );
     dispatch(clearAllMessages({}));
     dispatch(setRoomId(""));
     setClearMsgs(true);
@@ -105,10 +106,30 @@ const UserSpace = (props: any) => {
             }}
           >
             {showed ? (
-              <Rooms
-                setConversation={setConversation}
-                currentRoomId={CurrentRoomId}
-              ></Rooms>
+              <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                <Row style={{ height: "90vh" }}>
+                  <Col md={0}>
+                    <Nav variant="pills" className="flex-column">
+                      <Nav.Item>
+                        <Nav.Link eventKey="first">Rooms</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="second">Discover</Nav.Link>
+                      </Nav.Item>
+                    </Nav>
+                  </Col>
+                  <Col md={0}>
+                    <Tab.Content>
+                      <Tab.Pane eventKey="first">
+                        <Rooms></Rooms>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="second">
+                        <div>hello</div>
+                      </Tab.Pane>
+                    </Tab.Content>
+                  </Col>
+                </Row>
+              </Tab.Container>
             ) : (
               <></>
             )}
