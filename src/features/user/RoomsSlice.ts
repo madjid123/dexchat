@@ -19,7 +19,8 @@ interface Member {
 export interface Room {
 	members: Member[];
 	_id: string,
-	messages: MessagesResponse
+	newMessage : false 
+	// messages: MessagesResponse
 }
 interface RoomError {
 	exist: boolean;
