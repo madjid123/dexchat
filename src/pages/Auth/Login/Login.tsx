@@ -46,7 +46,7 @@ const Login = (props: any) => {
   };
 
   return (
-    <>
+    <div className="my-container">
       <Header history={props.history}></Header>
 
       <div className="form-mad">
@@ -111,7 +111,7 @@ const Login = (props: any) => {
           <p className="forgot-password text-right">Forgot password?</p>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

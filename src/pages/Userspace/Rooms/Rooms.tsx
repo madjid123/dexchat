@@ -34,12 +34,12 @@ const Rooms = (props: any) => {
   const { roomId, messagesResponse } = useSelector(MessagesSelector);
   const { error } = useSelector(RoomSelector);
   const { currentUser } = useSelector(AuthSelector);
-  console.log(ids);
+
   return (
     <>
       <Navbar
         variant="dark"
-        className="sidebar flex-column "
+        className="sidebare flex-column "
         collapseOnSelect
         style={{ color: "white" }}
       >
@@ -97,10 +97,12 @@ const Rooms = (props: any) => {
                         height="16"
                         alt=""
                       />
-                      {room.members.map((member: any) => {
+                      {
+                      room.members.map((member: any) => {
                         if (currentUser && member._id !== currentUser._id)
                           return member.username;
-                      })}
+                      })
+                      }
                     </div>
                     <br />
                   </Nav.Item>

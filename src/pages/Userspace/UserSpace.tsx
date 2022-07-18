@@ -1,7 +1,7 @@
 import Rooms from "./Rooms/Rooms";
 import Conversation from "./Conversation/Conversation";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { AuthSelector } from "../../features/user/authSlice";
@@ -20,11 +20,9 @@ import {
   MessagesSelector,
   setRoomId,
 } from "../../features/Conversation/MessagesSlice";
-import { Col, Nav, Row, Tab, Tabs } from "react-bootstrap";
-// interface User {
-//     _id: string,
-//     name: string
-// }
+import SideTabs from "./Tabs/Tabs";
+import { useMediaQuery } from "react-responsive";
+
 const UserSpace = (props: any) => {
   const [Member, setMember] = useState({} as any);
   const dispatch = useDispatch();
@@ -34,7 +32,8 @@ const UserSpace = (props: any) => {
   const [showed, setShowed] = useState(true);
   const rooms = useSelector(RoomsSelectors.selectAll);
   const { messagesResponse, roomId } = useSelector(MessagesSelector);
-  const conversation = useRef(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const header = useRef({} as React.Component);
   useEffect(() => {
     socket.connect();
     // if (socket.connected === true)
@@ -61,26 +60,6 @@ const UserSpace = (props: any) => {
     });
   });
 
-  const setConversation = (index: number) => {
-    const room = rooms[index];
-    room.members.forEach((member: any) => {
-      if (member._id !== currentUser?._id) {
-        // dispatch(
-        //   RoomUpdate({
-        //     id: CurrentRoomId,
-        //     // changes: { messages: messagesResponse },
-        //   })
-        // );
-        dispatch(setRoomId(room._id));
-        // setCurrentRoomId(room._id);
-        setMember(member);
-        return;
-      }
-    });
-  };
-  const SetClearMsgs = (b: boolean) => {
-    setClearMsgs(b);
-  };
   const closeConvrstion = () => {
     setMember({ _id: undefined });
     //should save messages in the specific toom here..
@@ -93,65 +72,41 @@ const UserSpace = (props: any) => {
     // setCurrentRoomId("");
   };
 
+  // const headerHeight =
+  // document.getElementsByClassName("header-nav")[0].clientHeight;
   return (
-    <>
-      <Header history={props.history}></Header>
+    <div className="my-container">
+      <div>
+        <Header history={props.history}></Header>
+      </div>
       {currentUser !== undefined ? (
-        <div style={{ height: `${100 - FooterHeight}%` }}>
+        // <div style={{ height: `${100 - FooterHeight}vh` }}>
+        <div style={{ height: "calc(100vh - var(--header-height))" }}>
           <div
-            className=""
+            className="cont"
             style={{
               display: "flex",
-              height: "94vh",
+              // height: "94vh",
+              // height: `${100 - FooterHeight}vh`,
+              height: `calc(100% - var(--header-height)))`,
             }}
           >
-            {showed ? (
-              <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                <Row style={{ height: "90vh" }}>
-                  <Col md={0}>
-                    <Nav variant="pills" className="flex-column">
-                      <Nav.Item>
-                        <Nav.Link eventKey="first">Rooms</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="second">Discover</Nav.Link>
-                      </Nav.Item>
-                    </Nav>
-                  </Col>
-                  <Col md={0}>
-                    <Tab.Content>
-                      <Tab.Pane eventKey="first">
-                        <Rooms></Rooms>
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="second">
-                        <div>hello</div>
-                      </Tab.Pane>
-                    </Tab.Content>
-                  </Col>
-                </Row>
-              </Tab.Container>
-            ) : (
-              <></>
-            )}
+            {showed ? <SideTabs></SideTabs> : <></>}
             {roomId !== "" ? (
-              <Conversation
-                // CurrentRoomId={CurrentRoomId}
-                // member={Member}
-                // clearMsgs={clearMsgs}
-                // setClearMsgs={SetClearMsgs}
-                closeConversation={closeConvrstion}
-              ></Conversation>
+              <Conversation closeConversation={closeConvrstion}></Conversation>
             ) : (
               <div></div>
             )}
           </div>
-          <Footer></Footer>
         </div>
       ) : (
         <div></div>
       )}
-    </>
+    </div>
   );
 };
 
 export default UserSpace;
+function useElementSize(): [any, any] {
+  throw new Error("Function not implemented.");
+}

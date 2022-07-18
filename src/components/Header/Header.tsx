@@ -4,8 +4,10 @@ import { useState } from "react";
 import { Redirect, RouteProps, withRouter } from "react-router";
 import { logout, AuthSelector } from "../../features/user/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "./Header.css";
-import { useTheme, Theme, styled, Container, Grid } from "@mui/material";
+// import { useTheme, Theme, styled, Container, Grid } from "@mui/material";
+import styled from "styled-components";
 import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
 
 const NavBar: React.FunctionComponent<RouteProps & any> = ({
@@ -25,17 +27,16 @@ const NavBar: React.FunctionComponent<RouteProps & any> = ({
   if (isAuth) {
     buttons = (
       <Button className="mx-2 " onClick={() => Logout()}>
-        {" "}
-        <a> Logout</a>
+        Logout
       </Button>
     );
   } else {
     buttons = (
-      <div className="">
+      <div className="header-content">
         <Button className="" href="/login">
-          <a>Login </a>
+          Login
         </Button>
-        <Button className="mx-1 btn-dex" href="/register">
+        <Button className="mx-1" href="/register">
           Register
         </Button>
       </div>
@@ -43,29 +44,43 @@ const NavBar: React.FunctionComponent<RouteProps & any> = ({
   }
 
   return (
-    <Navbar
-      collapseOnSelect
-      bg="tranparent"
-      variant="dark"
-      className="Navbar"
-      expand="sm"
-    >
-      <NavbarToggle
-        aria-controls="basic-navbar-nav"
-        style={{ color: "white" }}
-      />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="m-auto">
-          {currentUser !== undefined && (
-            <Nav.Link className="text-white" href="#home">
-              {currentUser.username}
-            </Nav.Link>
-          )}
-        </Nav>
+    <div className="header-nav">
+      <Navbar
+        collapseOnSelect
+        bg="tranparent"
+        variant="dark"
+        className="Navbar"
+        expand="md"
+      >
+        <NavbarToggle
+          aria-controls="basic-navbar-nav"
+          style={{ color: "white", margin: "0.75rem" }}
+        />
+        <Navbar.Collapse id="basic-navbar-nav" className="">
+          <Nav className="m-auto">
+            {currentUser !== undefined && (
+              <div>
+                <Nav.Link className="text-white" href="#home">
+                  {currentUser.username}
+                </Nav.Link>
+                <div className="show-responsive-elmnts">
+                  <Nav.Link
+                    className="text-white"
+                    onClick={() => {
+                      history.push("/wello");
+                    }}
+                  >
+                    Rooms
+                  </Nav.Link>
+                  <Link to="/wello">madjid</Link>
+                </div>
+              </div>
+            )}
+          </Nav>
+        </Navbar.Collapse>
         {buttons}
-      </Navbar.Collapse>
-    </Navbar>
+      </Navbar>
+    </div>
   );
 };
-
 export default withRouter(NavBar);

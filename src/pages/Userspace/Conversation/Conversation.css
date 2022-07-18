@@ -1,48 +1,62 @@
 .conversation {
   background-color: #343a4000;
   ;
-  width: 70%;
+  height: calc(100vh - calc(var(--header-height)+5rem));
+  width: 100%;
   text-align: center;
   color: #ffffff;
   border-radius: 1.5rem;
-  margin: 0.5rem;
-  margin-bottom: 6rem;
+  margin-block: 0.5rem;
+  margin-left: 0.5rem;
+  /* margin-bottom: 6rem; */
   box-shadow: 0 0 20px 5px hsla(0, 0%, 7%, 0.5)
 }
-/* footer {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  width: 70%;
-  display: flex;
-	flex-direction: column;
-} */
+
 .conversation footer {
-   position: relative; 
-  /* //right: 0; */
-  /* bottom: 0; */
-  /* width: 70%; */
+  position: relative;
   display: flex;
-  margin : 0.5rem;
+  margin: 0.5rem;
+  margin-bottom: 0.5rem;
 }
+
+.conversation-header {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
 .footer {
-	align-items: center;
-	display: flex;
-	flex-direction: row;
-  margin-top: -0.5rem !important;
+  position: absolute;
+  bottom: 0;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  /* margin-top: -1.5rem !important; */
+  /* background-color: rgba(0, 0, 0, 0.149); */
+  /* box-shadow: 10px 10px 10px #000; */
 }
- .footer-button {
+
+@media only screen and (min-width: 700px) {
+  .footer {
+    /* margin-top: -1.5rem !important; */
+  }
+
+}
+
+.footer-button {
   border-radius: 1.5rem !important;
   padding-inline: 1rem !important;
   background-color: #ff4800 !important;
   border-color: none;
-  margin : 0.5rem
+  margin: 0.5rem
 }
+
 .footer-input {
-	flex-direction: column;
+  flex-direction: column;
   width: 100%;
 }
-.footer-input input{
+
+.footer-input input {
   padding-block: 0.5rem;
   margin: 2.5rem;
   border: 1px #fff;
@@ -50,7 +64,8 @@
   width: 100%;
 
 }
-.footer-input{
+
+.footer-input {
   margin: 0.25rem;
   border-radius: 1.5rem;
   padding-block: 0.25rem;
@@ -59,14 +74,17 @@
   padding-inline: 0.5rem;
   border-color: #0000;
 }
-input:focus.footer-input{
+
+input:focus.footer-input {
   border-color: none;
   outline: none;
   width: 100%;
 }
-.footer-input input:active{
-	border: none;
+
+.footer-input input:active {
+  border: none;
 }
+
 .message .sender {
   display: flex;
   padding-inline: 3rem;
@@ -76,6 +94,7 @@ input:focus.footer-input{
   margin: auto;
   margin-left: 3rem;
 }
+
 .sender {
   position: relative;
   display: flex;
@@ -83,6 +102,7 @@ input:focus.footer-input{
   margin: auto;
   margin-left: 0;
 }
+
 .receiver {
   position: relative;
   display: flex;
@@ -90,33 +110,37 @@ input:focus.footer-input{
   margin: auto;
   margin-left: 0;
 }
+
 .message .user-bull {
   position: relative;
   left: 0;
   width: fit-content;
-    width:   -moz-fit-content;
+  width: -moz-fit-content;
   max-width: 50%;
-  background : linear-gradient(90deg,rgb(0, 226, 139) , rgba(0, 171, 250, 0.664));
+  background: linear-gradient(90deg, rgb(0, 226, 139), rgba(0, 171, 250, 0.664));
   /* background-color: rgba(52, 146, 146, 0.63); */
   padding-inline: 1rem;
   padding-block: 0.5rem;
   margin-inline: 0.5rem;
-    border-radius: 2rem 2rem 4rem 2rem;
+  border-radius: 2rem 2rem 4rem 2rem;
 
 }
+
 .message .message-bull {
   position: relative;
   width: fit-content;
-    width:   -moz-fit-content;
+  width: -moz-fit-content;
   box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.507);
 
   padding-inline: 1rem;
   padding-block: 0.5rem;
   margin-inline: 0.5rem;
 }
+
 li.MessageItem {
   list-style: none;
 }
+
 .message .member-bull {
   position: relative;
 
@@ -128,17 +152,19 @@ li.MessageItem {
   padding-inline: 1rem;
   padding-block: 0.5rem;
   border-radius: 2rem 2rem 2rem 4rem;
-  right : 0.5rem
+  right: 0.5rem
 }
-.list-of-messages{
- height: 100%;
+
+.list-of-messages {
+  /* height: 100%; */
 }
 
 div#scrollableDiv::-webkit-scrollbar-track-piece {
   scrollbar-width: thin;
-  scrollbar-color: rgb(204, 204, 20)rgb(180, 180, 180);
+  scrollbar-color: rgb(204, 204, 20);
 }
-div::-webkit-scrollbar{
+
+div::-webkit-scrollbar {
   width: 11px;
   scrollbar-arrow-color: #ffffff;
   background: rgb(48, 48, 48);
@@ -146,7 +172,7 @@ div::-webkit-scrollbar{
   border-radius: 1.5rem;
 }
 
-div::-webkit-scrollbar-thumb{
+div::-webkit-scrollbar-thumb {
   background: #fff;
   border-radius: 1.5rem;
 }

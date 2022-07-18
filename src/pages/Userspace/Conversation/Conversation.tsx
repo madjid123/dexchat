@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, ReactPropTypes } from "react";
 import { ListGroup, Spinner } from "react-bootstrap";
 import Button from "../../../components/Button/Button";
-import { io } from "socket.io-client";
 import { useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
 import {
@@ -174,21 +173,27 @@ function Conversation(props: ConversationProps) {
           borderRadius: "1.5rem 1.5rem 0.5rem 0.5rem",
         }}
       >
-        <Button
-          style={{ position: "absolute", right: "0" }}
-          onClick={() => {
-            props.closeConversation();
-          }}
-          className="mx-3"
-          variant="danger"
-        >
-          X
-        </Button>
         <h2
-          style={{ position: "sticky", width: "fit-content", margin: "auto" }}
+          style={{
+            position: "sticky",
+            width: "fit-content",
+            margin: "auto",
+          }}
         >
           {member.username}
         </h2>
+        <Button
+          style={{ position: "absolute", right: "4%", margin: "auto" }}
+          onClick={() => {
+            props.closeConversation();
+          }}
+          type="submit"
+          value="X"
+          // className="mx-3"
+          // variant="me-danger"
+        >
+          X
+        </Button>
       </div>
       <div
         id="scrollableDiv"

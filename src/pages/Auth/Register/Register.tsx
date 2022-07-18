@@ -38,6 +38,7 @@ const Register = (props: RegisterProps) => {
     const data = { ...state };
 
     if (!Valid) return;
+    console.log(data);
     axios
       .post(API_URL + "/register", data)
       .then((response) => {
@@ -126,7 +127,7 @@ const Register = (props: RegisterProps) => {
     return <Redirect to="/login"></Redirect>;
   }
   return (
-    <>
+    <div className="my-container">
       <Header history={props.history}> </Header>
       <div className="form-mad">
         <form id="form" onSubmit={handleSubmit}>
@@ -194,7 +195,7 @@ const Register = (props: RegisterProps) => {
           </p>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

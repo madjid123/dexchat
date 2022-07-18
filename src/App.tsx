@@ -22,19 +22,9 @@ import "./App.css";
 import { AuthSelector, CheckisAuth } from "./features/user/authSlice";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { darkTheme, lightTheme } from "./components/Theme/Theme";
+import Header from "./components/Header/Header";
+import { Home } from "./pages/Home/Home";
 
-const Theme = createTheme({
-  palette: {
-    mode: "dark",
-    background: {
-      default: "#A05656",
-      paper: "#1C1D22",
-    },
-  },
-  typography: {
-    fontFamily: "Poppins",
-  },
-});
 const App = () => {
   const dispatch = useDispatch();
   const History = useHistory();
@@ -42,9 +32,8 @@ const App = () => {
   useEffect(() => {
     dispatch(CheckisAuth());
   }, [isAuth]);
-
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={darkTheme}>
       <Router>
         {/* <NavBar history={History}></NavBar> */}
         {isAuth && <Redirect to="/user"></Redirect>}
@@ -57,6 +46,12 @@ const App = () => {
           </Route>
           <Route path="/register">
             <Register history={History}> </Register>
+          </Route>
+          <Route path="/wello">
+            <div>Wello</div>
+          </Route>
+          <Route path="/">
+            <Home></Home>
           </Route>
         </Switch>
       </Router>

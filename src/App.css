@@ -34,3 +34,6 @@ html {
 .bg-mydark {
   background-color: #30353a;
 }
+:root{
+  --header-height : 10vh;
+}
