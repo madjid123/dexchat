@@ -45,7 +45,7 @@ export interface MessagesResponse {
 interface MessagesState {
 	messagesResponse: MessagesResponse
 	errors: string[],
-	roomId : string
+	roomId: string
 }
 const initialState: MessagesState = {
 	messagesResponse: {
@@ -54,7 +54,7 @@ const initialState: MessagesState = {
 		pages: 1
 	},
 	errors: [],
-	roomId :""
+	roomId: ""
 }
 
 export const SendMessageToApi = createAsyncThunk<void, { message: Message, room_id: string }, {}>("message/send", async ({
@@ -91,14 +91,14 @@ const MessagesReducer = createSlice({
 				pages: 1
 			}
 		},
-		setMessagesState: (state, { payload }: { payload: MessagesResponse  }) => {
-			state.messagesResponse= payload
+		setMessagesState: (state, { payload }: { payload: MessagesResponse }) => {
+			state.messagesResponse = payload
 		},
-		setRoomId(state,action : PayloadAction<string>){
+		setRoomId(state, action: PayloadAction<string>) {
 
 			state.messagesResponse = initialState.messagesResponse
 			state.roomId = action.payload
-            socket.removeListener("getmsg:" + state.roomId);
+			socket.removeListener("getmsg:" + state.roomId);
 		}
 
 	},
@@ -128,6 +128,6 @@ const MessagesReducer = createSlice({
 
 const { actions, reducer } = MessagesReducer
 export const { addMessage, clearAllMessages, setMessagesState
-,setRoomId} = actions
+	, setRoomId } = actions
 export const MessagesSelector = (state: RootState) => state.MessagesReducer
 export default MessagesReducer.reducer as Reducer<typeof initialState>

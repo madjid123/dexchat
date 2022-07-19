@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ReactPropTypes } from "react";
+import { useState, useEffect } from "react";
 import { ListGroup, Spinner } from "react-bootstrap";
 import Button from "../../../components/Button/Button";
 import { useSelector } from "react-redux";
@@ -7,36 +7,23 @@ import {
   MessagesSelector,
   Message,
   addMessage,
-  clearAllMessages,
-  setMessagesState,
   SendMessageToApi,
-  MessagesResponse,
 } from "../../../features/Conversation/MessagesSlice";
 import { useAppDispatch } from "../../../app/hooks";
 import {
   MessageEndPointApi,
-  useGetMessagesByRoomIdQuery,
-  useLazyGetMessagesByRoomIdQuery,
 } from "../../../services/MessageApi";
 import "./Conversation.css";
 import "react-bootstrap";
-import { useCallback } from "react";
 import socket from "../../../utils/socket";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useFetchMessages } from "../../../hooks/useFetchMessages";
-import { reactHooksModuleName } from "@reduxjs/toolkit/dist/query/react/module";
 import Input from "../../../components/Input/Input";
 import {
   Room,
-  RoomSelector,
   RoomsSelectors,
 } from "../../../features/user/RoomsSlice";
 import { Dictionary } from "@reduxjs/toolkit";
 interface ConversationProps {
-  // clearMsgs: boolean;
-  // setClearMsgs(arg0: boolean): void;
-  // member: any;
-  // CurrentRoomId: string;
   closeConversation(): void;
 }
 
@@ -95,13 +82,6 @@ function Conversation(props: ConversationProps) {
         ...currentUser,
         id: currentUser?._id,
       };
-
-      // dispatch(
-      //   MessageEndPointApi.endpoints.getMessagesByRoomId.initiate(
-      //     { room_id: props.CurrentRoomId, page: 1 },
-      //     { forceRefetch: true }
-      //   )
-      // );
 
       let ScroDiv = document.getElementById("scrollableDiv");
       ScroDiv?.addEventListener("scroll", (e) => {});

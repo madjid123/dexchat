@@ -36,15 +36,12 @@ const UserSpace = (props: any) => {
   const header = useRef({} as React.Component);
   useEffect(() => {
     socket.connect();
-    // if (socket.connected === true)
     socket.emit("sendsocket", {
       rooms: rooms.map((room) => {
         return room._id;
       }),
-      // roomId: socket.id,
       user: currentUser,
     });
-    // else console.log("socket not connected");
   }, [socket.disconnected, rooms]);
   useEffect(() => {
     let id = undefined;
@@ -62,32 +59,22 @@ const UserSpace = (props: any) => {
 
   const closeConvrstion = () => {
     setMember({ _id: undefined });
-    //should save messages in the specific toom here..
-    // dispatch(
-    //   RoomUpdate({ id: CurrentRoomId, changes: { messages: messagesResponse } })
-    // );
     dispatch(clearAllMessages({}));
     dispatch(setRoomId(""));
     setClearMsgs(true);
-    // setCurrentRoomId("");
   };
 
-  // const headerHeight =
-  // document.getElementsByClassName("header-nav")[0].clientHeight;
   return (
     <div className="my-container">
       <div>
         <Header history={props.history}></Header>
       </div>
       {currentUser !== undefined ? (
-        // <div style={{ height: `${100 - FooterHeight}vh` }}>
         <div style={{ height: "calc(100vh - var(--header-height))" }}>
           <div
             className="cont"
             style={{
               display: "flex",
-              // height: "94vh",
-              // height: `${100 - FooterHeight}vh`,
               height: `calc(100% - var(--header-height)))`,
             }}
           >
