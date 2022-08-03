@@ -1,14 +1,18 @@
 .conversation {
   background-color: #343a4000;
-  ;
-  height: calc(100vh - calc(var(--header-height)+5rem));
+  display: flex;
+  height: calc(100vh - calc(var(--header-height)+6rem));
+  max-height: inherit;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  flex-direction: column;
   width: 100%;
   text-align: center;
   color: #ffffff;
   border-radius: 1.5rem;
-  margin-block: 0.5rem;
-  margin-left: 0.5rem;
-  box-shadow: 0 0 20px 5px hsla(0, 0%, 7%, 0.5)
+  box-shadow: 0 0 10px 2px hsla(0, 0%, 7%, 0.5);
+  flex: 2;
 }
 
 .conversation footer {
@@ -22,6 +26,7 @@
   display: flex;
   justify-content: center;
   text-align: center;
+  flex: 0.2;
 }
 
 .footer {
@@ -30,16 +35,20 @@
   align-items: center;
   display: flex;
   flex-direction: row;
+  flex: 0.5;
   /* margin-top: -1.5rem !important; */
   /* background-color: rgba(0, 0, 0, 0.149); */
   /* box-shadow: 10px 10px 10px #000; */
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (max-width: 768px) {
   .footer {
     /* margin-top: -1.5rem !important; */
   }
 
+  .conversation {
+    max-height: calc(100vh - calc(var(--header-height)+7rem));
+  }
 }
 
 .footer-button {
@@ -154,8 +163,8 @@ li.MessageItem {
   right: 0.5rem
 }
 
-.list-of-messages {
-  /* height: 100%; */
+#scrollableDiv {
+  flex: 4;
 }
 
 div#scrollableDiv::-webkit-scrollbar-track-piece {

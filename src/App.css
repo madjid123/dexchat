@@ -1,22 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+
 html,
 body,
 #app,
-#app > div {
+#app>div {
   height: 100%;
   overflow: hidden;
   /* background: url("C:\Users\madjid\Pictures\Backs\win11-img21.jpg"), #ffffff; */
-  background: rgb(35, 35, 44);
+  background: rgb(75 75 75);
   background-size: cover;
   font-family: Poppins, sans-serif;
   font-weight: 100;
 }
+
+body>#root>div {
+  height: 100vh;
+}
+
 /* #root {
   background-color: #444f55;
 } */
 html {
-  background-color: #353434;
+  background-color: #c18e5d;
 }
+
 .App {
   text-align: center;
 
@@ -26,6 +33,7 @@ html {
 .pro-sidebar {
   width: 30%;
 }
+
 .box-flex {
   display: flex;
   height: 89%;
@@ -34,6 +42,7 @@ html {
 .bg-mydark {
   background-color: #30353a;
 }
-:root{
-  --header-height : 10vh;
+
+:root {
+  --header-height: 10vh;
 }
