@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ListGroup, Spinner } from "react-bootstrap";
+import { Container, ListGroup, Spinner } from "react-bootstrap";
 import Button from "../../../components/Button/Button";
 import { useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
@@ -23,6 +23,8 @@ import {
   RoomsSelectors,
 } from "../../../features/user/RoomsSlice";
 import { Dictionary } from "@reduxjs/toolkit";
+
+
 interface ConversationProps {
   closeConversation(): void;
 }
@@ -137,7 +139,7 @@ function Conversation(props: ConversationProps) {
     });
   }, [scrollPos, messagesResponse?.page]);
   return (
-    <div
+          <div 
       className="conversation"
       onKeyPress={(e) => {
         if (e.key === "Enter") {
@@ -178,7 +180,7 @@ function Conversation(props: ConversationProps) {
       <div
         id="scrollableDiv"
         style={{
-          height: "80%",
+          height: "100vh",
           overflowY: "scroll",
           display: "flex",
           flexDirection: "column-reverse",
@@ -186,7 +188,6 @@ function Conversation(props: ConversationProps) {
         onScroll={(e) => {
           e.preventDefault();
         }}
-        // ref={ScrollableDivRef}
       >
         <InfiniteScroll
           dataLength={messagesResponse.messages.length}
@@ -213,7 +214,7 @@ function Conversation(props: ConversationProps) {
             </div>
           }
           scrollableTarget="scrollableDiv"
-          style={{ display: "flex", flexDirection: "column-reverse" }}
+          style={{ display: "flex", flexDirection: "column-reverse"}}
           inverse={true}
           scrollThreshold={"80%"}
           onScroll={(e) => {
@@ -221,7 +222,7 @@ function Conversation(props: ConversationProps) {
             e.stopPropagation();
           }}
         >
-          <ListGroup>
+          <ListGroup >
             {messagesResponse.messages.map((msg: Message, index) => {
               return (
                 <ListGroup.Item
@@ -229,7 +230,7 @@ function Conversation(props: ConversationProps) {
                   variant="dark"
                   key={index}
                   className="MessageItem"
-                  style={{ backgroundColor: "inherit", border: "none" }}
+                  style={{ backgroundColor: "inherit", border: "none"}}
                 >
                   <div className="message">
                     <div
@@ -269,6 +270,7 @@ function Conversation(props: ConversationProps) {
         </Button>
       </footer>
     </div>
+
   );
 }
 export default Conversation;

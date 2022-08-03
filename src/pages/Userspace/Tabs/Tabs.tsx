@@ -1,4 +1,5 @@
 import { Tab, Tabs } from "react-bootstrap";
+import { Discover } from "../Discover/Discover";
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
 const SideTabs = () => {
@@ -14,7 +15,7 @@ const SideTabs = () => {
           <Rooms />
         </Tab>
         <Tab eventKey="discover" title="Discover" className="tab">
-          <div>Hello</div>
+          <Discover></Discover>
         </Tab>
       </Tabs>
     </div>

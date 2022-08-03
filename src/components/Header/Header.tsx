@@ -52,14 +52,11 @@ const NavBar: React.FunctionComponent<RouteProps & any> = ({
         className="Navbar"
         expand="md"
       >
-        <NavbarToggle
-          aria-controls="basic-navbar-nav"
-          style={{ color: "white", margin: "0.75rem" }}
-        />
+       
         <Navbar.Collapse id="basic-navbar-nav" className="">
           <Nav className="m-auto">
             {currentUser !== undefined && (
-              <div>
+              <div >
                 <Nav.Link className="text-white" href="#home">
                   {currentUser.username}
                 </Nav.Link>
@@ -79,6 +76,10 @@ const NavBar: React.FunctionComponent<RouteProps & any> = ({
           </Nav>
         </Navbar.Collapse>
         {buttons}
+         <NavbarToggle
+          aria-controls="basic-navbar-nav"
+          style={{ color: "white", margin: "0.75rem" }}
+        />
       </Navbar>
     </div>
   );

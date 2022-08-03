@@ -2,7 +2,6 @@ import Rooms from "./Rooms/Rooms";
 import Conversation from "./Conversation/Conversation";
 
 import React, { useState, useEffect, useRef } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import { AuthSelector } from "../../features/user/authSlice";
 import {
@@ -11,7 +10,7 @@ import {
   RoomUpdate,
 } from "../../features/user/RoomsSlice";
 import Footer, { SideBar, FooterHeight } from "../../components/Footer/Footer";
-
+import Container from "react-bootstrap/Container"
 import "./UserSpace.css";
 import socket from "../../utils/socket";
 import Header from "../../components/Header/Header";
@@ -22,6 +21,7 @@ import {
 } from "../../features/Conversation/MessagesSlice";
 import SideTabs from "./Tabs/Tabs";
 import { useMediaQuery } from "react-responsive";
+import { Stack } from "react-bootstrap";
 
 const UserSpace = (props: any) => {
   const [Member, setMember] = useState({} as any);
@@ -56,7 +56,7 @@ const UserSpace = (props: any) => {
       else setShowed(true);
     });
   });
-
+  // const MediaQuery = useMediaQuery({})
   const closeConvrstion = () => {
     setMember({ _id: undefined });
     dispatch(clearAllMessages({}));
@@ -66,30 +66,27 @@ const UserSpace = (props: any) => {
 
   return (
     <div className="my-container">
+     
       <div>
         <Header history={props.history}></Header>
       </div>
       {currentUser !== undefined ? (
-        <div style={{ height: "calc(100vh - var(--header-height))" }}>
-          <div
+           <div
             className="cont"
-            style={{
-              display: "flex",
-              height: `calc(100% - var(--header-height)))`,
-            }}
-          >
-            {showed ? <SideTabs></SideTabs> : <></>}
+            
+          > 
+            <SideTabs></SideTabs>
             {roomId !== "" ? (
               <Conversation closeConversation={closeConvrstion}></Conversation>
             ) : (
               <div></div>
             )}
-          </div>
-        </div>
+            </div>
+
       ) : (
         <div></div>
       )}
-    </div>
+      </div>
   );
 };
 
