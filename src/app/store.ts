@@ -4,16 +4,20 @@ import RoomsReducer from "../features/user/RoomsSlice"
 import MessagesReducer from "../features/Conversation/MessagesSlice"
 import { MessageEndPointApi } from "../services/MessageApi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { SearchEndPointAPI } from "../services/searchApi";
 
 export const store = configureStore({
   reducer: {
     AuthReducer,
     RoomsReducer,
     MessagesReducer,
-    [MessageEndPointApi.reducerPath]: MessageEndPointApi.reducer
+    [MessageEndPointApi.reducerPath]: MessageEndPointApi.reducer,
+    [SearchEndPointAPI.reducerPath]: SearchEndPointAPI.reducer
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware({ serializableCheck: false }).concat(MessageEndPointApi.middleware)
+    return getDefaultMiddleware({ serializableCheck: false })
+      .concat(MessageEndPointApi.middleware)
+      .concat(SearchEndPointAPI.middleware)
   }
 
 
