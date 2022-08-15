@@ -4,6 +4,7 @@ import Header from "../../../components/Header/Header";
 import { login, AuthSelector } from "../../../features/user/authSlice";
 import { useAppDispatch } from "../../../app/hooks";
 import "./Login.css";
+import Input from "../../../components/Input/Input";
 type LoginData = {
   [key: string]: string | any;
 };
@@ -63,36 +64,39 @@ const Login = (props: any) => {
           <hr></hr>
           <div className="form-group">
             <label>Username</label>
-            <input
+            <Input
               name="username"
               type="text"
-              className="form-control"
+              // className="form-control"
               placeholder="Enter username"
               onChange={handleChange}
               value={data.username}
+              variant="dark"
               required
             />
           </div>
 
           <div className="form-group">
             <label>Password</label>
-            <input
+            <Input
               name="password"
               type="password"
-              className="form-control"
+              // className="form-control"
               placeholder="Enter password"
               required
               value={data.password}
               onChange={handleChange}
+              variant="dark"
             />
           </div>
 
           <div className="form-group">
             <div className="custom-control custom-checkbox">
-              <input
+              <Input
                 type="checkbox"
                 className="custom-control-input"
                 id="customCheck1"
+                variant="dark"
                 required
               />
               <label className="custom-control-label" htmlFor="customCheck1">
