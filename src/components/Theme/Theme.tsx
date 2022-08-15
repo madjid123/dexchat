@@ -10,8 +10,11 @@ export const darkTheme = {
 
 export const GlobalStyles = createGlobalStyle<{ theme: typeof lightTheme }>`
     body{
-        background: ${({ theme }) => theme.body};
-        color: ${({ theme }) => theme.text};
+        background: ${({ theme }) => theme.body} !important;
+        color: ${({ theme }) => theme.text} !important;
         transition: background 0.2s ease-in, color 0.2s ease-in;
+    }
+    *{
+      color : ${({ theme }) => theme.text}
     }
 `;
