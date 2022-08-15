@@ -23,6 +23,6 @@ export default styled(Input)`
     color: ${(props) => (props.variant === "light" ? "#222" : "#ddd")};
   }
     background-color: ${(props) =>
-      props.variant === "light" ? "#ffffff30" : "#00000031"};
+    props.variant === "light" ? "#ffffff30" : "#00000031"};
   }
 `;
