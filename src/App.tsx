@@ -35,7 +35,6 @@ const App = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <Router>
-        {/* <NavBar history={History}></NavBar> */}
         {isAuth && <Redirect to="/user"></Redirect>}
         <Switch>
           <Route path="/user">
