@@ -22,6 +22,7 @@ import {
 import SideTabs from "./Tabs/Tabs";
 import { useMediaQuery } from "react-responsive";
 import { Stack } from "react-bootstrap";
+import { OffCanvas } from "./OffCanvas/OffCanvas";
 
 const UserSpace = (props: any) => {
   const [Member, setMember] = useState({} as any);
@@ -29,11 +30,11 @@ const UserSpace = (props: any) => {
   const { currentUser, isAuth } = useSelector(AuthSelector);
   const [CurrentRoomId, setCurrentRoomId] = useState("");
   const [clearMsgs, setClearMsgs] = useState(false);
-  const [showed, setShowed] = useState(true);
+  const [show, setShow] = useState(false);
   const rooms = useSelector(RoomsSelectors.selectAll);
-  const { messagesResponse, roomId } = useSelector(MessagesSelector);
+  const { roomId } = useSelector(MessagesSelector);
   const [headerHeight, setHeaderHeight] = useState(0);
-  const header = useRef({} as React.Component);
+  // const header = useRef({} as React.Component);
   useEffect(() => {
     socket.connect();
     socket.emit("sendsocket", {
@@ -50,12 +51,12 @@ const UserSpace = (props: any) => {
       dispatch(getRooms({ id: id }));
     }
   }, [isAuth]);
-  useEffect(() => {
-    window.addEventListener("resize", (e) => {
-      if (window.screen.width < 500) setShowed(false);
-      else setShowed(true);
-    });
-  });
+  // useEffect(() => {
+  //   window.addEventListener("resize", (e) => {
+  //     if (window.screen.width < 500) setShowed(false);
+  //     else setShowed(true);
+  //   });
+  // });
   // const MediaQuery = useMediaQuery({})
   const closeConvrstion = () => {
     setMember({ _id: undefined });
@@ -64,29 +65,32 @@ const UserSpace = (props: any) => {
     setClearMsgs(true);
   };
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <div className="my-container">
-     
+
       <div>
-        <Header history={props.history}></Header>
+        <Header history={props.history} show={show} handleShow={handleShow}></Header>
       </div>
       {currentUser !== undefined ? (
-           <div
-            className="cont"
-            
-          > 
-            <SideTabs></SideTabs>
-            {roomId !== "" ? (
-              <Conversation closeConversation={closeConvrstion}></Conversation>
-            ) : (
-              <div></div>
-            )}
-            </div>
+        <div
+          className="cont"
+
+        >
+          <SideTabs show={show} handleClose={handleClose} className="sidetabs"></SideTabs>
+          <OffCanvas show={show} handleClose={handleClose}></OffCanvas>
+          {roomId !== "" ? (
+            <Conversation closeConversation={closeConvrstion}></Conversation>
+          ) : (
+            <div></div>
+          )}
+        </div>
 
       ) : (
         <div></div>
       )}
-      </div>
+    </div>
   );
 };
 
