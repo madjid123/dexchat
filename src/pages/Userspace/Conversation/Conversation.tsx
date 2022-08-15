@@ -86,7 +86,7 @@ function Conversation(props: ConversationProps) {
       };
 
       let ScroDiv = document.getElementById("scrollableDiv");
-      ScroDiv?.addEventListener("scroll", (e) => {});
+      ScroDiv?.addEventListener("scroll", (e) => { });
     }
   }, [currentUser, dispatch, , socket]);
   useEffect(() => {
@@ -139,7 +139,7 @@ function Conversation(props: ConversationProps) {
     });
   }, [scrollPos, messagesResponse?.page]);
   return (
-          <div 
+    <div
       className="conversation"
       onKeyPress={(e) => {
         if (e.key === "Enter") {
@@ -150,7 +150,7 @@ function Conversation(props: ConversationProps) {
       <div
         className="conversation-header"
         style={{
-          boxShadow: "0 0 30px 5px #0006",
+          // boxShadow: "0 0 30px 5px #0006",
           padding: "0.5rem",
           borderRadius: "1.5rem 1.5rem 0.5rem 0.5rem",
         }}
@@ -171,8 +171,8 @@ function Conversation(props: ConversationProps) {
           }}
           type="submit"
           value="X"
-          // className="mx-3"
-          // variant="me-danger"
+        // className="mx-3"
+        // variant="me-danger"
         >
           X
         </Button>
@@ -214,7 +214,7 @@ function Conversation(props: ConversationProps) {
             </div>
           }
           scrollableTarget="scrollableDiv"
-          style={{ display: "flex", flexDirection: "column-reverse"}}
+          style={{ display: "flex", flexDirection: "column-reverse" }}
           inverse={true}
           scrollThreshold={"80%"}
           onScroll={(e) => {
@@ -230,7 +230,7 @@ function Conversation(props: ConversationProps) {
                   variant="dark"
                   key={index}
                   className="MessageItem"
-                  style={{ backgroundColor: "inherit", border: "none"}}
+                  style={{ backgroundColor: "inherit", border: "none" }}
                 >
                   <div className="message">
                     <div
