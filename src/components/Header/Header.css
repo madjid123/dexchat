@@ -19,13 +19,15 @@
 
 .Navbar {
   color: white;
+  display: flex;
   /* margin: auto; */
   /* margin-top: 2rem; */
   text-align: center;
   align-items: center;
-  box-shadow: 0 0 10px 2px hsla(0, 0%, 0%, 0.5);
+  box-shadow: 0 0 5px 1px hsla(0, 0%, 0%, 0.399);
   border-radius: 1.5rem;
   background-color: #11111100 !important;
+  justify-content: space-between !important;
   /* backdrop-filter: blur(5rem); */
 }
 
@@ -43,6 +45,10 @@
   display: none;
 }
 
+.header-nav>a {
+  color: #fff !important;
+}
+
 @media only screen and (max-width:768px) {
   .show-responsive-elmnts {
     display: block;
@@ -51,4 +57,10 @@
 
 * {
   --height-header: var()
+}
+
+.dropdown-toggle-dex:hover {
+  background-color: #ccc;
+  border-radius: 1.5rem;
+
 }
