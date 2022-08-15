@@ -1,7 +1,7 @@
 .conversation {
   background-color: #343a4000;
   display: flex;
-  height: calc(100vh - calc(var(--header-height)+6rem));
+  height: calc(100vh - calc(var(--header-height)));
   max-height: inherit;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -11,7 +11,7 @@
   text-align: center;
   color: #ffffff;
   border-radius: 1.5rem;
-  box-shadow: 0 0 10px 2px hsla(0, 0%, 7%, 0.5);
+  box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
   flex: 2;
 }
 
@@ -27,6 +27,7 @@
   justify-content: center;
   text-align: center;
   flex: 0.2;
+  box-shadow: rgb(0 0 0 / 30%) 0px 5px 10px 1px;
 }
 
 .footer {
@@ -47,7 +48,7 @@
   }
 
   .conversation {
-    max-height: calc(100vh - calc(var(--header-height)+7rem));
+    max-height: calc(100vh - calc(var(--header-height)));
   }
 }
 
@@ -138,7 +139,7 @@ input:focus.footer-input {
   position: relative;
   width: fit-content;
   width: -moz-fit-content;
-  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.507);
+  box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
 
   padding-inline: 1rem;
   padding-block: 0.5rem;
