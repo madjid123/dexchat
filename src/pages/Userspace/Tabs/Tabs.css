@@ -4,18 +4,37 @@
   background-color: #343a4000;
   box-shadow: 1px 1px 10px 10px #ffffff08;
   border-radius: 1.5rem;
-  box-shadow: 0 0 10px 2px rgba(17, 17, 17, 0.486);
+  box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
   flex: 1;
-  height: calc(100vh - calc(var(--header-height)+5.75rem));
-  max-width: 40%;
+  height: calc(100vh - calc(var(--header-height)));
+  /* max-width: 40%; */
+}
+
+@media only screen and (min-width:769px) {
+  .sidetabs {
+    max-width: 40%;
+  }
+
+  .tabs {}
+}
+
+@media only screen and (max-width:768px) {
+  .sidetabs {
+    height: calc(100vh - calc(var(--header-height)+6.75rem));
+  }
 }
 
 .tabs {
   justify-content: center;
   color: #50515386;
   border-bottom: 1px solid #03b06b !important;
+  /* height: calc(100vh - var(--header-height)); */
   /* height: 80vh; */
 
+}
+
+.tab {
+  overflow-y: auto;
 }
 
 .tabs:hover {
@@ -42,8 +61,18 @@
 }
 
 
-@media only screen and (max-width:700px) {
+@media only screen and (max-width:766px) {
   .sidetabs {
     width: 100%;
   }
+}
+
+.offcanvas-dex {
+  color: #fff !important;
+  text-align: center;
+  background-color: var(--background-color-dex) !important;
+  box-shadow: 1px 1px 10px 10px #ffffff08;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
+  flex: 1;
 }
