@@ -8,7 +8,7 @@ import {
   RoomsSelectors,
   RoomUpdate,
   setAllRooms,
-  
+
 } from "../../../features/user/RoomsSlice";
 import {
   clearAllMessages,
@@ -24,6 +24,7 @@ import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
 import { store } from "../../../app/store";
 import socket from "../../../utils/socket";
+import { Person, PersonFill } from "react-bootstrap-icons";
 
 export interface Room {
   members: any[2];
@@ -53,41 +54,45 @@ const Rooms = (props: any) => {
                 <Input
                   placeholder="Search for new contact"
                   style={{ width: "90%", fontSize: "12px" }}
-                  variant="light"
+                  variant="dark"
                 />
               </div>
             </Nav.Item>
             <Nav.Link>
-              {rooms.map((room, index: number) => {
-                return (
-                  <Nav.Item
-                    key={index}
-                    onClick={() => {
-                      if (room._id !== roomId) {
-                        dispatch(setRoomId(room._id));
-                        
-                      }
-                    }}
-                  >
-                    <div>
-                      <img
-                        key={index}
-                        src={"logo192.png"}
-                        width="16"
-                        height="16"
-                        alt=""
-                      />
-                      {
-                      room.members.map((member: any) => {
-                        if (currentUser && member._id !== currentUser._id)
-                          return member.username;
-                      })
-                      }
-                    </div>
-                    <br />
-                  </Nav.Item>
-                );
-              })}
+              <div className="d-flex">
+                {rooms.map((room, index: number) => {
+                  return (
+                    <Nav.Item
+                      key={index}
+                      onClick={() => {
+                        if (room._id !== roomId) {
+                          dispatch(setRoomId(room._id));
+
+                        }
+                      }}
+                    >
+                      <div className="d-flex align-items-center justify-content-center p-2">
+
+                        <div className="mx-1 d-flex align-items-center">
+                          <PersonFill size={22}></PersonFill>
+                        </div>
+
+                        <div>                      {
+                          room.members.map((member: any) => {
+                            if (currentUser && member._id !== currentUser._id)
+                              return member.username;
+                          })
+                        }
+                        </div>
+
+                      </div>
+                      <br />
+                    </Nav.Item>
+
+                  );
+                })
+                }
+              </div>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
