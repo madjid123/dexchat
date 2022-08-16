@@ -59,7 +59,7 @@ const Rooms = (props: any) => {
               </div>
             </Nav.Item>
             <Nav.Link>
-              <div className="d-flex">
+              <div className="d-flex flex-column ">
                 {rooms.map((room, index: number) => {
                   return (
                     <Nav.Item
@@ -71,7 +71,7 @@ const Rooms = (props: any) => {
                         }
                       }}
                     >
-                      <div className="d-flex align-items-center justify-content-center p-2">
+                      <div className="d-flex align-items-center justify-content-center ">
 
                         <div className="mx-1 d-flex align-items-center">
                           <PersonFill size={22}></PersonFill>
