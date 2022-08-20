@@ -9,7 +9,6 @@ import { Person, PersonPlusFill } from "react-bootstrap-icons"
 import Button from "../../../components/Button/Button"
 export const Discover = () => {
   const [pattern, setPattern] = useState("")
-  const pseudoUsers = ["dxfd", "fkdjf", "erwtq", "twqrt", "trw"]
   const handleChange = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement
     setPattern(target.value)
