@@ -11,7 +11,6 @@ export const SearchEndPointAPI = createApi({
                 url: `search/${args.user_id}/getallusers`
             }),
             transformResponse: (rawResult, meta) => {
-                console.log(rawResult)
                 return rawResult
             }
         }),
