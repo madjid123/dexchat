@@ -6,9 +6,9 @@ export const SearchEndPointAPI = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include" }),
     tagTypes: ["Search"],
     endpoints: (builder) => ({
-        getAllUsers: builder.query<any, { user_id: string }>({
+        getAllUsers: builder.query<any, { user_id: string, pattern: string }>({
             query: (args) => ({
-                url: `search/${args.user_id}/getallusers`
+                url: `search/${args.user_id}/getallusers?pattern=${args.pattern}`,
             }),
             transformResponse: (rawResult, meta) => {
                 return rawResult
@@ -16,7 +16,7 @@ export const SearchEndPointAPI = createApi({
         }),
         getUserByPattern: builder.query<any, { pattern: string, user_id: string }>({
             query: (args) => ({
-                url: `search/${args.user_id}/getuser/${args.pattern}`,
+                url: `search/${args.user_id}/getuser?pattern=${args.pattern}`,
             }),
             transformResponse: (rawResult, meta) => {
                 return rawResult
