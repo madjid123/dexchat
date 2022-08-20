@@ -45,4 +45,8 @@ export const SearchEndPointAPI = createApi({
     })
 
 })
-export const { useGetAllUsersQuery, useLazyGetAllUsersQuery } = SearchEndPointAPI
+export const {
+    useGetAllUsersQuery,
+    useLazyGetAllUsersQuery,
+    useLazyGetUserByPatternQuery
+} = SearchEndPointAPI
