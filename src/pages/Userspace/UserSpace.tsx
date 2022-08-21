@@ -44,13 +44,7 @@ const UserSpace = (props: any) => {
       user: currentUser,
     });
   }, [socket.disconnected, rooms]);
-  useEffect(() => {
-    let id = undefined;
-    if (currentUser !== undefined) {
-      id = currentUser._id;
-      dispatch(getRooms({ id: id }));
-    }
-  }, [isAuth]);
+
   // useEffect(() => {
   //   window.addEventListener("resize", (e) => {
   //     if (window.screen.width < 500) setShowed(false);
