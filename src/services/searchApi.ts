@@ -1,25 +1,41 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { store } from "../app/store"
+import { Room, setAllRooms } from "../features/user/RoomsSlice"
 import URL from "../URL"
+
+export type User = {
+    _id: string,
+    username: string,
+    email: string,
+}
 
 export const SearchEndPointAPI = createApi({
     reducerPath: "SearchEndPointAPI",
     baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include" }),
     tagTypes: ["Search"],
     endpoints: (builder) => ({
-        getAllUsers: builder.query<any, { user_id: string, pattern: string }>({
+        getAllUsers: builder.query<User[], { user_id: string, pattern: string, friend: string }>({
             query: (args) => ({
-                url: `search/${args.user_id}/getallusers?pattern=${args.pattern}`,
+                url: `search/${args.user_id}/getallusers?pattern=${args.pattern}${(args.friend === "true") ? "&friend=true" : ""}`,
             }),
-            transformResponse: (rawResult, meta) => {
-                return rawResult
-            }
+            transformResponse: ({ users }: { users: User[] }, meta) => {
+                return users
+            },
         }),
-        getUserByPattern: builder.query<any, { pattern: string, user_id: string }>({
+        getRooms: builder.query<Room[], { pattern: string, user_id: string }>({
             query: (args) => ({
-                url: `search/${args.user_id}/getuser?pattern=${args.pattern}`,
+                url: `user/${args.user_id}/rooms?pattern=${args.pattern}`,
             }),
-            transformResponse: (rawResult, meta) => {
-                return rawResult
+            transformResponse: (rawResult: any, meta) => {
+                return rawResult.Rooms as Room[]
+            },
+            onQueryStarted: async (arg, api) => {
+                try {
+                    const { data } = await api.queryFulfilled
+                    store.dispatch(setAllRooms(data))
+                } catch (err) {
+                    console.log(err)
+                }
             }
         }),
         joinRequest: builder.query<any, { user_id: string, other_user_id: string }>({
@@ -48,5 +64,5 @@ export const SearchEndPointAPI = createApi({
 export const {
     useGetAllUsersQuery,
     useLazyGetAllUsersQuery,
-    useLazyGetUserByPatternQuery
+    useLazyGetRoomsQuery
 } = SearchEndPointAPI
