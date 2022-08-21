@@ -46,14 +46,17 @@ const Rooms = (props: any) => {
   }
   useEffect(() => {
     let id = undefined;
-    if (currentUser !== undefined && pattern.length === 0) {
+    if (currentUser !== undefined) {
       id = currentUser._id;
-      dispatch(getRooms({ id: id }));
+      if (pattern.length === 0)
+        dispatch(getRooms({ id: id }));
+      else
+        trigger({ pattern: pattern, user_id: currentUser._id })
+
     }
   }, [isAuth, pattern]);
   useEffect(() => {
     if (currentUser !== undefined && pattern !== "") {
-      trigger({ pattern: pattern, user_id: currentUser._id })
     }
   }, [currentUser, pattern])
   return (
