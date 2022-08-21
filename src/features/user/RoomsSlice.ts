@@ -19,7 +19,7 @@ interface Member {
 export interface Room {
 	members: Member[];
 	_id: string,
-	newMessage : false 
+	newMessage: false
 	// messages: MessagesResponse
 }
 interface RoomError {
@@ -36,7 +36,7 @@ const RoomsAdapter = createEntityAdapter<Room>({
 export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, thunkAPI) => {
 	try {
 		const _id = id
-		const response = await axios.get(URL + `/user/contacts/${_id}`, { withCredentials: true })
+		const response = await axios.get(URL + `/user/${_id}/rooms`, { withCredentials: true })
 		if (response.status === 200) {
 			thunkAPI.dispatch(setAllRooms(response.data.Rooms))
 			// return response.data.Rooms
