@@ -3,6 +3,7 @@ import { Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
 import {
+  getRooms,
   RoomErrorSelector,
   RoomSelector,
   RoomsSelectors,
@@ -19,13 +20,13 @@ import {
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Rooms.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
 import { store } from "../../../app/store";
 import socket from "../../../utils/socket";
 import { Person, PersonFill } from "react-bootstrap-icons";
-
+import { useLazyGetAllUsersQuery, useLazyGetRoomsQuery } from "../../../services/searchApi";
 export interface Room {
   members: any[2];
 }
@@ -33,15 +34,33 @@ const Rooms = (props: any) => {
   const dispatch = useDispatch();
   const rooms = useSelector(RoomsSelectors.selectAll);
   const ids = useSelector(RoomsSelectors.selectIds);
-  const { roomId, messagesResponse } = useSelector(MessagesSelector);
-  const { error } = useSelector(RoomSelector);
-  const { currentUser } = useSelector(AuthSelector);
+  const { roomId } = useSelector(MessagesSelector);
+  const { currentUser, isAuth } = useSelector(AuthSelector);
+  const [pattern, setPattern] = useState("");
+  const [trigger] = useLazyGetRoomsQuery();
 
+  const handleChange = (e: React.SyntheticEvent) => {
+    const target = e.target as HTMLInputElement
+    setPattern(target.value)
+
+  }
+  useEffect(() => {
+    let id = undefined;
+    if (currentUser !== undefined) {
+      id = currentUser._id;
+      dispatch(getRooms({ id: id }));
+    }
+  }, [isAuth]);
+  useEffect(() => {
+    if (currentUser !== undefined && pattern !== "") {
+      trigger({ pattern: pattern, user_id: currentUser._id })
+    }
+  }, [currentUser, pattern])
   return (
     <>
       <Navbar
         variant="dark"
-        className="sidebare flex-column "
+        className="sidebar. flex-column "
         collapseOnSelect
         style={{ color: "white" }}
       >
@@ -55,6 +74,7 @@ const Rooms = (props: any) => {
                   placeholder="Search for new contact"
                   style={{ width: "90%", fontSize: "12px" }}
                   variant="dark"
+                  onChange={handleChange}
                 />
               </div>
             </Nav.Item>
@@ -71,7 +91,7 @@ const Rooms = (props: any) => {
                         }
                       }}
                     >
-                      <div className="d-flex align-items-center justify-content-center ">
+                      <div className="d-flex align-items-center justify-content-begin">
 
                         <div className="mx-1 d-flex align-items-center">
                           <PersonFill size={22}></PersonFill>
