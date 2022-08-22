@@ -55,7 +55,8 @@ export const SearchEndPointAPI = createApi({
         }),
         joinRemove: builder.query<any, { user_id: string, other_user_id: string }>({
             query: (args) => ({
-                url: `join_room/${args.user_id}/remove/${args.other_user_id}`
+                url: `join_room/${args.user_id}/remove/${args.other_user_id}`,
+                method: "DELETE"
             })
         }),
     })
@@ -64,5 +65,9 @@ export const SearchEndPointAPI = createApi({
 export const {
     useGetAllUsersQuery,
     useLazyGetAllUsersQuery,
-    useLazyGetRoomsQuery
+    useLazyGetRoomsQuery,
+    useLazyJoinAcceptQuery,
+    useLazyJoinRejectQuery,
+    useLazyJoinRequestQuery,
+    useLazyJoinRemoveQuery,
 } = SearchEndPointAPI
