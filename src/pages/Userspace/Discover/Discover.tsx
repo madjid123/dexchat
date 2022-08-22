@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Input from "../../../components/Input/Input"
 import { useLazyGetAllUsersQuery, User } from "../../../services/searchApi"
 import { useSelector } from "react-redux"
@@ -9,17 +9,18 @@ import Button from "../../../components/Button/Button"
 export const Discover = () => {
   const [pattern, setPattern] = useState("")
   const { currentUser } = useSelector(AuthSelector)
-  const [trigger, data, error,] = useLazyGetAllUsersQuery()
+  const [trigger, data,] = useLazyGetAllUsersQuery()
   useEffect(() => {
     if (currentUser !== undefined) {
       trigger({ pattern: pattern, user_id: currentUser._id, friend: "" })
     }
   }, [currentUser, pattern])
   const handleChange = (e: React.SyntheticEvent) => {
+    e.preventDefault()
     const target = e.target as HTMLInputElement
     setPattern(target.value)
-    // if (currentUser !== undefined)
-    // trigger({ pattern: pattern, user_id: currentUser._id })
+  }
+  const handleRequestClick = (e: React.SyntheticEvent) => {
 
   }
   return <div className="my-container">
@@ -47,7 +48,7 @@ export const Discover = () => {
               </div>
 
               <div className="text-warning mx-2">
-                <Button className="btn-warning">
+                <Button className="btn-warning" onClick={handleRequestClick} >
                   <PersonPlusFill className="text-success" />
                 </Button>
               </div>
