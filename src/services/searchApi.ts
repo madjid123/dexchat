@@ -7,6 +7,7 @@ export type User = {
     _id: string,
     username: string,
     email: string,
+    pendingRequest: boolean
 }
 
 export const SearchEndPointAPI = createApi({
