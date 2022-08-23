@@ -5,6 +5,7 @@ import {
     useLazyGetAllUsersQuery,
     useLazyJoinAcceptQuery,
     useLazyJoinRejectQuery,
+    useLazyGetRequestsQuery,
     User
 } from "../../../services/searchApi"
 import { store } from "../../../app/store"
@@ -17,13 +18,13 @@ import Button from "../../../components/Button/Button"
 export const Requests = () => {
     const [pattern, setPattern] = useState("")
     const { currentUser } = useSelector(AuthSelector)
-    const [trigger, data,] = useLazyGetAllUsersQuery()
+    const [trigger, data,] = useLazyGetRequestsQuery()
     const [triggerAccept, dataAccept,] = useLazyJoinAcceptQuery()
     const [triggerReject, dataReject,] = useLazyJoinRejectQuery()
     const btnRef = useRef(null)
     useEffect(() => {
         if (currentUser !== undefined) {
-            trigger({ pattern: pattern, user_id: currentUser._id, requests: "true" })
+            trigger({ user_id: currentUser._id })
         }
     }, [currentUser, pattern])
     const handleChange = (e: React.SyntheticEvent) => {
@@ -36,8 +37,7 @@ export const Requests = () => {
         let user: User
         let pendingRequest: boolean
         if (data.data !== undefined) {
-            user = data?.data[index]
-            user_id = user._id
+            user_id = data.data[index].RequesterId._id
 
         }
         else
@@ -49,6 +49,10 @@ export const Requests = () => {
             else {
                 triggerAccept({ user_id: currentUser?._id, other_user_id: user_id })
             }
+            store.dispatch(SearchEndPointAPI.util.updateQueryData("getRequests", { user_id: currentUser?._id }, (draftJrReq) => {
+                draftJrReq = draftJrReq.filter((jrr, i) => jrr.ReceiverId !== currentUser?._id)
+                return draftJrReq
+            }))
         }
 
     }
@@ -68,7 +72,7 @@ export const Requests = () => {
             <div className="p-3"
                 style={{ display: "flex", flexDirection: "column" }}>
 
-                {(data.isSuccess) && data.data.map((user: User, index) => {
+                {(data.isSuccess) && data.data.map((JrReq, index) => {
                     return <Nav.Item key={index}>
                         <div className="d-flex align-items-center justify-content-between p-2">
                             <div className="d-flex">
@@ -76,7 +80,7 @@ export const Requests = () => {
                                     <Person />
                                 </div>
                                 <div>
-                                    {user.username}
+                                    {JrReq.RequesterId.username}
                                 </div>
                             </div>
 
