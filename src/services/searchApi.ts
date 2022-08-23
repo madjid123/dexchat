@@ -15,9 +15,9 @@ export const SearchEndPointAPI = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include" }),
     tagTypes: ["Search"],
     endpoints: (builder) => ({
-        getAllUsers: builder.query<User[], { user_id: string, pattern: string, friend: string }>({
+        getAllUsers: builder.query<User[], { user_id: string, pattern: string, requests: string }>({
             query: (args) => ({
-                url: `search/${args.user_id}/getallusers?pattern=${args.pattern}${(args.friend === "true") ? "&friend=true" : ""}`,
+                url: `search/${args.user_id}/getallusers?pattern=${args.pattern}${(args.requests === "true") ? "&requests=true" : ""}`,
             }),
             transformResponse: ({ users }: { users: User[] }, meta) => {
                 return users
@@ -38,6 +38,12 @@ export const SearchEndPointAPI = createApi({
                     console.log(err)
                 }
             }
+        }),
+
+        getRequests: builder.query<any, { user_id: string, other_user_id: string }>({
+            query: (args) => ({
+                url: `join_room/${args.user_id}/getrequests`
+            })
         }),
         joinRequest: builder.query<any, { user_id: string, other_user_id: string }>({
             query: (args) => ({
