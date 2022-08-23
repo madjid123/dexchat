@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Offcanvas, Tab, Tabs } from "react-bootstrap";
 import { Discover } from "../Discover/Discover";
+import { Requests } from "../Requests/Requests";
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
 const SideTabs = (props: any) => {
@@ -23,6 +24,7 @@ const SideTabs = (props: any) => {
           <Discover></Discover>
         </Tab>
         <Tab eventKey="requests" title="Requests" className="tab">
+          <Requests></Requests>
         </Tab>
 
 
