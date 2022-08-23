@@ -23,7 +23,7 @@ export const Discover = () => {
   const btnRef = useRef(null)
   useEffect(() => {
     if (currentUser !== undefined) {
-      trigger({ pattern: pattern, user_id: currentUser._id, friend: "" })
+      trigger({ pattern: pattern, user_id: currentUser._id, requests: "" })
     }
   }, [currentUser, pattern])
   const handleChange = (e: React.SyntheticEvent) => {
@@ -52,7 +52,7 @@ export const Discover = () => {
         pendingRequest = false
       }
       store.dispatch(SearchEndPointAPI.util.updateQueryData("getAllUsers", {
-        user_id: currentUser._id, pattern: "", friend: ""
+        user_id: currentUser._id, pattern: "", requests: ""
       }, (draftUsers) => {
         console.log("this is a draft")
         draftUsers[index].pendingRequest = pendingRequest
