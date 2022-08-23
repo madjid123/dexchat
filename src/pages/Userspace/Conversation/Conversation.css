@@ -24,8 +24,9 @@
 
 .conversation-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   text-align: center;
+  align-items: center;
   flex: 0.2;
   box-shadow: rgb(0 0 0 / 30%) 0px 5px 10px 1px;
 }
