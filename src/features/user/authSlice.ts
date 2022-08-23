@@ -84,7 +84,6 @@ export const CheckisAuth = createAsyncThunk("users/isAauth", async (opt, thunkAP
   try {
     const response = await axios.get(API_URL + "/auth/login", { withCredentials: true })
     if (response.status === 200) {
-      console.log(response)
       return response.data
     }
     else {
