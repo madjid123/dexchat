@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import MessagesSlice, { Message, MessagesResponse, setMessagesState ,addMessage} from "../features/Conversation/MessagesSlice"
+import MessagesSlice, { Message, MessagesResponse, setMessagesState, addMessage } from "../features/Conversation/MessagesSlice"
 import URL from "../URL"
 import { store } from "../app/store"
 import socket from "../utils/socket"
@@ -41,16 +41,14 @@ export const MessageEndPointApi = createApi({
 					socket.connect()
 					// wait for the initial query to resolve before proceeding
 					await api.cacheDataLoaded
-
 					// when data is received from the socket connection to the server,
 					// if it is a message and for the appropriate channel,
 					// update our query result with the received message
-					console.log("getMsg")
-					const listener = (data:any) => {
+					const listener = (data: any) => {
 						console.log("GETMSG", data)
-							
+
 						api.updateCachedData((draft) => {
-							if(draft.messages[0].Room.id !== data.room) return
+							if (draft.messages[0].Room.id !== data.room) return
 							draft.messages.push(data.message)
 							store.dispatch(addMessage(data.message))
 							return draft
@@ -65,7 +63,7 @@ export const MessageEndPointApi = createApi({
 				await api.cacheEntryRemoved
 				// perform cleanup steps once the `cacheEntryRemoved` promise resolves
 			},
-			
+
 		}),
 	})
 })
