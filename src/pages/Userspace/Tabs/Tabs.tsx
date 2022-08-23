@@ -13,17 +13,17 @@ const SideTabs = (props: any) => {
 
       <Tabs
         defaultActiveKey="rooms"
-        id="uncontrolled-tab-example"
+        id="tabs"
         className="m-3 tabs"
         variant="pills"
       >
-        <Tab eventKey="rooms" title="Rooms" className="tab">
+        <Tab eventKey="rooms" title="Rooms" className="tab" >
           <Rooms />
         </Tab>
         <Tab eventKey="discover" title="Discover" className="tab">
           <Discover></Discover>
         </Tab>
-        <Tab eventKey="requests" title="Requests" className="tab">
+        <Tab eventKey="requests" title="Requests" className="tab"  >
           <Requests></Requests>
         </Tab>
 
