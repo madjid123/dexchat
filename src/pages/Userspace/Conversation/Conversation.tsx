@@ -23,6 +23,7 @@ import {
   RoomsSelectors,
 } from "../../../features/user/RoomsSlice";
 import { Dictionary } from "@reduxjs/toolkit";
+import { X, XCircleFill, XLg } from "react-bootstrap-icons";
 
 
 interface ConversationProps {
@@ -142,26 +143,25 @@ function Conversation(props: ConversationProps) {
           borderRadius: "1.5rem 1.5rem 0.5rem 0.5rem",
         }}
       >
+        <p></p>
         <h2
           style={{
             position: "sticky",
             width: "fit-content",
-            margin: "auto",
           }}
+          className="m-0"
         >
           {member.username}
         </h2>
         <Button
-          style={{ position: "absolute", right: "4%", margin: "auto" }}
           onClick={() => {
             props.closeConversation();
           }}
           type="submit"
           value="X"
-        // className="mx-3"
-        // variant="me-danger"
+          variant="danger"
         >
-          X
+          <X />
         </Button>
       </div>
       <div
