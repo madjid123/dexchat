@@ -9,6 +9,16 @@ export type User = {
     email: string,
     pendingRequest: boolean
 }
+export type JoinRoomRequest = {
+    _id: string,
+    ReceiverId: string,
+    RequesterId: {
+        _id: string,
+        username: string,
+        email: string
+    }
+    State: string
+}
 
 export const SearchEndPointAPI = createApi({
     reducerPath: "SearchEndPointAPI",
@@ -40,10 +50,13 @@ export const SearchEndPointAPI = createApi({
             }
         }),
 
-        getRequests: builder.query<any, { user_id: string, other_user_id: string }>({
+        getRequests: builder.query<JoinRoomRequest[], { user_id: string }>({
             query: (args) => ({
                 url: `join_room/${args.user_id}/getrequests`
-            })
+            }),
+            transformResponse: (data, meta) => {
+                return (data as any).joinRoomRequests as JoinRoomRequest[]
+            }
         }),
         joinRequest: builder.query<any, { user_id: string, other_user_id: string }>({
             query: (args) => ({
@@ -77,4 +90,5 @@ export const {
     useLazyJoinRejectQuery,
     useLazyJoinRequestQuery,
     useLazyJoinRemoveQuery,
+    useLazyGetRequestsQuery
 } = SearchEndPointAPI
