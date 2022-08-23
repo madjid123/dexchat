@@ -68,7 +68,7 @@ const Rooms = (props: any) => {
         style={{ color: "white" }}
       >
         <Navbar.Brand href="#home">Room</Navbar.Brand>
-        <Navbar.Toggle aria-target="colapsedSidbar" />
+        <Navbar.Toggle formTarget="colapsedSidbar" />
         <Navbar.Collapse className="flex-column" id="colapsedSidbar">
           <Nav className="flex-column">
             <Nav.Item>
