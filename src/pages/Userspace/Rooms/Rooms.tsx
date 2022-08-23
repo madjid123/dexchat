@@ -37,7 +37,7 @@ const Rooms = (props: any) => {
   const { roomId } = useSelector(MessagesSelector);
   const { currentUser, isAuth } = useSelector(AuthSelector);
   const [pattern, setPattern] = useState("");
-  const [trigger] = useLazyGetRoomsQuery();
+  const [trigger] = useLazyGetRoomsQuery({ pollingInterval: 3000 });
 
   const handleChange = (e: React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement
