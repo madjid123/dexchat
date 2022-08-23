@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button } from "react-bootstrap";
 
 const borderColor = "#30c982";
+const danger = "#fd5d57"
 const variants = {
   primary: `
     &:hover {
@@ -10,25 +11,26 @@ const variants = {
       color: white;
     }
   background-color : #0000001a;
+  border-color : ${borderColor};
   color : ${borderColor};
   `,
   danger: `{
-  background-color : #fd5d57";
-  color : #fff;
    &:hover {
-      background-color: ${borderColor};
+      background-color: ${danger};
       color: white;
     }
+  background-color: #0000001a;
+  border-color : ${danger};
+  color : ${danger};
     }
   `,
 };
 
 export default styled(Button)`
-  && {
+  border-radius: 1rem 0.5rem 1rem 0.5rem;
+  border-width : 2px;
     ${(props) =>
-      props.variant === "me-danger" ? variants.danger : variants.primary}
-    border-radius: 1rem 0.5rem 1rem 0.5rem;
-    border: 1px solid;
-  }
+    props.variant === "danger" ? variants.danger : variants.primary}
+  
 `;
 // i always feels like i am doing it the wrong way. what's wrong why do i even have to think like this
