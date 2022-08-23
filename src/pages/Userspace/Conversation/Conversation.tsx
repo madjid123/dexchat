@@ -72,7 +72,6 @@ function Conversation(props: ConversationProps) {
 
   useEffect(() => {
     if (rooms) {
-      console.log(rooms[roomId]);
       rooms[roomId]?.members.map((member) => {
         if (member._id !== currentUser?._id) setMember(member);
       });
@@ -90,20 +89,13 @@ function Conversation(props: ConversationProps) {
     }
   }, [currentUser, dispatch, , socket]);
   useEffect(() => {
-    //getMessage();
     let page = 1;
-    // const messages = rooms[props.CurrentRoomId]?.messages;
-    // if (messages && messages?.messages.length > 0) {
     if (messagesResponse.messages.length > 0) {
       // dispatch(setMessagesState(messages));
-      console.log("executed by a dictator Xd");
     } else {
-      console.log(roomId);
       trigger({ room_id: roomId, page: 1 });
-      console.log("here we are");
     }
     socket.on("typing", (args: string) => {
-      console.log(args, "is typing");
     });
   }, [roomId]);
   useEffect(() => {
@@ -119,19 +111,15 @@ function Conversation(props: ConversationProps) {
       setScrollPos(ScroDiv?.scrollTop);
     }
     setTimeout(() => {
-      // if (result.data !== undefined) {
-      // let page = result.data.page;
       let page = messagesResponse.page;
 
       if (page !== undefined && page + 1 > messagesResponse.pages) return;
       else page += 1;
 
       trigger({ room_id: roomId, page: page });
-      // }
     }, 1000);
   };
   useEffect(() => {
-    console.log(scrollPos);
     let ScroDiv = document.getElementById("scrollableDiv");
     ScroDiv?.scrollTo({
       top: scrollPos,
@@ -150,7 +138,6 @@ function Conversation(props: ConversationProps) {
       <div
         className="conversation-header"
         style={{
-          // boxShadow: "0 0 30px 5px #0006",
           padding: "0.5rem",
           borderRadius: "1.5rem 1.5rem 0.5rem 0.5rem",
         }}
