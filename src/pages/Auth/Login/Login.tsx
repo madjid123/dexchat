@@ -67,7 +67,7 @@ const Login = (props: any) => {
             <Input
               name="username"
               type="text"
-              // className="form-control"
+              className="form-control"
               placeholder="Enter username"
               onChange={handleChange}
               value={data.username}
@@ -81,7 +81,7 @@ const Login = (props: any) => {
             <Input
               name="password"
               type="password"
-              // className="form-control"
+              className="form-control"
               placeholder="Enter password"
               required
               value={data.password}
@@ -91,10 +91,10 @@ const Login = (props: any) => {
           </div>
 
           <div className="form-group">
-            <div className="custom-control custom-checkbox">
+            <div className="control checkbox">
               <Input
                 type="checkbox"
-                className="custom-control-input"
+                // className="f"
                 id="customCheck1"
                 variant="dark"
                 required
