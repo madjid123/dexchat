@@ -62,7 +62,7 @@ export const Discover = () => {
 
   }
   return <div className="my-container">
-    <div className="flex-row overflow-y">
+    <div className="flex-row">
       <Input
         placeholder="Search for new contact"
         style={{ width: "90%", fontSize: "12px" }}
@@ -75,7 +75,12 @@ export const Discover = () => {
         {(dataJoinRequest.isSuccess && <p className="text-success">Request is sent!</p>)}
       </div>
       <div className="px-3"
-        style={{ display: "flex", flexDirection: "column", overflowY: "scroll", height: "60vh" }}>
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "scroll",
+          height: "63vh"
+        }}>
 
         {(data.isSuccess) && data.data.map((user: User, index) => {
           return <Nav.Item key={index} className="nav-item-dex" >
