@@ -7,7 +7,8 @@ export type User = {
     _id: string,
     username: string,
     email: string,
-    pendingRequest: boolean
+    pendingRequest: boolean,
+    to: boolean
 }
 export type JoinRoomRequest = {
     _id: string,
