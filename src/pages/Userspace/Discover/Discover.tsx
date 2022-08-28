@@ -90,12 +90,16 @@ export const Discover = () => {
               </div>
 
               <div className="text-warning mx-2">
-                <Button className={` `} onClick={() => handleRequestClick(index)} id={index}
-                  variant={`${user.pendingRequest ? "danger" : ""}`} >
-                  {(!user.pendingRequest) ? <PersonPlusFill className="text" /> :
-                    <PersonDashFill className="text" onClick={() => console.log("person")} />
-                  }
-                </Button>
+                {(!user.to) &&
+                  <Button className={` `} onClick={() => handleRequestClick(index)} id={index}
+                    variant={`${user.pendingRequest ? "danger" : ""}`} >
+                    {(!user.pendingRequest) ? <PersonPlusFill className="text" /> :
+                      <PersonDashFill className="text" onClick={() => console.log("person")} />
+                    }
+                  </Button>
+                }{
+                  user.to && <p className="text-warning">has a request for You</p>
+                }
               </div>
 
             </div>
