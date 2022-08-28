@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { isValidElement, useEffect, useState } from "react";
 import API_URL from "../../../URL";
 import { Link, Redirect } from "react-router-dom";
 import "./Register.css";
@@ -14,20 +14,27 @@ const EmailRegEx = RegExp(
 );
 
 type RegisterState = {
-  [key: string]: any;
+  [key: string]: string;
+  username: string
+  email: string;
+  password: string;
+
 };
 type RegisterError = {
-  [key: string]: any;
+  [key: string]: string | Array<string>;
+  username: string;
+  email: string;
+  password: string;
+  server: Array<string>
 };
 type RegisterProps = any;
 const Register = (props: RegisterProps) => {
-  // State variablee
   const [state, setState] = useState({} as RegisterState);
   const [errors, setErrors] = useState({
     username: "",
     email: "",
     password: "",
-    server: [] as any[],
+    server: []
   } as RegisterError);
   const [redirect, setRedirect] = useState(false);
   const [Valid, setValid] = useState(false);
@@ -41,7 +48,6 @@ const Register = (props: RegisterProps) => {
     const data = { ...state };
 
     if (!Valid) return;
-    console.log(data);
     axios
       .post(API_URL + "/register", data)
       .then((response) => {
@@ -55,11 +61,10 @@ const Register = (props: RegisterProps) => {
       .catch((error) => {
         error.response.data.errors.filter((error: any) => {
           let Errors = { ...errors };
-          Errors.server.push(error.msg);
+          Errors.server.push(error.msg as string);
           setErrors(Errors);
           return null;
         });
-        console.log(error);
       });
   };
   const handleChange = (e: React.SyntheticEvent) => {
@@ -72,19 +77,22 @@ const Register = (props: RegisterProps) => {
 
     const { name, value } = target;
 
-    ValidInput({ name, value });
     setErrors((errs) => {
       errs[target.name] = "";
-      errs["server"] = [];
+      errs.server = [];
       return errs;
     });
-    isValid();
+    ValidInput({ name, value });
+    isValid()
   };
+  useEffect(() => {
+    setErrors({ ...errors, server: [] } as RegisterError)
+  }, [state])
 
   const ValidInput = (target: any) => {
     let Errors = { ...errors };
 
-    switch (target.username) {
+    switch (target.name) {
       case "username": {
         Errors.username =
           target.value.length < 5 ? "Name must be at least 5 characters !" : "";
@@ -93,7 +101,7 @@ const Register = (props: RegisterProps) => {
       case "email": {
         Errors.email = EmailRegEx.test(target.value)
           ? ""
-          : "Incorrect email foramat !";
+          : "Incorrect email format !";
         break;
       }
       case "password": {
@@ -106,6 +114,7 @@ const Register = (props: RegisterProps) => {
       default:
         break;
     }
+    console.log(Errors)
     setErrors(Errors);
     isValid();
   };
@@ -137,7 +146,7 @@ const Register = (props: RegisterProps) => {
         <form id="form" onSubmit={handleSubmit} className="d-flex justify-center flex-column gap-2" >
           <h3>Register</h3>
           {errors.server.length > 0 && <hr></hr> && (
-            <span className="error text-danger"> {errors.server} </span>
+            <span className="error text-danger"> {errors.server.map((err) => (<><span>{err}</span><br></br></>))} </span>
           )}
           <div className="form-group">
             <label>Name</label>
