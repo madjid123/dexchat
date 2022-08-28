@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import API_URL from "../../../URL";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "./Register.css";
 import Header from "../../../components/Header/Header";
+import Input from "../../../components/Input/Input";
+import Button from "../../../components/Button/Button";
+import { Nav } from "react-bootstrap";
 
 // Email Regular expression
 const EmailRegEx = RegExp(
@@ -72,6 +75,7 @@ const Register = (props: RegisterProps) => {
     ValidInput({ name, value });
     setErrors((errs) => {
       errs[target.name] = "";
+      errs["server"] = [];
       return errs;
     });
     isValid();
@@ -129,20 +133,20 @@ const Register = (props: RegisterProps) => {
   return (
     <div className="my-container">
       <Header history={props.history}> </Header>
-      <div className="form-mad">
-        <form id="form" onSubmit={handleSubmit}>
+      <div className="form-mad ">
+        <form id="form" onSubmit={handleSubmit} className="d-flex justify-center flex-column gap-2" >
           <h3>Register</h3>
           {errors.server.length > 0 && <hr></hr> && (
             <span className="error text-danger"> {errors.server} </span>
           )}
-          <hr></hr>
           <div className="form-group">
             <label>Name</label>
-            <input
+            <Input
               name="username"
               type="text"
               className="form-control"
               placeholder="Name"
+              variant="dark"
               onChange={handleChange}
               value={state.username}
               onClick={handleChange}
@@ -154,11 +158,12 @@ const Register = (props: RegisterProps) => {
 
           <div className="form-group">
             <label>Email</label>
-            <input
+            <Input
               name="email"
               type="email"
               className="form-control"
               placeholder="Enter email"
+              variant="dark"
               onChange={handleChange}
               onClick={handleChange}
             />
@@ -169,11 +174,12 @@ const Register = (props: RegisterProps) => {
 
           <div className="form-group">
             <label>Password</label>
-            <input
+            <Input
               name="password"
               type="password"
               className="form-control"
               placeholder="Enter password"
+              variant="dark"
               onChange={handleChange}
               onClick={handleChange}
             />
@@ -181,18 +187,20 @@ const Register = (props: RegisterProps) => {
               <span className="text-danger">{errors.password}</span>
             )}
           </div>
+          <div className="form-group my-1">
+            <Button
+              disabled={Valid === false}
+              type="submit"
+              className="btn btn-block btn-register"
+              onClick={Submit}
+            >
+              Register
+            </Button>
+            <p className="forgot-password text-right my-1">
 
-          <button
-            disabled={Valid === false}
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            onClick={Submit}
-          >
-            Register
-          </button>
-          <p className="forgot-password text-right">
-            Already registered <a href="/login">log in?</a>
-          </p>
+              Already registered <Link to="/login">log in?</Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>
