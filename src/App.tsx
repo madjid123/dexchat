@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
   useHistory,
+  withRouter,
 } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -24,6 +25,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { darkTheme, lightTheme } from "./components/Theme/Theme";
 import Header from "./components/Header/Header";
 import { Home } from "./pages/Home/Home";
+import RoomsPage from "./pages/RoomsPage/RoomsPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -46,8 +48,8 @@ const App = () => {
           <Route path="/register">
             <Register history={History}> </Register>
           </Route>
-          <Route path="/wello">
-            <div>Wello</div>
+          <Route path="/rooms" component={RoomsPage}>
+            {/* <RoomsPage history={History}></RoomsPage> */}
           </Route>
           <Route path="/">
             <Home></Home>
@@ -58,4 +60,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withRouter(App);
