@@ -34,7 +34,7 @@
 }
 
 .tab {
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 .tabs:hover {
