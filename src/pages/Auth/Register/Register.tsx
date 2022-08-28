@@ -95,7 +95,7 @@ const Register = (props: RegisterProps) => {
       case "password": {
         Errors.password =
           target.value.length < 6
-            ? "Password must be atleast 6 characters !"
+            ? "Password must be at least 6 characters !"
             : "";
         break;
       }
