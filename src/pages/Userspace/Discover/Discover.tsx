@@ -8,7 +8,7 @@ import {
   User
 } from "../../../services/searchApi"
 import { store } from "../../../app/store"
-
+import "./Discover.css"
 import { useSelector } from "react-redux"
 import { AuthSelector } from "../../../features/user/authSlice"
 import { Nav } from "react-bootstrap"
@@ -62,7 +62,7 @@ export const Discover = () => {
 
   }
   return <div className="my-container">
-    <div className="flex-row">
+    <div className="flex-row overflow-y">
       <Input
         placeholder="Search for new contact"
         style={{ width: "90%", fontSize: "12px" }}
@@ -74,11 +74,11 @@ export const Discover = () => {
         {(dataJoinRequest.isError && <p className="text-danger">{(dataJoinRequest.error as any).data.originalStatus !== 200}</p>)}
         {(dataJoinRequest.isSuccess && <p className="text-success">Request is sent!</p>)}
       </div>
-      <div className="p-3"
-        style={{ display: "flex", flexDirection: "column" }}>
+      <div className="px-3"
+        style={{ display: "flex", flexDirection: "column", overflowY: "scroll", height: "60vh" }}>
 
         {(data.isSuccess) && data.data.map((user: User, index) => {
-          return <Nav.Item key={index}>
+          return <Nav.Item key={index} className="nav-item-dex" >
             <div className="d-flex align-items-center justify-content-between p-2">
               <div className="d-flex">
                 <div className="mx-1">
