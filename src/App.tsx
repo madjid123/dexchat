@@ -1,19 +1,18 @@
 // React
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Redirect,
-  useHistory,
-  withRouter,
+  Navigate,
+  Routes,
+  useNavigate,
 } from "react-router-dom";
+import { } from "react-router"
 import { useEffect } from "react";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 // Components
 import Register from "./pages/Auth/Register/Register";
-import NavBar from "./components/Header/Header";
 import Login from "./pages/Auth/Login/Login";
 import UserSpace from "./pages/Userspace/UserSpace";
 
@@ -21,43 +20,34 @@ import UserSpace from "./pages/Userspace/UserSpace";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { AuthSelector, CheckisAuth } from "./features/user/authSlice";
-import { createTheme, ThemeProvider } from "@mui/material";
 import { darkTheme, lightTheme } from "./components/Theme/Theme";
-import Header from "./components/Header/Header";
 import { Home } from "./pages/Home/Home";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
+import { ThemeProvider } from "styled-components";
 
 const App = () => {
   const dispatch = useDispatch();
-  const History = useHistory();
-  const { isAuth } = useSelector(AuthSelector);
+  const navigate = useNavigate();
+  const { currentUser, isAuth } = useSelector(AuthSelector);
   useEffect(() => {
     dispatch(CheckisAuth());
   }, [isAuth]);
   return (
     <ThemeProvider theme={darkTheme}>
-      <Router>
-        {isAuth && <Redirect to="/user"></Redirect>}
-        <Switch>
-          <Route path="/user">
-            <UserSpace history={History}></UserSpace>
-          </Route>
-          <Route path="/login">
-            <Login history={History}></Login>
-          </Route>
-          <Route path="/register">
-            <Register history={History}> </Register>
-          </Route>
-          <Route path="/rooms" component={RoomsPage}>
-            {/* <RoomsPage history={History}></RoomsPage> */}
-          </Route>
-          <Route path="/">
-            <Home></Home>
-          </Route>
-        </Switch>
-      </Router>
+      {/* {isAuth && <Navigate to="/user"></Navigate>} */}
+      <Routes>
+        <Route path="/user" element={<UserSpace />}>
+        </Route>
+        <Route path="/login" element={<Login />}>
+        </Route>
+        <Route path="/register" element={<Register />}>
+        </Route>
+        <Route path="/rooms" element={<RoomsPage />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+
     </ThemeProvider>
   );
 };
 
-export default withRouter(App);
+export default App;
