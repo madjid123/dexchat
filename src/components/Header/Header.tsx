@@ -1,25 +1,21 @@
 import { Navbar, Nav, NavDropdown, Dropdown } from "react-bootstrap";
 import Button from "../Button/Button";
-import { useState } from "react";
-import { Redirect, RouteProps, withRouter } from "react-router";
+import { RouteProps, useNavigate } from "react-router";
 import { logout, AuthSelector } from "../../features/user/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import "./Header.css";
 import "./DropMenu.css"
-import { PersonCircle, MenuApp } from "react-bootstrap-icons"
-import styled from "styled-components";
+import { PersonCircle } from "react-bootstrap-icons"
 import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
 import DexLogo from "../../public/dexplanet.png"
 const NavBar: React.FunctionComponent<RouteProps & any> = (props: any) => {
   const dispatch = useDispatch();
   const { currentUser, isAuth } = useSelector(AuthSelector);
-
+  const navigate = useNavigate();
   const Logout = () => {
     dispatch(logout());
     const newPath = "/login";
-    props.history.push(newPath);
-    // <Redirect to="/login"></Redirect>;
+    navigate(newPath)
   };
   let buttons = <> </>;
 
@@ -104,4 +100,4 @@ const NavBar: React.FunctionComponent<RouteProps & any> = (props: any) => {
     </div >
   );
 };
-export default withRouter(NavBar);
+export default NavBar;
