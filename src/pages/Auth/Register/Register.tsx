@@ -1,12 +1,12 @@
 import axios from "axios";
-import React, { isValidElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import API_URL from "../../../URL";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import "./Register.css";
 import Header from "../../../components/Header/Header";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
-import { Nav } from "react-bootstrap";
 
 // Email Regular expression
 const EmailRegEx = RegExp(
@@ -36,7 +36,8 @@ const Register = (props: RegisterProps) => {
     password: "",
     server: []
   } as RegisterError);
-  const [redirect, setRedirect] = useState(false);
+  // const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate()
   const [Valid, setValid] = useState(false);
 
   useEffect(() => {
@@ -53,7 +54,9 @@ const Register = (props: RegisterProps) => {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          if (response.data.response !== undefined) setRedirect(true);
+          if (response.data.response !== undefined) {
+            navigate("/login")
+          }
           else {
           }
         }
@@ -95,7 +98,7 @@ const Register = (props: RegisterProps) => {
     switch (target.name) {
       case "username": {
         Errors.username =
-          target.value.length < 5 ? "Name must be at least 5 characters !" : "";
+          target.value.length < 3 ? "Name must be at least 3 characters !" : "";
         break;
       }
       case "email": {
@@ -136,9 +139,9 @@ const Register = (props: RegisterProps) => {
     setErrors(Errors);
   };
 
-  if (redirect === true) {
-    return <Redirect to="/login"></Redirect>;
-  }
+  // if (redirect === true) {
+  //   return <Navigate to="/login"></Navigate>;
+  // }
   return (
     <div className="my-container">
       <Header history={props.history}> </Header>
