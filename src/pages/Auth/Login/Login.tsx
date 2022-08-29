@@ -5,6 +5,7 @@ import { login, AuthSelector } from "../../../features/user/authSlice";
 import { useAppDispatch } from "../../../app/hooks";
 import "./Login.css";
 import Input from "../../../components/Input/Input";
+import { useNavigate } from "react-router";
 type LoginData = {
   [key: string]: string | any;
 };
@@ -13,8 +14,8 @@ const Login = (props: any) => {
   const [notEmpty, setNotEmpty] = useState(false);
   const [isformChanged, setIsFormChanged] = useState(false);
   const dispatch = useDispatch();
-  const AppDispatch = useAppDispatch();
-  const { currentUser, isAuth, error } = useSelector(AuthSelector);
+  const navigate = useNavigate();
+  const { isAuth, error } = useSelector(AuthSelector);
 
   const isFormValid = useCallback((): boolean => {
     if (data.username.length > 0 && data.password.length > 0) {
@@ -32,6 +33,9 @@ const Login = (props: any) => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(login({ username: data.username, password: data.password }));
+    if (isAuth) {
+      navigate("/user")
+    }
     setIsFormChanged(false);
     setNotEmpty(false);
   };
@@ -92,11 +96,11 @@ const Login = (props: any) => {
 
           <div className="form-group">
             <div className="control checkbox">
-              <Input
+              <input
                 type="checkbox"
                 // className="f"
                 id="customCheck1"
-                variant="dark"
+                // variant="dark"
                 required
               />
               <label className="custom-control-label" htmlFor="customCheck1">
