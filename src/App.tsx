@@ -15,15 +15,15 @@ import { useSelector, useDispatch } from "react-redux";
 import Register from "./pages/Auth/Register/Register";
 import Login from "./pages/Auth/Login/Login";
 import UserSpace from "./pages/Userspace/UserSpace";
-
+import Rooms from "./pages/Rooms/Rooms";
 // Styling
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { AuthSelector, CheckisAuth } from "./features/user/authSlice";
 import { darkTheme, lightTheme } from "./components/Theme/Theme";
 import { Home } from "./pages/Home/Home";
-import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import { ThemeProvider } from "styled-components";
+import Room from "./pages/Room/Room";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,7 +42,8 @@ const App = () => {
         </Route>
         <Route path="/register" element={<Register />}>
         </Route>
-        <Route path="/rooms" element={<RoomsPage />} />
+        <Route path="/rooms" element={<Rooms />} />
+        <Route path="/room/:id" element={<Room />} />
         <Route path="/" element={<Home />} />
       </Routes>
 
