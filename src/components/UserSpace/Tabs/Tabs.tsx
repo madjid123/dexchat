@@ -5,9 +5,7 @@ import { Requests } from "../Requests/Requests";
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
 const SideTabs = (props: any) => {
-  const [show, setShow] = useState(false);
 
-  const handleShow = () => setShow(true);
   return (
     <div className="sidetabs">
 
