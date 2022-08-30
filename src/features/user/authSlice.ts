@@ -119,6 +119,7 @@ const AuthReducer = createSlice({
       .addCase(login.fulfilled, (state, { payload }) => {
         state.currentUser = payload;
         state.isAuth = true;
+        state.isLoading = false
       })
       .addCase(login.rejected, (state, { payload }) => {
         console.log(payload);
@@ -126,11 +127,13 @@ const AuthReducer = createSlice({
         ErrorMessages.push(payload as any[])
         state.error.messages = [...ErrorMessages]
       })
+      .addCase(login.pending, (state, { payload }) => {
+        state.isLoading = true
+      })
       .addCase(logout.fulfilled, (state, { payload }) => {
         return initialState;
       })
       .addCase(logout.rejected, (state, { payload }) => {
-        console.log("falied to logout");
       }).addCase(CheckisAuth.fulfilled, (state, { payload }) => {
         if (!payload.username) return initialState;
         state.isAuth = true;
