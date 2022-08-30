@@ -17,6 +17,8 @@ const Login = (props: any) => {
   const navigate = useNavigate();
   const { isAuth, error } = useSelector(AuthSelector);
 
+  const [show, setShow] = useState(false)
+  const handleShow = () => setShow(true)
   const isFormValid = useCallback((): boolean => {
     if (data.username.length > 0 && data.password.length > 0) {
       return true;
@@ -52,7 +54,7 @@ const Login = (props: any) => {
 
   return (
     <div className="my-container">
-      <Header history={props.history}></Header>
+      <Header show={show} handleShow={handleShow} ></Header>
 
       <div className="form-mad">
         <form id="form" onSubmit={handleSubmit}>
