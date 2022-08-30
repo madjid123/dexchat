@@ -8,7 +8,12 @@ import "./DropMenu.css"
 import { PersonCircle } from "react-bootstrap-icons"
 import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
 import DexLogo from "../../public/dexplanet.png"
-const NavBar: React.FunctionComponent<RouteProps & any> = (props: any) => {
+type HeaderProps = {
+  show: boolean
+  handleShow: () => void
+
+}
+const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const dispatch = useDispatch();
   const { currentUser, isAuth } = useSelector(AuthSelector);
   const navigate = useNavigate();
@@ -58,7 +63,7 @@ const NavBar: React.FunctionComponent<RouteProps & any> = (props: any) => {
           <img src={DexLogo} width="24" height="28" alt="dexlogo" />
         </div>
         <div className="menu d-flex ">
-          <Navbar.Collapse id="basic-navbar-nav" className="" />
+          <Navbar.Collapse area-label="basic-navbar-nav" className="" />
           {currentUser !== undefined && (
             <Dropdown
               id="nav-dropdown-dark-example"
@@ -100,4 +105,4 @@ const NavBar: React.FunctionComponent<RouteProps & any> = (props: any) => {
     </div >
   );
 };
-export default NavBar;
+export default Header;
