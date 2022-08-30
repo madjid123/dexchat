@@ -24,7 +24,7 @@ const RoomsPageRouter = (props: any) => {
     }
     return (
         <div className="my-container">
-            < Header  ></Header >
+            < Header show={true} handleShow={() => { }}  ></Header >
             <Rooms isPage={true}></Rooms>
         </div >
     )
