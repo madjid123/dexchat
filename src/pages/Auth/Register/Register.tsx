@@ -28,6 +28,7 @@ type RegisterError = {
   server: Array<string>
 };
 type RegisterProps = any;
+
 const Register = (props: RegisterProps) => {
   const [state, setState] = useState({} as RegisterState);
   const [errors, setErrors] = useState({
@@ -39,6 +40,8 @@ const Register = (props: RegisterProps) => {
   // const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate()
   const [Valid, setValid] = useState(false);
+  const [show, setShow] = useState(false)
+  const handleShow = () => setShow(true)
 
   useEffect(() => {
     isValid();
@@ -144,7 +147,7 @@ const Register = (props: RegisterProps) => {
   // }
   return (
     <div className="my-container">
-      <Header history={props.history}> </Header>
+      <Header show={show} handleShow={handleShow} > </Header>
       <div className="form-mad ">
         <form id="form" onSubmit={handleSubmit} className="d-flex justify-center flex-column gap-2" >
           <h3>Register</h3>
