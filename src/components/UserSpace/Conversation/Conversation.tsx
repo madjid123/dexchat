@@ -154,16 +154,18 @@ const Conversation = (props: ConversationProps) => {
         >
           {member.username}
         </h2>
-        <Button
-          onClick={() => {
-            props.closeConversation();
-          }}
-          type="submit"
-          value="X"
-          variant="danger"
-        >
-          <X />
-        </Button>
+        {(!props.isPage) &&
+          <Button
+            onClick={() => {
+              props.closeConversation();
+            }}
+            type="submit"
+            value="X"
+            variant="danger"
+          >
+            <X />
+          </Button>
+        }
       </div>
       <div
         id="scrollableDiv"
