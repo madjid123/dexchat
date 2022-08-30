@@ -51,26 +51,28 @@ const UserSpace = (props: any) => {
     <div className="my-container">
 
       <div>
-        <Header history={props.history} show={show} handleShow={handleShow}></Header>
+        <Header show={show} handleShow={handleShow}></Header>
       </div>
-      {currentUser !== undefined ? (
-        <div
-          className="cont"
+      {
+        currentUser !== undefined ? (
+          <div
+            className="cont"
 
-        >
-          <SideTabs show={show} handleClose={handleClose} className="sidetabs"></SideTabs>
-          <OffCanvas show={show} handleClose={handleClose}></OffCanvas>
-          {roomId !== "" ? (
-            <Conversation closeConversation={closeConvrstion} isPage={false}></Conversation>
-          ) : (
-            <div></div>
-          )}
-        </div>
+          >
+            <SideTabs show={show} handleClose={handleClose} className="sidetabs"></SideTabs>
+            <OffCanvas show={show} handleClose={handleClose}></OffCanvas>
+            {roomId !== "" ? (
+              <Conversation closeConversation={closeConvrstion} isPage={false}></Conversation>
+            ) : (
+              <div></div>
+            )}
+          </div>
 
-      ) : (
-        <div></div>
-      )}
-    </div>
+        ) : (
+          <div></div>
+        )
+      }
+    </div >
   );
 };
 
