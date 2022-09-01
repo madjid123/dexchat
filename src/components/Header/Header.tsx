@@ -1,6 +1,6 @@
 import { Navbar, Nav, NavDropdown, Dropdown } from "react-bootstrap";
 import Button from "../Button/Button";
-import { RouteProps, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { logout, AuthSelector } from "../../features/user/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
