@@ -10,17 +10,11 @@ type PrivateRouteProps = {
 
 const PrivateRoute = () => {
 
-    // const { isAuth, currentUser } = useSelector(AuthSelector)
-    const { initialState } = useAuthContext()
-    const { isAuth } = initialState
+    const { authState } = useAuthContext()
+    const { isAuth } = authState
     const [user, setUser] = useState({} as CurrentUser | undefined)
     useEffect(() => {
-        // if (!isAuth) {
-        //     let userString = localStorage.getItem("currentUser")
-        //     console.log(userString)
-        //     if (userString !== null)
-        //         setUser(JSON.parse(userString) as CurrentUser)
-        // }
+
     }, [user]);
     return (
         (!isAuth) ?
