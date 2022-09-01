@@ -15,15 +15,15 @@ const PrivateRoute = () => {
     const { isAuth } = initialState
     const [user, setUser] = useState({} as CurrentUser | undefined)
     useEffect(() => {
-        if (!isAuth) {
-            let userString = localStorage.getItem("currentUser")
-            console.log(userString)
-            if (userString !== null)
-                setUser(JSON.parse(userString) as CurrentUser)
-        }
+        // if (!isAuth) {
+        //     let userString = localStorage.getItem("currentUser")
+        //     console.log(userString)
+        //     if (userString !== null)
+        //         setUser(JSON.parse(userString) as CurrentUser)
+        // }
     }, [user]);
     return (
-        (user === undefined) ?
+        (!isAuth) ?
             <div><Navigate to="/login" /></div>
             : <Outlet />
     )
