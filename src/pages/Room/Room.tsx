@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate, useMatch } from "react-router"
+import { useNavigate, useMatch, useParams } from "react-router"
 import { Navigate } from "react-router-dom"
 import Header from "../../components/Header/Header"
 import Conversation from "../../components/UserSpace/Conversation/Conversation"
@@ -19,8 +19,10 @@ const Room: FC<RoomProps> = (props) => {
     const { roomId } = useSelector(MessagesSelector)
     const [show, setShow] = useState(false)
     const navigate = useNavigate()
+    const params = useParams()
+
     const match = useMatch("/room/:id")
-    const { initialState } = useAuthContext()
+    const { authState } = useAuthContext()
     useEffect(() => {
         if (roomId == "" && match?.params.id !== undefined)
             dispatch(setRoomId(match?.params.id));
