@@ -1,13 +1,21 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import AuthReducer from "../features/user/authSlice"
+import { configureStore, ThunkAction, Action, combineReducers } from "@reduxjs/toolkit";
+import authReducer from "../features/user/authSlice"
 import RoomsReducer from "../features/user/RoomsSlice"
 import MessagesReducer from "../features/Conversation/MessagesSlice"
 import { MessageEndPointApi } from "../services/MessageApi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { SearchEndPointAPI } from "../services/searchApi";
+import { persistStore, persistReducer } from "redux-persist"
+import storage from 'redux-persist/lib/storage'
+const persistConfig = {
+  key: 'auth',
+  storage,
+}
+const AuthReducer = persistReducer(persistConfig, authReducer)
 
 export const store = configureStore({
   reducer: {
+    // persistedReducer,
     AuthReducer,
     RoomsReducer,
     MessagesReducer,
@@ -23,6 +31,7 @@ export const store = configureStore({
 
 });
 setupListeners(store.dispatch);
+export const persistor = persistStore(store)
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
