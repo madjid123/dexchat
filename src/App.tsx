@@ -7,7 +7,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { } from "react-router"
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -24,30 +24,44 @@ import { darkTheme, lightTheme } from "./components/Theme/Theme";
 import { Home } from "./pages/Home/Home";
 import { ThemeProvider } from "styled-components";
 import Room from "./pages/Room/Room";
-
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import { useAuthContext, MyAuthContext } from "./contexts/authentication/AuthContext";
 const App = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { currentUser, isAuth } = useSelector(AuthSelector);
+  const AuthState = useSelector(AuthSelector);
+  const { currentUser, isAuth, isLoading } = AuthState;
   useEffect(() => {
-    dispatch(CheckisAuth());
-  }, [isAuth]);
+    (async () => {
+      await dispatch(CheckisAuth());
+      if (isAuth) {
+        localStorage.setItem("currentUser", JSON.stringify(currentUser))
+      }
+    })()
+  }, []);
   return (
-    <ThemeProvider theme={darkTheme}>
-      {/* {isAuth && <Navigate to="/user"></Navigate>} */}
-      <Routes>
-        <Route path="/user" element={<UserSpace />}>
-        </Route>
-        <Route path="/login" element={<Login />}>
-        </Route>
-        <Route path="/register" element={<Register />}>
-        </Route>
-        <Route path="/rooms" element={<Rooms />} />
-        <Route path="/room/:id" element={<Room />} />
-        <Route path="/" element={<Home />} />
-      </Routes>
+    // <ThemeProvider theme={darkTheme}>
+    <Fragment>
+      <MyAuthContext.Provider value={{ initialState: AuthState, setAuth: () => { } }}>
+        <Routes>
+          <Route path="/user" element={<UserSpace />}>
+          </Route>
+          <Route path="/login" element={(!isAuth) ? <Login /> : <Navigate to="/user" />}>
+          </Route>
+          <Route path="/register" element={<Register />}>
+          </Route>
+          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/room/"
+            element={<PrivateRoute />} >
+            <Route path=":id" element={<Room />} />
+          </Route>
 
-    </ThemeProvider>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </MyAuthContext.Provider>
+    </Fragment >
+
+
+    // </ThemeProvider>
   );
 };
 
