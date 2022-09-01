@@ -9,13 +9,10 @@ import { RootState } from "../../app/store";
 // API URL of our app usually localhost:5000
 import API_URL from "../../URL";
 
-interface CurrentUser {
+export interface CurrentUser {
   _id: string;
   username: string;
   email: string;
-  password: string;
-  createdAt: string;
-  updatedAt: string;
 
 }
 export interface AuthState {
@@ -96,7 +93,7 @@ export const CheckisAuth = createAsyncThunk("users/isAauth", async (opt, thunkAP
 
   }
 })
-const initialState = {
+export const initialState = {
   isLoading: false,
   isAuth: false,
   currentUser: undefined,
