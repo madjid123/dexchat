@@ -5,20 +5,22 @@ import { Navigate } from "react-router-dom"
 import Header from "../../components/Header/Header"
 import Conversation from "../../components/UserSpace/Conversation/Conversation"
 import { clearAllMessages, setRoomId } from "../../features/Conversation/MessagesSlice"
-import { AuthSelector, CheckisAuth } from "../../features/user/authSlice"
+import { CheckisAuth } from "../../features/user/authSlice"
 import { MessagesSelector } from "../../features/Conversation/MessagesSlice"
+import { useAuthContext } from "../../contexts/authentication/AuthContext"
 type RoomProps = {
 }
 const Room: FC<RoomProps> = (props) => {
     const dispatch = useDispatch();
+    // const { currentUser, isAuth, isLoading } = useSelector(AuthSelector)
     const closeConversation = () => {
         dispatch(clearAllMessages({}));
     };
-    const { currentUser, isAuth, isLoading } = useSelector(AuthSelector)
     const { roomId } = useSelector(MessagesSelector)
     const [show, setShow] = useState(false)
     const navigate = useNavigate()
     const match = useMatch("/room/:id")
+    const { initialState } = useAuthContext()
     useEffect(() => {
         if (roomId == "" && match?.params.id !== undefined)
             dispatch(setRoomId(match?.params.id));
@@ -27,11 +29,9 @@ const Room: FC<RoomProps> = (props) => {
         dispatch(CheckisAuth())
     })
     const handleShow = () => setShow(true)
-    console.log(isAuth)
+
     return (
-        (!isAuth) && (<Navigate to="/login" />) ||
-        <div className="my-container">
-            (console.log(isAuth))
+        <div className="my-container sidebar">
             < Header show={show} handleShow={handleShow}  ></Header >
             <Conversation closeConversation={closeConversation} isPage={true}></Conversation>
         </div >
