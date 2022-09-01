@@ -144,5 +144,5 @@ const AuthReducer = createSlice({
 });
 const { actions, reducer } = AuthReducer
 export const { clearErrors, getAuth } = actions
-export const AuthSelector = (state: RootState) => state.AuthReducer;
+export const AuthSelector = (state: RootState) => state.AuthReducer
 export default AuthReducer.reducer as Reducer<typeof initialState>;
