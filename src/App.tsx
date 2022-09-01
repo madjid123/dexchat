@@ -41,7 +41,7 @@ const App = () => {
   return (
     // <ThemeProvider theme={darkTheme}>
     <Fragment>
-      <MyAuthContext.Provider value={{ initialState: AuthState, setAuth: () => { } }}>
+      <MyAuthContext.Provider value={{ authState: AuthState, setAuth: () => { } }}>
         <Routes>
           <Route path="/user" element={<UserSpace />}>
           </Route>
