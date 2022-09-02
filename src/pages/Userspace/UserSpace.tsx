@@ -14,7 +14,7 @@ import Header from "../../components/Header/Header";
 import {
   clearAllMessages,
   MessagesSelector,
-  setRoomId,
+  setRoom,
 } from "../../features/Conversation/MessagesSlice";
 import SideTabs from "../../components/UserSpace/Tabs/Tabs";
 import { OffCanvas } from "../../components/UserSpace/OffCanvas/OffCanvas";
@@ -26,7 +26,7 @@ const UserSpace = (props: any) => {
   // const [clearMsgs, setClearMsgs] = useState(false);
   const [show, setShow] = useState(false);
   const rooms = useSelector(RoomsSelectors.selectAll);
-  const { roomId } = useSelector(MessagesSelector);
+  const { room } = useSelector(MessagesSelector);
   const [headerHeight, setHeaderHeight] = useState(0);
   useEffect(() => {
     socket.connect();
@@ -41,7 +41,7 @@ const UserSpace = (props: any) => {
   const closeConvrstion = () => {
     // setMember({ _id: undefined });
     dispatch(clearAllMessages({}));
-    dispatch(setRoomId(""));
+    dispatch(setRoom(null));
     // setClearMsgs(true);
   };
 
@@ -61,7 +61,7 @@ const UserSpace = (props: any) => {
           >
             <SideTabs show={show} handleClose={handleClose} className="sidetabs"></SideTabs>
             <OffCanvas show={show} handleClose={handleClose}></OffCanvas>
-            {roomId !== "" ? (
+            {room !== null ? (
               <Conversation closeConversation={closeConvrstion} isPage={false}></Conversation>
             ) : (
               <div></div>
