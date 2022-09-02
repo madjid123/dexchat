@@ -19,6 +19,7 @@ import socket from "../../../utils/socket";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Input from "../../Input/Input";
 import {
+  Member,
   Room,
   RoomsSelectors,
 } from "../../../features/user/RoomsSlice";
@@ -33,8 +34,8 @@ interface ConversationProps {
 
 const Conversation = (props: ConversationProps) => {
   const { currentUser } = useSelector(AuthSelector);
-  const { messagesResponse, roomId } = useSelector(MessagesSelector);
-  const [member, setMember] = useState({} as any);
+  const { messagesResponse, room } = useSelector(MessagesSelector);
+  const [member, setMember] = useState({} as Member);
   const [message, setMessage] = useState("" as string);
   const [scrollPos, setScrollPos] = useState(0);
   const dispatch = useAppDispatch();
@@ -42,9 +43,10 @@ const Conversation = (props: ConversationProps) => {
     MessageEndPointApi.endpoints.getMessagesByRoomId.useLazyQuery({});
   const rooms: Dictionary<Room> = useSelector(RoomsSelectors.selectEntities);
 
+  console.log(member)
   const onMessage = () => {
     if (message === "") return;
-    if (socket.connected && currentUser !== undefined) {
+    if (socket.connected && currentUser !== undefined && room !== null && member._id !== undefined) {
       const { _id, username } = currentUser;
       const _message: Message = {
         Receiver: {
@@ -56,7 +58,7 @@ const Conversation = (props: ConversationProps) => {
           id: _id,
         },
         Room: {
-          id: roomId,
+          id: room._id,
         },
         content: {
           text: message,
@@ -67,18 +69,21 @@ const Conversation = (props: ConversationProps) => {
         message: _message,
       });
       dispatch(addMessage(_message));
-      dispatch(SendMessageToApi({ message: _message, room_id: roomId }));
+      dispatch(SendMessageToApi({ message: _message, room_id: room._id }));
       setMessage("");
     }
   };
 
   useEffect(() => {
-    if (rooms) {
-      rooms[roomId]?.members.map((member) => {
-        if (member._id !== currentUser?._id) setMember(member);
+    if (rooms && room !== null) {
+      rooms[room._id]?.members.map((Member) => {
+        if (currentUser && Member._id !== currentUser?._id) {
+          console.log(room)
+          setMember(Member);
+        }
       });
     }
-  }, [roomId]);
+  }, [room]);
   useEffect(() => {
     if (currentUser !== undefined) {
       let user = {
@@ -92,14 +97,16 @@ const Conversation = (props: ConversationProps) => {
   }, [currentUser, dispatch, , socket]);
   useEffect(() => {
     let page = 1;
+
     if (messagesResponse.messages.length > 0) {
       // dispatch(setMessagesState(messages));
     } else {
-      trigger({ room_id: roomId, page: 1 });
+      if (room !== null)
+        trigger({ room_id: room._id, page: 1 });
     }
     socket.on("typing", (args: string) => {
     });
-  }, [roomId]);
+  }, [room]);
   useEffect(() => {
     socket.volatile.emit("typing", {
       Sender: currentUser?.username,
@@ -117,8 +124,8 @@ const Conversation = (props: ConversationProps) => {
 
       if (page !== undefined && page + 1 > messagesResponse.pages) return;
       else page += 1;
-
-      trigger({ room_id: roomId, page: page });
+      if (room != null)
+        trigger({ room_id: room._id, page: page });
     }, 1000);
   };
   useEffect(() => {
@@ -152,9 +159,17 @@ const Conversation = (props: ConversationProps) => {
           }}
           className="m-0"
         >
-          {member.username}
+          {
+            (room !== null && room.members.find((member) => {
+              if (currentUser)
+                return member._id != currentUser._id
+            })?.username)}
+          {(
+
+            console.log(room)
+          )}
         </h2>
-        {(!props.isPage) &&
+        {(!props.isPage) ?
           <Button
             onClick={() => {
               props.closeConversation();
@@ -165,6 +180,7 @@ const Conversation = (props: ConversationProps) => {
           >
             <X />
           </Button>
+          : <p></p>
         }
       </div>
       <div
