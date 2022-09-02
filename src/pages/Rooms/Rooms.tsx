@@ -4,6 +4,8 @@ import { useSelector } from "react-redux"
 import { AuthSelector } from "../../features/user/authSlice"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import "./Rooms.css"
+import Footer from "../../components/Footer/Footer"
 type RoomsPageProps = {
 
 }
@@ -23,9 +25,16 @@ const RoomsPageRouter = (props: any) => {
         navigate("/login")
     }
     return (
-        <div className="my-container">
+        <div className=" d-flex m-2 gap-2 flex-column justify-center align-center">
             < Header show={true} handleShow={() => { }}  ></Header >
-            <Rooms isPage={true}></Rooms>
+            <div className="my-container box-container">
+
+                <Rooms isPage={true}></Rooms>
+            </div>
+            <div className="mb-3">
+
+                <Footer ></Footer>
+            </div>
         </div >
     )
 }
