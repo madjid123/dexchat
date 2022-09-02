@@ -11,12 +11,10 @@ import URL from "../../URL"
 import { type } from "os"
 import { buildHooks } from "@reduxjs/toolkit/dist/query/react/buildHooks"
 import socket from "../../utils/socket"
-// axios({
-// 	headers: {
-// 		'Content-Type': 'application/json',
-// 	},
-// 	withCredentials: true
-// })
+import { User } from "../../services/searchApi"
+import { CurrentUser } from "../user/authSlice"
+import { Room } from "../user/RoomsSlice"
+
 export interface Message {
 	Sender: {
 		id: string,
@@ -42,10 +40,10 @@ export interface MessagesResponse {
 	page: number,
 	pages: number,
 }
-interface MessagesState {
+export interface MessagesState {
 	messagesResponse: MessagesResponse
 	errors: string[],
-	roomId: string
+	room: Room | null
 }
 const initialState: MessagesState = {
 	messagesResponse: {
@@ -54,7 +52,8 @@ const initialState: MessagesState = {
 		pages: 1
 	},
 	errors: [],
-	roomId: ""
+	room: null
+
 }
 
 export const SendMessageToApi = createAsyncThunk<void, { message: Message, room_id: string }, {}>("message/send", async ({
@@ -94,11 +93,12 @@ const MessagesReducer = createSlice({
 		setMessagesState: (state, { payload }: { payload: MessagesResponse }) => {
 			state.messagesResponse = payload
 		},
-		setRoomId(state, action: PayloadAction<string>) {
+		setRoom(state, action: PayloadAction<Room | null>) {
 
 			state.messagesResponse = initialState.messagesResponse
-			state.roomId = action.payload
-			socket.removeListener("getmsg:" + state.roomId);
+			state.room = action.payload
+			if (state.room != null)
+				socket.removeListener("getmsg:" + state.room._id);
 		}
 
 	},
@@ -107,14 +107,15 @@ const MessagesReducer = createSlice({
 
 		bulider.addMatcher(MessageEndPointApi.endpoints.getMessagesByRoomId.matchFulfilled,
 			(state, action) => {
-				if (state.messagesResponse.messages.length === 0)
-					state.messagesResponse = action.payload;
-				else {
-					state.messagesResponse = {
-						messages: [...action.payload.messages, ...state.messagesResponse.messages,],
-						page: action.payload.page,
-						pages: action.payload.pages
-					}
+				if (state.messagesResponse.messages.length === 0) {
+					state.messagesResponse = action.payload.messagesResponse;
+					state.room = action.payload.room;
+				} else {
+
+					const payload = action.payload
+					console.log(payload)
+					state.messagesResponse = payload.messagesResponse
+					state.room = payload.room
 				}
 
 			})
@@ -128,6 +129,6 @@ const MessagesReducer = createSlice({
 
 const { actions, reducer } = MessagesReducer
 export const { addMessage, clearAllMessages, setMessagesState
-	, setRoomId } = actions
+	, setRoom } = actions
 export const MessagesSelector = (state: RootState) => state.MessagesReducer
 export default MessagesReducer.reducer as Reducer<typeof initialState>
