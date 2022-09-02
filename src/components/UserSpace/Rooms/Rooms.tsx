@@ -15,7 +15,7 @@ import {
   clearAllMessages,
   MessagesSelector,
   setMessagesState,
-  setRoomId,
+  setRoom,
 } from "../../../features/Conversation/MessagesSlice";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Rooms.css";
@@ -28,6 +28,7 @@ import socket from "../../../utils/socket";
 import { Person, PersonFill } from "react-bootstrap-icons";
 import { useLazyGetAllUsersQuery, useLazyGetRoomsQuery } from "../../../services/searchApi";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 type RoomsProps = {
   isPage: boolean;
@@ -39,7 +40,7 @@ const Rooms = (props: RoomsProps) => {
   const dispatch = useDispatch();
   const rooms = useSelector(RoomsSelectors.selectAll);
   const ids = useSelector(RoomsSelectors.selectIds);
-  const { roomId } = useSelector(MessagesSelector);
+  const { room } = useSelector(MessagesSelector);
   const { currentUser, isAuth } = useSelector(AuthSelector);
   const [pattern, setPattern] = useState("");
   const navigate = useNavigate();
@@ -87,18 +88,22 @@ const Rooms = (props: RoomsProps) => {
                 />
               </div>
             </Nav.Item>
-            <Nav.Link>
+            <Nav.Link >
               <div className="d-flex flex-column ">
-                {rooms.map((room, index: number) => {
+                {rooms.map((Room, index: number) => {
                   return (
-                    <Nav.Item
+                    <Nav.Link
+                      href={`/room/${Room._id}`}
                       key={index}
                       onClick={() => {
-                        if (room._id !== roomId) {
-                          dispatch(setRoomId(room._id));
-                          if (props.isPage)
-                            navigate("/room/" + room._id)
+                        if (room === null)
+                          dispatch(setRoom(Room));
+                        else if (Room._id !== room._id) {
+                          dispatch(setRoom(Room));
+                          console.log(room)
                         }
+                        if (props.isPage)
+                          navigate("/room/" + Room._id)
                       }}
                     >
                       <div className="d-flex align-items-center justify-content-begin">
@@ -107,17 +112,17 @@ const Rooms = (props: RoomsProps) => {
                           <PersonFill size={22}></PersonFill>
                         </div>
 
-                        <div>                      {
-                          room.members.map((member: any) => {
+                        <a>                      {
+                          Room.members.map((member) => {
                             if (currentUser && member._id !== currentUser._id)
                               return member.username;
                           })
                         }
-                        </div>
+                        </a>
 
                       </div>
                       <br />
-                    </Nav.Item>
+                    </Nav.Link>
 
                   );
                 })
