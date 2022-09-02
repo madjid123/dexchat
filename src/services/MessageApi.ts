@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import MessagesSlice, { Message, MessagesResponse, setMessagesState, addMessage } from "../features/Conversation/MessagesSlice"
+import MessagesSlice, { Message, MessagesResponse, setMessagesState, addMessage, MessagesState } from "../features/Conversation/MessagesSlice"
 import URL from "../URL"
 import { store } from "../app/store"
 import socket from "../utils/socket"
@@ -10,7 +10,7 @@ export const MessageEndPointApi = createApi({
 	tagTypes: ["Message"],
 
 	endpoints: (builder) => ({
-		getMessagesByRoomId: builder.query<MessagesResponse, { room_id: string, page: number }>({
+		getMessagesByRoomId: builder.query<MessagesState, { room_id: string, page: number }>({
 
 			query: (args) => ({
 				url: `messages/room/${args.room_id}?page=${args.page}`,
@@ -18,7 +18,9 @@ export const MessageEndPointApi = createApi({
 
 			}),
 			transformResponse: (rawResult, meta) => {
-				const result = (rawResult as MessagesResponse)
+				console.log(rawResult);
+				const result = (rawResult as MessagesState)
+
 				return result
 
 			},
@@ -48,13 +50,18 @@ export const MessageEndPointApi = createApi({
 						console.log("GETMSG", data)
 
 						api.updateCachedData((draft) => {
-							if (draft.messages[0].Room.id !== data.room) return
-							draft.messages.push(data.message)
+							console.log(data)
+							if (draft.messagesResponse.messages[0].Room.id !== data.room) return
+							draft.messagesResponse.messages.push(data.message)
 							store.dispatch(addMessage(data.message))
 							return draft
 						})
 					}
-					socket.on(`getmsg:${store.getState().MessagesReducer.roomId}`, listener)
+					const room = store.getState().MessagesReducer.room
+					if (room != null) {
+						socket.on(`getmsg:${room._id}`, listener)
+						console.log(room._id)
+					}
 
 				} catch (e) {
 					console.log((e as Error).message)
