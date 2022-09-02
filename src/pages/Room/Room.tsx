@@ -4,32 +4,28 @@ import { useNavigate, useMatch, useParams } from "react-router"
 import { Navigate } from "react-router-dom"
 import Header from "../../components/Header/Header"
 import Conversation from "../../components/UserSpace/Conversation/Conversation"
-import { clearAllMessages, setRoomId } from "../../features/Conversation/MessagesSlice"
+import { clearAllMessages, setRoom } from "../../features/Conversation/MessagesSlice"
 import { CheckisAuth } from "../../features/user/authSlice"
 import { MessagesSelector } from "../../features/Conversation/MessagesSlice"
 import { useAuthContext } from "../../contexts/authentication/AuthContext"
+import { useLazyGetMessagesByRoomIdQuery } from "../../services/MessageApi"
 type RoomProps = {
 }
 const Room: FC<RoomProps> = (props) => {
     const dispatch = useDispatch();
-    // const { currentUser, isAuth, isLoading } = useSelector(AuthSelector)
     const closeConversation = () => {
         dispatch(clearAllMessages({}));
     };
-    const { roomId } = useSelector(MessagesSelector)
-    const [show, setShow] = useState(false)
-    const navigate = useNavigate()
-    const params = useParams()
 
+    const { room } = useSelector(MessagesSelector)
+    const [show, setShow] = useState(false)
+    const { id } = useParams()
+    const [trigger] = useLazyGetMessagesByRoomIdQuery()
     const match = useMatch("/room/:id")
-    const { authState } = useAuthContext()
     useEffect(() => {
-        if (roomId == "" && match?.params.id !== undefined)
-            dispatch(setRoomId(match?.params.id));
-    }, [roomId])
-    useEffect(() => {
-        dispatch(CheckisAuth())
-    })
+        if (room == null && id !== undefined)
+            trigger({ room_id: id, page: 1 })
+    }, [room])
     const handleShow = () => setShow(true)
 
     return (
