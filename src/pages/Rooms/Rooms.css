@@ -1,0 +1,13 @@
+.box-shadow {
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.429)
+}
+
+.box-container {
+    color: #fff;
+    text-align: center;
+    display: flex;
+    background-color: #343a4000;
+    box-shadow: 1px 1px 10px 10px #ffffff08;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 5px 1px rgb(17 17 17 / 49%);
+}
