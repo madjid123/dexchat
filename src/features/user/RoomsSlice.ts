@@ -12,9 +12,10 @@ import { RootState, store } from "../../app/store";
 import URL from "../../URL";
 import { MessagesResponse } from "../Conversation/MessagesSlice";
 
-interface Member {
-	name: string,
+export interface Member {
+	username: string,
 	_id: string,
+	email: string
 }
 export interface Room {
 	members: Member[];
