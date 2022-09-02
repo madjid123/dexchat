@@ -31,12 +31,7 @@ const App = () => {
   const AuthState = useSelector(AuthSelector);
   const { currentUser, isAuth, isLoading } = AuthState;
   useEffect(() => {
-    (async () => {
-      await dispatch(CheckisAuth());
-      if (isAuth) {
-        localStorage.setItem("currentUser", JSON.stringify(currentUser))
-      }
-    })()
+    dispatch(CheckisAuth());
   }, []);
   return (
     // <ThemeProvider theme={darkTheme}>
