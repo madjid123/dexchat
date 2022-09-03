@@ -96,11 +96,11 @@ const MessagesReducer = createSlice({
 		setRoom(state, action: PayloadAction<Room | null>) {
 
 			state.messagesResponse = initialState.messagesResponse
-			state.room = action.payload
-			if (state.room != null)
-				socket.removeListener("getmsg:" + state.room._id);
-		}
+			// if (state.room != null)
+			// 	socket.removeListener("getmsg:" + state.room._id);
 
+			state.room = action.payload
+		}
 	},
 	extraReducers: (bulider) => {
 
