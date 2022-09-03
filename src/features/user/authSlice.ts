@@ -25,10 +25,13 @@ interface AuthError {
   messages: string[];
 }
 
-// axios({
-//   withCredentials: true
-// })
 
+export const initialState = {
+  isLoading: false,
+  isAuth: false,
+  currentUser: undefined,
+  error: { messages: [] },
+} as AuthState;
 // implement the login logic for our chat app using thunks in redux 
 export const login = createAsyncThunk(
   "users/Login",
@@ -82,23 +85,19 @@ export const CheckisAuth = createAsyncThunk("users/isAauth", async (opt, thunkAP
   try {
     const response = await axios.get(API_URL + "/auth/login", { withCredentials: true })
     if (response.status === 200) {
+      console.log(response.data)
       return response.data
     }
     else {
       return thunkAPI.rejectWithValue(initialState)
     }
-  } catch (err: any) {
-    console.log(err)
+  } catch (e) {
+    const err = e as AxiosError
+    console.log(err.message)
     return thunkAPI.rejectWithValue(initialState)
 
   }
 })
-export const initialState = {
-  isLoading: false,
-  isAuth: false,
-  currentUser: undefined,
-  error: { messages: [] },
-} as AuthState;
 
 const AuthReducer = createSlice({
   name: "auth",
@@ -136,7 +135,8 @@ const AuthReducer = createSlice({
         state.isAuth = true;
         state.currentUser = payload as CurrentUser
       }).addCase(CheckisAuth.rejected, (state, { payload }) => {
-        state.isAuth = false
+        // console.log(payload)
+        // state.isAuth = false
         return initialState
       })
 
