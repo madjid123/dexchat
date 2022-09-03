@@ -41,34 +41,27 @@ export const MessageEndPointApi = createApi({
 				// create a websocket connection when the cache subscription starts
 				try {
 					socket.connect()
-					// wait for the initial query to resolve before proceeding
 					await api.cacheDataLoaded
-					// when data is received from the socket connection to the server,
-					// if it is a message and for the appropriate channel,
-					// update our query result with the received message
-					const listener = (data: any) => {
+					const room = store.getState().MessagesReducer.room
+					const listener = (data: { message: Message, room: string }) => {
 						console.log("GETMSG", data)
 
 						api.updateCachedData((draft) => {
 							console.log(data)
-							if (draft.messagesResponse.messages[0].Room.id !== data.room) return
+							if (room !== null && room._id !== data.room) return
 							draft.messagesResponse.messages.push(data.message)
 							store.dispatch(addMessage(data.message))
 							return draft
 						})
 					}
-					const room = store.getState().MessagesReducer.room
 					if (room != null) {
 						socket.on(`getmsg:${room._id}`, listener)
-						console.log(room._id)
 					}
 
 				} catch (e) {
 					console.log((e as Error).message)
 				}
-				// cacheEntryRemoved will resolve when the cache subscription is no longer active
 				await api.cacheEntryRemoved
-				// perform cleanup steps once the `cacheEntryRemoved` promise resolves
 			},
 
 		}),
