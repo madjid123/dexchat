@@ -35,7 +35,7 @@ interface ConversationProps {
 const Conversation = (props: ConversationProps) => {
   const { currentUser } = useSelector(AuthSelector);
   const { messagesResponse, room } = useSelector(MessagesSelector);
-  const [member, setMember] = useState({} as Member);
+  const [member, setMember] = useState<Member | null>(null);
   const [message, setMessage] = useState("" as string);
   const [scrollPos, setScrollPos] = useState(0);
   const dispatch = useAppDispatch();
@@ -43,10 +43,10 @@ const Conversation = (props: ConversationProps) => {
     MessageEndPointApi.endpoints.getMessagesByRoomId.useLazyQuery({});
   const rooms: Dictionary<Room> = useSelector(RoomsSelectors.selectEntities);
 
-  console.log(member)
   const onMessage = () => {
     if (message === "") return;
-    if (socket.connected && currentUser !== undefined && room !== null && member._id !== undefined) {
+    console.log(member)
+    if (socket.connected && currentUser !== undefined && room !== null && member !== null) {
       const { _id, username } = currentUser;
       const _message: Message = {
         Receiver: {
@@ -73,12 +73,10 @@ const Conversation = (props: ConversationProps) => {
       setMessage("");
     }
   };
-
   useEffect(() => {
-    if (rooms && room !== null) {
-      rooms[room._id]?.members.map((Member) => {
+    if (room !== null) {
+      room.members.map((Member) => {
         if (currentUser && Member._id !== currentUser?._id) {
-          console.log(room)
           setMember(Member);
         }
       });
@@ -108,11 +106,12 @@ const Conversation = (props: ConversationProps) => {
     });
   }, [room]);
   useEffect(() => {
-    socket.volatile.emit("typing", {
-      Sender: currentUser?.username,
-      Receiver: member._id,
-    });
-  }, [currentUser?.username, member._id, message]);
+    if (member != null)
+      socket.volatile.emit("typing", {
+        Sender: currentUser?.username,
+        Receiver: member._id,
+      });
+  }, [currentUser?.username, member, message]);
 
   const fetchMessages = () => {
     let ScroDiv = document.getElementById("scrollableDiv");
@@ -164,10 +163,6 @@ const Conversation = (props: ConversationProps) => {
               if (currentUser)
                 return member._id != currentUser._id
             })?.username)}
-          {(
-
-            console.log(room)
-          )}
         </h2>
         {(!props.isPage) ?
           <Button
