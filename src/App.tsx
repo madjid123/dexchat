@@ -32,7 +32,8 @@ const App = () => {
   const { currentUser, isAuth, isLoading } = AuthState;
   useEffect(() => {
     dispatch(CheckisAuth());
-  }, []);
+    // console.log(isAuth)
+  }, [isAuth]);
   return (
     // <ThemeProvider theme={darkTheme}>
     <Fragment>
