@@ -26,6 +26,7 @@ import { ThemeProvider } from "styled-components";
 import Room from "./pages/Room/Room";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { useAuthContext, MyAuthContext } from "./contexts/authentication/AuthContext";
+import DiscoverPage from "./pages/Discover/Discover";
 const App = () => {
   const dispatch = useDispatch();
   const AuthState = useSelector(AuthSelector);
@@ -51,6 +52,14 @@ const App = () => {
             <Route path=":id" element={<Room />} />
           </Route>
 
+          <Route path="/discover/"
+            element={<PrivateRoute />} >
+            <Route path=":id" element={<DiscoverPage />} />
+          </Route>
+          <Route path="/requests/"
+            element={<PrivateRoute />} >
+            <Route path=":id" element={<DiscoverPage />} />
+          </Route>
           <Route path="/" element={<Home />} />
         </Routes>
       </MyAuthContext.Provider>
