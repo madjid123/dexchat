@@ -31,20 +31,14 @@ const SideTabs = (props: any) => {
     <Tab.Container id="left-tabs-example" defaultActiveKey="first" >
       <Container >
         <Row sm={10} md={12} >
-          <Row>
-            <Tab.Content className="box-container d-flex justify-content-center">
-              <Tab.Pane eventKey="first">
-                <Rooms isPage={false} />
-              </Tab.Pane>
-              <Tab.Pane eventKey="second">
-                <Discover />
-              </Tab.Pane>
-            </Tab.Content>
-          </Row>
-          <Row />
-          <Row />
-          <Row />
-          <Row />
+          <Tab.Content className="box-container d-flex justify-content-center">
+            <Tab.Pane eventKey="first">
+              <Rooms isPage={false} />
+            </Tab.Pane>
+            <Tab.Pane eventKey="second">
+              <Discover />
+            </Tab.Pane>
+          </Tab.Content>
         </Row>
         <Row sm={10} md={12} >
           <Nav variant="pills" className="flex-row justify-content-center box-container">
