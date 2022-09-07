@@ -45,7 +45,6 @@ const Conversation = (props: ConversationProps) => {
 
   const onMessage = () => {
     if (message === "") return;
-    console.log(member)
     if (socket.connected && currentUser !== undefined && room !== null && member !== null) {
       const { _id, username } = currentUser;
       const _message: Message = {
