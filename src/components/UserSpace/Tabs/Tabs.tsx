@@ -32,7 +32,7 @@ const SideTabs = (props: any) => {
       <Container className="d-flex flex-column justify-content-between sidetabs  gap-2" >
         <Row sm={10} md={12} className="box-container" >
           <Tab.Content className="d-flex justify-content-center ">
-            <Tab.Pane eventKey="first" className="" style={{ height: "100%" }}>
+            <Tab.Pane eventKey="first" className="" >
               <Rooms isPage={false} />
             </Tab.Pane>
             <Tab.Pane eventKey="second">
