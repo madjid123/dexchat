@@ -76,3 +76,8 @@
   box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
   flex: 1;
 }
+
+.main-box {
+
+  height: calc(100vh - calc(var(--header-height)));
+}
