@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Col, Container, Nav, Offcanvas, Row, Tab, Tabs } from "react-bootstrap";
 import { Discover } from "../Discover/Discover";
 import { Requests } from "../Requests/Requests";
-import { Compass } from "react-bootstrap-icons"
+import { Compass, People, PersonLinesFill } from "react-bootstrap-icons"
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
 import Button from "../../Button/Button";
@@ -48,13 +48,13 @@ const SideTabs = (props: any) => {
         <div>
           <Nav variant="pills" className="flex-row justify-content-center box-container tabs">
             <Nav.Item >
-              <Nav.Link eventKey="rooms" className="tab">Rooms</Nav.Link>
+              <Nav.Link eventKey="rooms" className="tab"><People /></Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="discover"><Compass /></Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="requests">Requests</Nav.Link>
+              <Nav.Link eventKey="requests"><PersonLinesFill /></Nav.Link>
             </Nav.Item>
           </Nav>
 
