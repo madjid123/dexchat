@@ -47,7 +47,7 @@ const SideTabs = (props: any) => {
         </div>
         <div>
           <Nav variant="pills" className="flex-row justify-content-center box-container tabs">
-            <Nav.Item className="">
+            <Nav.Item >
               <Nav.Link eventKey="rooms" className="tab">Rooms</Nav.Link>
             </Nav.Item>
             <Nav.Item>
