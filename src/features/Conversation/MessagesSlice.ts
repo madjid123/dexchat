@@ -112,10 +112,13 @@ const MessagesReducer = createSlice({
 					state.room = action.payload.room;
 				} else {
 
-					const payload = action.payload
-					console.log(payload)
-					state.messagesResponse = payload.messagesResponse
-					state.room = payload.room
+					let payload: MessagesState = action.payload
+					payload.messagesResponse.messages = [
+						...payload.messagesResponse.messages,
+						...state.messagesResponse.messages
+					]
+
+					return payload
 				}
 
 			})
