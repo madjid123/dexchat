@@ -27,7 +27,7 @@ const RoomsPageRouter = (props: any) => {
     return (
         <div className=" d-flex m-2 gap-2 flex-column justify-center align-center">
             < Header show={true} handleShow={() => { }}  ></Header >
-            <div className="my-container box-container">
+            <div className="container box-container">
 
                 <Rooms isPage={true}></Rooms>
             </div>
