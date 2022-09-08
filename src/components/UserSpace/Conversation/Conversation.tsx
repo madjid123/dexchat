@@ -8,6 +8,7 @@ import {
   Message,
   addMessage,
   SendMessageToApi,
+  setRoom,
 } from "../../../features/Conversation/MessagesSlice";
 import { useAppDispatch } from "../../../app/hooks";
 import {
@@ -103,7 +104,7 @@ const Conversation = (props: ConversationProps) => {
     }
     socket.on("typing", (args: string) => {
     });
-  }, [room]);
+  }, [room !== null]);
   useEffect(() => {
     if (member != null)
       socket.volatile.emit("typing", {
@@ -167,6 +168,8 @@ const Conversation = (props: ConversationProps) => {
           <Button
             onClick={() => {
               props.closeConversation();
+              dispatch(setRoom(null))
+              setMember(null)
             }}
             type="submit"
             value="X"
