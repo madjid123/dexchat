@@ -100,7 +100,6 @@ const Rooms = (props: RoomsProps) => {
                           dispatch(setRoom(Room));
                         else if (Room._id !== room._id) {
                           dispatch(setRoom(Room));
-                          console.log(room)
                         }
                         if (props.isPage)
                           navigate("/room/" + Room._id)
