@@ -5,6 +5,7 @@ import { Requests } from "../Requests/Requests";
 import { Compass } from "react-bootstrap-icons"
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
+import Button from "../../Button/Button";
 const SideTabs = (props: any) => {
 
   return (
@@ -30,8 +31,8 @@ const SideTabs = (props: any) => {
     //   </Tabs>
     // </div >
     <Tab.Container id="left-tabs-example" defaultActiveKey="first" >
-      <Container className="d-flex flex-column justify-content-between main-box gap-2 tabs" >
-        <div className="box-container" >
+      <Container className="d-flex flex-column justify-content-between main-box gap-2 sidetabs" >
+        <div className="ox-container" >
           <Tab.Content className="d-flex justify-content-center ">
             <Tab.Pane eventKey="rooms" className="" >
               <Rooms isPage={false} />
@@ -45,7 +46,7 @@ const SideTabs = (props: any) => {
           </Tab.Content>
         </div>
         <div>
-          <Nav variant="pills" className="flex-row justify-content-center box-container">
+          <Nav variant="pills" className="flex-row justify-content-center box-container tabs">
             <Nav.Item className="">
               <Nav.Link eventKey="rooms" className="tab">Rooms</Nav.Link>
             </Nav.Item>
