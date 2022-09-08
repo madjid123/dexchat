@@ -56,12 +56,13 @@ const UserSpace = (props: any) => {
       {
         currentUser !== undefined ? (
           <div
-            className="cont"
+            className="main-box d-flex flex-row gap-2"
 
           >
             <SideTabs show={show} handleClose={handleClose} className="sidetabs"></SideTabs>
             <OffCanvas show={show} handleClose={handleClose}></OffCanvas>
             {room !== null ? (
+
               <Conversation closeConversation={closeConvrstion} isPage={false}></Conversation>
             ) : (
               <div></div>
