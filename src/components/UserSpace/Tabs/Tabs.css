@@ -27,7 +27,7 @@
 .tabs {
   justify-content: center;
   color: #50515386;
-  border-bottom: 1px solid #03b06b !important;
+  /* border-bottom: 1px solid #03b06b !important; */
   /* height: calc(100vh - var(--header-height)); */
   /* height: 80vh; */
 
@@ -45,8 +45,8 @@
   background-color: #50515300 !important;
   color: #03b06b !important;
   border: 0px solid #03b06b !important;
-  border-bottom: 2px #03b06b solid !important;
-  box-shadow: inset 0 -5px 0 #03b06b !important;
+  border-bottom: 1px #03b06b solid !important;
+  box-shadow: inset 0 -3px 0 #03b06b !important;
 }
 
 .tabs .nav-link:hover {
