@@ -25,16 +25,14 @@ const RoomsPageRouter = (props: any) => {
         navigate("/login")
     }
     return (
-        <div className=" d-flex m-2 gap-2 flex-column justify-center align-center">
-            < Header show={true} handleShow={() => { }}  ></Header >
-            <div className="container box-container">
+        <div className=" box-container d-flex flex-column justify-center align-center" style={{ height: "100%" }}>
+            {/* < Header show={true} handleShow={() => { }}  ></Header > */}
 
-                <Rooms isPage={true}></Rooms>
-            </div>
-            <div className="mb-3">
+            <Rooms isPage={true}></Rooms>
+            {/* <div className="mb-3">
 
                 <Footer ></Footer>
-            </div>
+            </div> */}
         </div >
     )
 }
