@@ -29,12 +29,12 @@ const Room: FC<RoomProps> = (props) => {
     const handleShow = () => setShow(true)
 
     return (
-        <div className="main-box d-flex flex-column gap-0 mx-2 justify-content-around ">
-            < Header show={show} handleShow={handleShow}  ></Header >
-            <div className="main-box box-container">
-                <Conversation closeConversation={closeConversation} isPage={true}></Conversation>
-            </div>
+        // <div className="main-box d-flex flex-column gap-0 mx-2 justify-content-around ">
+        /* < Header show={show} handleShow={handleShow}  ></Header > */
+        < div className="d-flex " style={{ height: "100%" }} >
+            <Conversation closeConversation={closeConversation} isPage={true}></Conversation>
         </div >
+        // </div >
     )
 }
 export default Room
