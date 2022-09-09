@@ -27,6 +27,7 @@ import Room from "./pages/Room/Room";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { useAuthContext, MyAuthContext } from "./contexts/authentication/AuthContext";
 import DiscoverPage from "./pages/Discover/Discover";
+import { Page } from "./components/Page/Page";
 const App = () => {
   const dispatch = useDispatch();
   const AuthState = useSelector(AuthSelector);
@@ -46,10 +47,10 @@ const App = () => {
           </Route>
           <Route path="/register" element={<Register />}>
           </Route>
-          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/rooms" element={<Page><Rooms /></Page>} />
           <Route path="/room/"
             element={<PrivateRoute />} >
-            <Route path=":id" element={<Room />} />
+            <Route path=":id" element={<Page><Room /></Page>} />
           </Route>
 
           <Route path="/discover/"
