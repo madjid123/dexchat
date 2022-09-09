@@ -209,7 +209,7 @@ const Conversation = (props: ConversationProps) => {
               <Spinner animation="grow" variant="light" />
             </div>
           }
-          height="100%"
+          // height="100%"
           //initialScrollY={-10}
           endMessage={
             <div>
