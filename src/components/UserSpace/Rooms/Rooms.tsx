@@ -72,7 +72,7 @@ const Rooms = (props: RoomsProps) => {
         variant="dark"
         className="sidebar. flex-column "
         collapseOnSelect
-        style={{ color: "white" }}
+        style={{ color: "white", height: "inherit" }}
       >
         <Navbar.Brand href="#home">Room</Navbar.Brand>
         <Navbar.Toggle formTarget="colapsedSidbar" />
