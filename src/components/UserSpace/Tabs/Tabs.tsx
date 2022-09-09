@@ -6,8 +6,9 @@ import { Compass, People, PersonLinesFill } from "react-bootstrap-icons"
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
 import Button from "../../Button/Button";
+import { useNavigate } from "react-router";
 const SideTabs = (props: any) => {
-
+  const navigate = useNavigate()
   return (
     // <div className="sidetabs">
 
@@ -31,8 +32,8 @@ const SideTabs = (props: any) => {
     //   </Tabs>
     // </div >
     <Tab.Container id="left-tabs-example" defaultActiveKey="first" >
-      <Container className="d-flex flex-column justify-content-between main-box gap-2 sidetabs" >
-        <div className="ox-container" >
+      {/* <Container className="d-flex flex-column justify-content-between main-box gap-2 sidetabs" > */}
+      {/* <div className="ox-container" >
           <Tab.Content className="d-flex justify-content-center ">
             <Tab.Pane eventKey="rooms" className="" >
               <Rooms isPage={false} />
@@ -44,22 +45,22 @@ const SideTabs = (props: any) => {
               <Requests />
             </Tab.Pane>
           </Tab.Content>
-        </div>
-        <div>
-          <Nav variant="pills" className="flex-row justify-content-center box-container tabs">
-            <Nav.Item >
-              <Nav.Link eventKey="rooms" className="tab"><People /></Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="discover"><Compass /></Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="requests"><PersonLinesFill /></Nav.Link>
-            </Nav.Item>
-          </Nav>
+        </div> */}
+      <div>
+        <Nav variant="pills" className="flex-row justify-content-center box-container tabs">
+          <Nav.Item >
+            <Nav.Link eventKey="rooms" className="tab" onClick={() => { navigate("/rooms") }}><People /></Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="discover"><Compass /></Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="requests"><PersonLinesFill /></Nav.Link>
+          </Nav.Item>
+        </Nav>
 
-        </div>
-      </Container>
+      </div>
+      {/* </Container> */}
 
     </Tab.Container>
   );
