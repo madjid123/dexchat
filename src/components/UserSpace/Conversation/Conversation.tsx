@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, ListGroup, Spinner } from "react-bootstrap";
+import { Container, ListGroup, ListGroupItem, Spinner } from "react-bootstrap";
 import Button from "../../Button/Button";
 import { useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
@@ -26,6 +26,7 @@ import {
 } from "../../../features/user/RoomsSlice";
 import { Dictionary } from "@reduxjs/toolkit";
 import { X, XCircleFill, XLg } from "react-bootstrap-icons";
+import useInfiniteScroll from 'react-infinite-scroll-hook'
 
 
 interface ConversationProps {
@@ -134,6 +135,16 @@ const Conversation = (props: ConversationProps) => {
       left: 0,
     });
   }, [scrollPos, messagesResponse?.page]);
+  // const [sentryRef] = useInfiniteScroll({
+  //   loading: result.isLoading,
+  //   hasNextPage: messagesResponse.page < messagesResponse.pages ? true : false
+  //   ,
+  //   onLoadMore: fetchMessages,
+  //   // When there is an error, we stop infinite loading.
+  //   // It can be reactivated by setting "error" state as undefined.
+  //   disabled: result.isError,
+  //   rootMargin: '0px 0px 400px 0px',
+  // });
   return (
     <div
       className="conversation"
@@ -183,7 +194,7 @@ const Conversation = (props: ConversationProps) => {
       <div
         id="scrollableDiv"
         style={{
-          height: "100vh",
+          // height: "100vh",
           overflowY: "scroll",
           display: "flex",
           flexDirection: "column-reverse",
@@ -209,11 +220,8 @@ const Conversation = (props: ConversationProps) => {
               <Spinner animation="grow" variant="light" />
             </div>
           }
-          // height="100%"
-          //initialScrollY={-10}
           endMessage={
             <div>
-              {" "}
               <hr></hr>
             </div>
           }
@@ -226,11 +234,10 @@ const Conversation = (props: ConversationProps) => {
             e.stopPropagation();
           }}
         >
-          <ListGroup >
+          <ListGroup id="scrollableDiv" style={{ height: "50vh" }}>
             {messagesResponse.messages.map((msg: Message, index) => {
               return (
                 <ListGroup.Item
-                  bsPrefix={"alksdjf"}
                   variant="dark"
                   key={index}
                   className="MessageItem"
@@ -244,7 +251,6 @@ const Conversation = (props: ConversationProps) => {
                           : "message-bull member-bull"
                       }
                     >
-                      <div></div>
                       <label>{msg.content.text}</label>
                     </div>
                     <br></br>
@@ -265,7 +271,7 @@ const Conversation = (props: ConversationProps) => {
           variant="dark"
         ></Input>
         <Button
-          className="footer-butto px-3 mx-2"
+          className="footer-button px-3 mx-2"
           onClick={() => {
             onMessage();
           }}
