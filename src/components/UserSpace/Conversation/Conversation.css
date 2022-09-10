@@ -1,7 +1,6 @@
 .conversation {
-  background-color: #343a4000;
+  /* background-color: #343a4000; */
   display: flex;
-  /* height: calc(100vh - calc(var(--header-height))); */
   max-height: inherit;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -12,6 +11,7 @@
   color: #ffffff;
   border-radius: 1.5rem;
   box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
+  height: calc(100vh - var(--header-height));
   flex: 2;
 }
 
@@ -166,6 +166,7 @@ li.MessageItem {
 }
 
 #scrollableDiv {
+  overflow: auto;
   flex: 4;
 }
 
