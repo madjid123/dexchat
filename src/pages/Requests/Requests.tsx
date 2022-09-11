@@ -1,11 +1,9 @@
 import Header from "../../components/Header/Header"
 import { Requests } from "../../components/UserSpace/Requests/Requests"
-const DiscoverPage = () => {
+export const RequestsPage = () => {
 
-    return (<div className="box">
-        <Header show={false} handleShow={() => { }} />
+    return (
         <Requests />
-    </div>
 
     )
 }
