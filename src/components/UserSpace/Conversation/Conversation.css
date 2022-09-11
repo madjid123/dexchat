@@ -10,8 +10,9 @@
   text-align: center;
   color: #ffffff;
   border-radius: 1.5rem;
-  box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
-  height: calc(100vh - var(--header-height));
+  overflow: hidden;
+  /* box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486); */
+  /* height: calc(100vh - var(--header-height)); */
   flex: 2;
 }
 
