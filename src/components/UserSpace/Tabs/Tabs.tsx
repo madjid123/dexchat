@@ -6,34 +6,36 @@ import { Compass, People, PersonLinesFill } from "react-bootstrap-icons"
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
 import Button from "../../Button/Button";
+import { useTabsContext } from "../../../contexts/TabsContext";
 import { useNavigate } from "react-router";
 const SideTabs = (props: any) => {
   const navigate = useNavigate()
+  const { currentEventKey, setEventKey } = useTabsContext()
   return (
-    // <div className="sidetabs">
+    <Tab.Container id="left-tabs-example" defaultActiveKey={currentEventKey} >
+      <div>
+        <Nav variant="pills" className="flex-row justify-content-center box-container tabs">
+          <Nav.Item >
+            <Nav.Link eventKey="rooms" className="tab" onClick={() => { setEventKey("rooms"); navigate("/rooms") }}><People /></Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="discover" onClick={() => { setEventKey("discover"); navigate("/discover") }} ><Compass /></Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="requests" onClick={() => { setEventKey("requests"); navigate("/requests") }}><PersonLinesFill /></Nav.Link>
+          </Nav.Item>
+        </Nav>
 
-    //   <Tabs
-    //     defaultActiveKey="rooms"
-    //     id="tabs"
-    //     className="m-3 tabs"
-    //     variant="pills"
-    //   >
-    //     <Tab eventKey="rooms" title="Rooms" className="tab" >
-    //       <Rooms isPage={false} />
-    //     </Tab>
-    //     <Tab eventKey="discover" title="Discover" className="tab">
-    //       <Discover></Discover>
-    //     </Tab>
-    //     <Tab eventKey="requests" title="Requests" className="tab"  >
-    //       <Requests></Requests>
-    //     </Tab>
+      </div>
+      {/* </Container> */}
 
+    </Tab.Container>
+  );
+};
+export default SideTabs;
 
-    //   </Tabs>
-    // </div >
-    <Tab.Container id="left-tabs-example" defaultActiveKey="first" >
-      {/* <Container className="d-flex flex-column justify-content-between main-box gap-2 sidetabs" > */}
-      {/* <div className="ox-container" >
+{/* <Container className="d-flex flex-column justify-content-between main-box gap-2 sidetabs" > */ }
+{/* <div className="ox-container" >
           <Tab.Content className="d-flex justify-content-center ">
             <Tab.Pane eventKey="rooms" className="" >
               <Rooms isPage={false} />
@@ -46,23 +48,3 @@ const SideTabs = (props: any) => {
             </Tab.Pane>
           </Tab.Content>
         </div> */}
-      <div>
-        <Nav variant="pills" className="flex-row justify-content-center box-container tabs">
-          <Nav.Item >
-            <Nav.Link eventKey="rooms" className="tab" onClick={() => { navigate("/rooms") }}><People /></Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="discover"><Compass /></Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="requests"><PersonLinesFill /></Nav.Link>
-          </Nav.Item>
-        </Nav>
-
-      </div>
-      {/* </Container> */}
-
-    </Tab.Container>
-  );
-};
-export default SideTabs;
