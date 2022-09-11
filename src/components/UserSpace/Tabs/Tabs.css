@@ -78,6 +78,6 @@
 }
 
 .main-box {
-
-  height: calc(100vh - calc(var(--header-height)));
+  overflow: hidden;
+  /* height: calc(100vh - calc(var(--header-height))); */
 }
