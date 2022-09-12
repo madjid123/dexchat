@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { MyTabsContext } from "../../contexts/TabsContext";
 import Header from "../Header/Header";
 import SideTabs from "../UserSpace/Tabs/Tabs";
 
