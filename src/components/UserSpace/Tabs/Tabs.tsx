@@ -25,7 +25,6 @@ const SideTabs: React.FC<SideTabsPropsType> = (props) => {
         </Nav>
 
       </div>
-      {/* </Container> */}
 
     </Tab.Container>
   );
