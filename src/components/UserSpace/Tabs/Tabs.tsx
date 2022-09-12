@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Col, Container, Nav, Offcanvas, Row, Tab, Tabs } from "react-bootstrap";
+import { Nav, Offcanvas, Row, Tab, Tabs } from "react-bootstrap";
 import { Discover } from "../Discover/Discover";
 import { Requests } from "../Requests/Requests";
 import { Compass, People, PersonLinesFill } from "react-bootstrap-icons"
