@@ -1,6 +1,5 @@
 import { Nav, Tab } from "react-bootstrap";
 import { Compass, People, PersonLinesFill } from "react-bootstrap-icons"
-import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
 import { useTabsContext } from "../../../contexts/TabsContext";
 import { useNavigate } from "react-router";
