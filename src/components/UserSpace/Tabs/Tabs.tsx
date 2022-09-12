@@ -1,10 +1,7 @@
 import { Nav, Offcanvas, Row, Tab, Tabs } from "react-bootstrap";
-import { Discover } from "../Discover/Discover";
-import { Requests } from "../Requests/Requests";
 import { Compass, People, PersonLinesFill } from "react-bootstrap-icons"
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
-import Button from "../../Button/Button";
 import { useTabsContext } from "../../../contexts/TabsContext";
 import { useNavigate } from "react-router";
 const SideTabs = (props: any) => {
