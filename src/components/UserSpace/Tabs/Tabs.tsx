@@ -1,4 +1,4 @@
-import { Nav, Tab, Tabs } from "react-bootstrap";
+import { Nav, Tab } from "react-bootstrap";
 import { Compass, People, PersonLinesFill } from "react-bootstrap-icons"
 import Rooms from "../Rooms/Rooms";
 import "./Tabs.css";
