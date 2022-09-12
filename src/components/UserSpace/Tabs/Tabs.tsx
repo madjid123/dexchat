@@ -3,7 +3,10 @@ import { Compass, People, PersonLinesFill } from "react-bootstrap-icons"
 import "./Tabs.css";
 import { useTabsContext } from "../../../contexts/TabsContext";
 import { useNavigate } from "react-router";
-const SideTabs = (props: any) => {
+type SideTabsPropsType = {
+
+}
+const SideTabs: React.FC<SideTabsPropsType> = (props) => {
   const navigate = useNavigate()
   const { currentEventKey, setEventKey } = useTabsContext()
   return (
