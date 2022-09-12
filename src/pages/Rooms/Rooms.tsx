@@ -26,13 +26,9 @@ const RoomsPageRouter = (props: any) => {
     }
     return (
         <div className=" d-flex flex-column justify-center align-center" style={{ height: "100%" }}>
-            {/* < Header show={true} handleShow={() => { }}  ></Header > */}
 
             <Rooms isPage={true}></Rooms>
-            {/* <div className="mb-3">
 
-                <Footer ></Footer>
-            </div> */}
         </div >
     )
 }
