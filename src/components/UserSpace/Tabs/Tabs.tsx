@@ -29,18 +29,3 @@ const SideTabs = (props: any) => {
   );
 };
 export default SideTabs;
-
-{/* <Container className="d-flex flex-column justify-content-between main-box gap-2 sidetabs" > */ }
-{/* <div className="ox-container" >
-          <Tab.Content className="d-flex justify-content-center ">
-            <Tab.Pane eventKey="rooms" className="" >
-              <Rooms isPage={false} />
-            </Tab.Pane>
-            <Tab.Pane eventKey="discover">
-              <Discover />
-            </Tab.Pane>
-            <Tab.Pane eventKey="requests">
-              <Requests />
-            </Tab.Pane>
-          </Tab.Content>
-        </div> */}
