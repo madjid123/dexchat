@@ -36,7 +36,7 @@ const Login = (props: any) => {
     e.preventDefault();
     dispatch(login({ username: data.username, password: data.password }));
     if (isAuth) {
-      navigate("/user")
+      navigate("/rooms")
     }
     setIsFormChanged(false);
     setNotEmpty(false);
