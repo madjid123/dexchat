@@ -59,8 +59,7 @@ const UserSpace = (props: any) => {
             className="main-box d-flex flex-column flex-row gap-2"
 
           >
-            <div> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa libero eius vel odit ut magni suscipit omnis sapiente at possimus, quisquam nam, eligendi nihil in nostrum iste esse veritatis voluptate?</div>
-            <SideTabs show={show} handleClose={handleClose} className="sidetabs"></SideTabs>
+            <SideTabs />
             <OffCanvas show={show} handleClose={handleClose}></OffCanvas>
             {room !== null ? (
 
