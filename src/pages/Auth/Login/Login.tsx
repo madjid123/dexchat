@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../components/Header/Header";
 import { login, AuthSelector } from "../../../features/user/authSlice";
-import { useAppDispatch } from "../../../app/hooks";
 import "./Login.css";
 import Input from "../../../components/Input/Input";
 import { useNavigate } from "react-router";
