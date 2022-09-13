@@ -9,6 +9,6 @@ export const Home = () => {
     const [show, setShow] = useState(false)
     const handleShow = () => setShow(true)
     if (isAuth)
-        return <Navigate to="/user" />
+        return <Navigate to="/rooms" />
     return <div className="my-container"> <Header show={show} handleShow={handleShow}></Header> </div>
 }
