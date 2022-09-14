@@ -17,6 +17,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const dispatch = useDispatch();
   const { currentUser, isAuth } = useSelector(AuthSelector);
   const navigate = useNavigate();
+
   const Logout = () => {
     dispatch(logout());
     const newPath = "/login";
