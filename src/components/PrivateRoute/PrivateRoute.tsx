@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
 import { Navigate, Outlet } from "react-router"
-import { AuthSelector, CheckisAuth, CurrentUser } from "../../features/user/authSlice"
+import { CurrentUser } from "../../features/user/authSlice"
 import { useAuthContext } from "../../contexts/authentication/AuthContext"
 type PrivateRouteProps = {
 
 }
-
-
 
 const PrivateRoute = () => {
 
