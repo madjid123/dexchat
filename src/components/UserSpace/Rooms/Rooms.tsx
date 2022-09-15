@@ -62,10 +62,6 @@ const Rooms = (props: RoomsProps) => {
 
     }
   }, [isAuth, pattern]);
-  useEffect(() => {
-    if (currentUser !== undefined && pattern !== "") {
-    }
-  }, [currentUser, pattern])
   return (
     <>
       <Navbar
