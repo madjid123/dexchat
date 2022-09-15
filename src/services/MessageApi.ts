@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import MessagesSlice, { Message, MessagesResponse, setMessagesState, addMessage, MessagesState } from "../features/Conversation/MessagesSlice"
+import { Message, addMessage, MessagesState } from "../features/Conversation/MessagesSlice"
 import URL from "../URL"
 import { store } from "../app/store"
 import socket from "../utils/socket"
