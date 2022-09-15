@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react"
 import Input from "../../../components/Input/Input"
 import {
     SearchEndPointAPI,
-    useLazyGetAllUsersQuery,
     useLazyJoinAcceptQuery,
     useLazyJoinRejectQuery,
     useLazyGetRequestsQuery,
@@ -34,8 +33,6 @@ export const Requests = () => {
     }
     const handleRequestClick = (index: number, accept: boolean) => {
         let user_id: string
-        let user: User
-        let pendingRequest: boolean
         if (data.data !== undefined) {
             user_id = data.data[index].RequesterId._id
 
