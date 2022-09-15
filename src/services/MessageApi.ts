@@ -55,6 +55,7 @@ export const MessageEndPointApi = createApi({
 						})
 					}
 					if (room != null) {
+						console.log("room.id", room._id)
 						socket.on(`getmsg:${room._id}`, listener)
 					}
 
