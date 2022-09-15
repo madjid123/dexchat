@@ -4,7 +4,6 @@ import {
   Route,
   Navigate,
   Routes,
-  useNavigate,
 } from "react-router-dom";
 import { } from "react-router"
 import { Fragment, useEffect, useState } from "react";
@@ -25,7 +24,6 @@ import { Home } from "./pages/Home/Home";
 import { ThemeProvider } from "styled-components";
 import Room from "./pages/Room/Room";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import { useAuthContext, MyAuthContext } from "./contexts/authentication/AuthContext";
 import DiscoverPage from "./pages/Discover/Discover";
 import { Page } from "./components/Page/Page";
 import { MyTabsContext } from "./contexts/TabsContext";
@@ -37,36 +35,33 @@ const App = () => {
   const [currentEventKey, setCurrenEventKey] = useState("rooms")
   useEffect(() => {
     dispatch(CheckisAuth());
-    // console.log(isAuth)
   }, [isAuth]);
   return (
     // <ThemeProvider theme={darkTheme}>
     <Fragment>
       <MyTabsContext.Provider value={{ currentEventKey: currentEventKey, setEventKey: setCurrenEventKey }}>
-        <MyAuthContext.Provider value={{ authState: AuthState, setAuth: () => { } }}>
-          <Routes>
-            <Route path="/user" element={<UserSpace />}>
-            </Route>
-            <Route path="/login" element={(!isAuth) ? <Login /> : <Navigate to="/user" />}>
-            </Route>
-            <Route path="/register" element={<Register />}>
-            </Route>
-            <Route path="/rooms" element={<Page><Rooms /></Page>} />
-            <Route path="/room/"
-              element={<PrivateRoute />} >
-              <Route path=":id" element={<Page><Room /></Page>} />
-            </Route>
-            <Route path="/discover/"
-              element={<PrivateRoute />} >
-              <Route path="" element={<Page><DiscoverPage /></Page>} />
-            </Route>
-            <Route path="/requests/"
-              element={<PrivateRoute />} >
-              <Route path="" element={<Page><RequestsPage /></Page>} />
-            </Route>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </MyAuthContext.Provider>
+        <Routes>
+          <Route path="/user" element={<UserSpace />}>
+          </Route>
+          <Route path="/login" element={(!isAuth) ? <Login /> : <Navigate to="/user" />}>
+          </Route>
+          <Route path="/register" element={<Register />}>
+          </Route>
+          <Route path="/rooms" element={<Page><Rooms /></Page>} />
+          <Route path="/room/"
+            element={<PrivateRoute />} >
+            <Route path=":id" element={<Page><Room /></Page>} />
+          </Route>
+          <Route path="/discover/"
+            element={<PrivateRoute />} >
+            <Route path="" element={<Page><DiscoverPage /></Page>} />
+          </Route>
+          <Route path="/requests/"
+            element={<PrivateRoute />} >
+            <Route path="" element={<Page><RequestsPage /></Page>} />
+          </Route>
+          <Route path="/" element={<Home />} />
+        </Routes>
       </MyTabsContext.Provider >
     </Fragment >
 
