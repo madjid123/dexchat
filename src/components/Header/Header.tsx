@@ -1,4 +1,4 @@
-import { Navbar, Nav, NavDropdown, Dropdown } from "react-bootstrap";
+import { Navbar, NavDropdown, Dropdown } from "react-bootstrap";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router";
 import { logout, AuthSelector } from "../../features/user/authSlice";
