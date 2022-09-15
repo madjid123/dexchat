@@ -4,31 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
 import {
   getRooms,
-  RoomErrorSelector,
-  RoomSelector,
   RoomsSelectors,
-  RoomUpdate,
-  setAllRooms,
 
 } from "../../../features/user/RoomsSlice";
 import {
-  clearAllMessages,
   MessagesSelector,
-  setMessagesState,
   setRoom,
 } from "../../../features/Conversation/MessagesSlice";
-import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import "./Rooms.css";
 
 import { useEffect, useState } from "react";
 import Input from "../../../components/Input/Input";
-import Button from "../../../components/Button/Button";
-import { store } from "../../../app/store";
-import socket from "../../../utils/socket";
-import { Person, PersonFill } from "react-bootstrap-icons";
-import { useLazyGetAllUsersQuery, useLazyGetRoomsQuery } from "../../../services/searchApi";
+import { PersonFill } from "react-bootstrap-icons";
+import { useLazyGetRoomsQuery } from "../../../services/searchApi";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
 
 type RoomsProps = {
   isPage: boolean;
