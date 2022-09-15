@@ -43,7 +43,6 @@ const Conversation = (props: ConversationProps) => {
   const dispatch = useAppDispatch();
   const [trigger, result] =
     MessageEndPointApi.endpoints.getMessagesByRoomId.useLazyQuery({});
-  const rooms: Dictionary<Room> = useSelector(RoomsSelectors.selectEntities);
 
   const onMessage = () => {
     if (message === "") return;
@@ -76,6 +75,7 @@ const Conversation = (props: ConversationProps) => {
   };
   useEffect(() => {
     if (room !== null) {
+      socket.emit("sendsocket", { rooms: [room._id] })
       room.members.map((Member) => {
         if (currentUser && Member._id !== currentUser?._id) {
           setMember(Member);
@@ -135,16 +135,6 @@ const Conversation = (props: ConversationProps) => {
       left: 0,
     });
   }, [scrollPos, messagesResponse?.page]);
-  // const [sentryRef] = useInfiniteScroll({
-  //   loading: result.isLoading,
-  //   hasNextPage: messagesResponse.page < messagesResponse.pages ? true : false
-  //   ,
-  //   onLoadMore: fetchMessages,
-  //   // When there is an error, we stop infinite loading.
-  //   // It can be reactivated by setting "error" state as undefined.
-  //   disabled: result.isError,
-  //   rootMargin: '0px 0px 400px 0px',
-  // });
   return (
     <div
       className="conversation"
