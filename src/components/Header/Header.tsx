@@ -8,13 +8,14 @@ import "./DropMenu.css"
 import { PersonCircle } from "react-bootstrap-icons"
 import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
 import DexLogo from "../../public/dexplanet.png"
+import { useAppDispatch } from "../../app/hooks";
 type HeaderProps = {
   show: boolean
   handleShow: () => void
 
 }
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { currentUser, isAuth } = useSelector(AuthSelector);
   const navigate = useNavigate();
 
