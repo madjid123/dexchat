@@ -32,9 +32,9 @@ export const Discover = () => {
     setPattern(target.value)
   }
   const handleRequestClick = (index: number) => {
-    let user_id: string
-    let user: User
-    let pendingRequest: boolean
+    var user_id: string
+    var user: User
+    var pendingRequest: boolean
     if (data.data !== undefined) {
       user = data?.data[index]
       user_id = user._id
