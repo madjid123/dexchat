@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action, combineReducers } from "@reduxjs/toolkit";
+import { ThunkMiddleware } from "redux-thunk"
 import authReducer from "../features/user/authSlice"
 import RoomsReducer from "../features/user/RoomsSlice"
 import MessagesReducer from "../features/Conversation/MessagesSlice"
