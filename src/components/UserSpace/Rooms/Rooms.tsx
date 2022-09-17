@@ -17,6 +17,7 @@ import Input from "../../../components/Input/Input";
 import { PersonFill } from "react-bootstrap-icons";
 import { useLazyGetRoomsQuery } from "../../../services/searchApi";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../../app/hooks";
 
 type RoomsProps = {
   isPage: boolean;
@@ -25,7 +26,7 @@ export interface Room {
   members: any[2];
 }
 const Rooms = (props: RoomsProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const rooms = useSelector(RoomsSelectors.selectAll);
   const ids = useSelector(RoomsSelectors.selectIds);
   const { room } = useSelector(MessagesSelector);
