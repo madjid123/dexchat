@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Header from "../../../components/Header/Header";
 import { login, AuthSelector } from "../../../features/user/authSlice";
 import "./Login.css";
 import Input from "../../../components/Input/Input";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../../app/hooks";
 type LoginData = {
   [key: string]: string | any;
 };
@@ -12,7 +13,7 @@ const Login = (props: any) => {
   const [data, setData] = useState({ username: "", password: "" } as LoginData);
   const [notEmpty, setNotEmpty] = useState(false);
   const [isformChanged, setIsFormChanged] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isAuth, error } = useSelector(AuthSelector);
 
