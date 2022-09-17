@@ -147,7 +147,7 @@ const Register = (props: RegisterProps) => {
   // }
   return (
     <div className="my-container">
-      <Header show={show} handleShow={handleShow} > </Header>
+      <Header show={true} handleShow={() => { }} />
       <div className="form-mad ">
         <form id="form" onSubmit={handleSubmit} className="d-flex justify-center flex-column gap-2" >
           <h3>Register</h3>
