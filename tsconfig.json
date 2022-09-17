@@ -3,7 +3,7 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "target": "es5",
     "module": "esnext",
     "strict": true,
