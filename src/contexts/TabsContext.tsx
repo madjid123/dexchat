@@ -6,6 +6,6 @@ export type TabsContext = {
 
 
 export const MyTabsContext = createContext<TabsContext>({
-    currentEventKey: "rooms", setEventKey: (value: string) => { }
+    currentEventKey: "", setEventKey: (value: string) => { }
 } as TabsContext)
 export const useTabsContext = () => useContext(MyTabsContext)
