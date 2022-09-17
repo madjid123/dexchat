@@ -10,6 +10,7 @@ import { Fragment, useEffect, useState } from "react";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch } from "./app/hooks"
 // Components
 import Register from "./pages/Auth/Register/Register";
 import Login from "./pages/Auth/Login/Login";
@@ -29,7 +30,7 @@ import { Page } from "./components/Page/Page";
 import { MyTabsContext } from "./contexts/TabsContext";
 import { RequestsPage } from "./pages/Requests/Requests";
 const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const AuthState = useSelector(AuthSelector);
   const { currentUser, isAuth, isLoading } = AuthState;
   const [currentEventKey, setCurrenEventKey] = useState("rooms")
@@ -43,7 +44,7 @@ const App = () => {
         <Routes>
           <Route path="/user" element={<UserSpace />}>
           </Route>
-          <Route path="/login" element={(!isAuth) ? <Login /> : <Navigate to="/user" />}>
+          <Route path="/login" element={(!isAuth) ? <Login /> : <Navigate to="/" />}>
           </Route>
           <Route path="/register" element={<Register />}>
           </Route>
