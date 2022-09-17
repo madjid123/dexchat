@@ -9,10 +9,11 @@ import { CheckisAuth } from "../../features/user/authSlice"
 import { MessagesSelector } from "../../features/Conversation/MessagesSlice"
 import { useAuthContext } from "../../contexts/authentication/AuthContext"
 import { useLazyGetMessagesByRoomIdQuery } from "../../services/MessageApi"
+import { useAppDispatch } from "../../app/hooks"
 type RoomProps = {
 }
 const Room: FC<RoomProps> = (props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const closeConversation = () => {
         dispatch(clearAllMessages({}));
     };
