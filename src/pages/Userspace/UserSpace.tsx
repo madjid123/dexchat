@@ -18,10 +18,11 @@ import {
 } from "../../features/Conversation/MessagesSlice";
 import SideTabs from "../../components/UserSpace/Tabs/Tabs";
 import { OffCanvas } from "../../components/UserSpace/OffCanvas/OffCanvas";
+import { useAppDispatch } from "../../app/hooks";
 
 const UserSpace = (props: any) => {
   // const [Member, setMember] = useState({} as any);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { currentUser, isAuth } = useSelector(AuthSelector);
   // const [clearMsgs, setClearMsgs] = useState(false);
   const [show, setShow] = useState(false);
@@ -60,7 +61,7 @@ const UserSpace = (props: any) => {
 
           >
             <SideTabs />
-            <OffCanvas show={show} handleClose={handleClose}></OffCanvas>
+            {/* <OffCanvas show={show} handleClose={handleClose}></OffCanvas> */}
             {room !== null ? (
 
               <Conversation closeConversation={closeConvrstion} isPage={false}></Conversation>
