@@ -5,7 +5,6 @@ body,
 #app,
 #app>div {
   height: 100%;
-  overflow: hidden;
   background: var(--background-color-dex);
   background-size: cover;
   font-family: Poppins, sans-serif !important;
@@ -40,7 +39,7 @@ html {
 
 :root {
   --header-height: 14vh;
-  --background-color-dex: rgb(49, 49, 53);
+  --background-color-dex: rgb(37, 38, 40);
 }
 
 @media only screen and (min-width: 768px) {
