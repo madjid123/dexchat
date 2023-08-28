@@ -56,10 +56,16 @@
 
 .footer-button {
   border-radius: 1.5rem !important;
+  padding-block: 0.5rem !important;
   padding-inline: 1rem !important;
   background-color: #ff4800 !important;
-  border-color: none;
+  color: white !important;
+  border-color: white !important;
   margin: 0.5rem
+}
+
+.footer-button:hover {
+  background: #a22e00 !important;
 }
 
 .footer-input {
@@ -129,6 +135,7 @@ input:focus.footer-input {
   width: -moz-fit-content;
   max-width: 50%;
   background: linear-gradient(90deg, rgb(0, 226, 139), rgba(0, 171, 250, 0.664));
+  color: white;
   /* background-color: rgba(52, 146, 146, 0.63); */
   padding-inline: 1rem;
   padding-block: 0.5rem;
@@ -142,7 +149,7 @@ input:focus.footer-input {
   width: fit-content;
   width: -moz-fit-content;
   box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
-
+  color: white;
   padding-inline: 1rem;
   padding-block: 0.5rem;
   margin-inline: 0.5rem;
