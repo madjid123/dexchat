@@ -8,3 +8,44 @@
   max-height: 100%;
   padding: 0.5rem;
 }
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  height: fit-content;
+}
+
+.intro {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.intro-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 4rem;
+}
+
+.landing-button {
+  width: fit-content;
+  background: linear-gradient(90deg, rgb(56, 40, 200), rgb(0, 166, 160));
+  /* background: red; */
+  outline: none;
+  border: none;
+  color: white;
+  padding-inline: 2rem;
+  padding-block: 1rem;
+  border-radius: 2rem;
+}
+
+.landing-button:hover {
+  background: linear-gradient(20deg, rgb(56, 40, 200), rgb(238, 0, 255));
+  backdrop-filter: invert(100px);
+}
