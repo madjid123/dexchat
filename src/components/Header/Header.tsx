@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
               {/* <MenuApp /> */}
             </NavbarToggle>
           }
-          <img src={DexLogo} width="24" height="28" alt="dexlogo" />
+          <img src={DexLogo} width="24" height="28" alt="dexlogo" onClick={() => { navigate("/") }} />
         </div>
         <div className="menu d-flex ">
           <Navbar.Collapse area-label="basic-navbar-nav" className="" />
