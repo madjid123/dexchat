@@ -19,7 +19,7 @@ export const Home = () => {
                 <div className="intro-text m-sm-0 gap-2   p-sm-0 ">
                     <h1 className=" display-4 gradient-text">Your Ultimate Real-Time Chat website </h1>
                     <h3>Communicate, Share and interact</h3>
-                    <p>Welcome to DexChat, the cutting-edge solution that revolutionizes the way you communicate and collaborate online. With ConnectChat, real-time communication has never been easier, more interactive, and more efficient. Say goodbye to delayed responses and hello to instant, seamless conversations.DexChat provide a unique chat experience.  </p>
+                    <p>Welcome to DexChat, the cutting-edge solution that revolutionizes the way you communicate and collaborate online. With ConnectChat, real-time communication has never been easier, more interactive, and more efficient. Say goodbye to delayed responses and hello to instant, seamless conversations.</p>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                         <button onClick={() => { navigate("/register") }} className="landing-button"> Join Us Now!</button>
                     </div>
