@@ -63,6 +63,7 @@ export const Discover = () => {
   }
   return (
     <div className="my-container">
+      <h4>Discover new users</h4>
       <div className="flex-row">
         <Input
           placeholder="Search for new contact"
