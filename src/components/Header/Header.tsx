@@ -41,70 +41,71 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 
 
   return (
-    <div className="header-nav ">
-      <Navbar
-        collapseOnSelect
-        bg="tranparent"
-        variant="dark"
-        className="Navbar m-auto px-4 align-items-center d-flex justify-content-space-between"
-        expand="sm"
+    // <div className="header-nav fixed-top  " >
+    <Navbar
+      collapseOnSelect
+      bg="tranparent"
+      variant="dark"
+      className="Navbar sticky-top fixed-top  px-4 align-items-center d-flex justify-content-space-between"
+      expand="sm"
+      sticky="top"
 
-      >
+    >
 
-        <div className="logo d-flex align-items-center gap-1">
-          {currentUser !== undefined &&
-            <NavbarToggle
-              aria-controls="basic-navbar-nav"
-              style={{ color: "white", margin: "0.25rem" }}
-              onClick={props.handleShow}
-            >
+      <div className="logo d-flex align-items-center gap-1">
+        {currentUser !== undefined &&
+          <NavbarToggle
+            aria-controls="basic-navbar-nav"
+            style={{ color: "white", margin: "0.25rem" }}
+            onClick={props.handleShow}
+          >
 
-              {/* <MenuApp /> */}
-            </NavbarToggle>
-          }
-          <img src={DexLogo} width="24" height="28" alt="dexlogo" onClick={() => { navigate("/") }} />
-        </div>
-        <div className="menu d-flex ">
-          <Navbar.Collapse area-label="basic-navbar-nav" className="" />
-          {currentUser !== undefined && (
-            <Dropdown
-              id="nav-dropdown-dark-example"
-              // menuVariant="dex"
-              // title={()}
-              align={{ md: "end" }}
-              className="text-white text-center d-flex justify-content-center"
-              style={{ display: "flex", justifyContent: "center", color: "white" }}
-            >
-              <Dropdown.Toggle id="" variant="" className="d-flex align-items-center p-2 dropdown-toggle-dex" as={"div"}>
-                <div className="flex justify-content-center ">
+            {/* <MenuApp /> */}
+          </NavbarToggle>
+        }
+        <img src={DexLogo} width="24" height="28" alt="dexlogo" onClick={() => { navigate("/") }} />
+      </div>
+      <div className="menu d-flex ">
+        <Navbar.Collapse area-label="basic-navbar-nav" className="" />
+        {currentUser !== undefined && (
+          <Dropdown
+            id="nav-dropdown-dark-example"
+            // menuVariant="dex"
+            // title={()}
+            align={{ md: "end" }}
+            className="text-white text-center d-flex justify-content-center"
+            style={{ display: "flex", justifyContent: "center", color: "white" }}
+          >
+            <Dropdown.Toggle id="" variant="" className="d-flex align-items-center p-2 dropdown-toggle-dex" as={"div"}>
+              <div className="flex justify-content-center ">
 
-                  <PersonCircle />
-                  <a className="text-white text-center text-decoration-none mx-2 justify-content-between" >
-                    {currentUser.username}
-                  </a>
-                </div>
-              </Dropdown.Toggle>
+                <PersonCircle />
+                <a className="text-white text-center text-decoration-none mx-2 justify-content-between" >
+                  {currentUser.username}
+                </a>
+              </div>
+            </Dropdown.Toggle>
 
-              <Dropdown.Menu variant="dex" style={{ color: "white!important" }} align="end">
-                <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Settings
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="" onClick={Logout} className="text-danger">
-                  Logout
-                </NavDropdown.Item>
-              </Dropdown.Menu>
+            <Dropdown.Menu variant="dex" style={{ color: "white!important" }} align="end">
+              <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Settings
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="" onClick={Logout} className="text-danger">
+                Logout
+              </NavDropdown.Item>
+            </Dropdown.Menu>
 
-            </Dropdown>
-          )
-          }
-          {buttons}
+          </Dropdown>
+        )
+        }
+        {buttons}
 
-        </div>
+      </div>
 
-      </Navbar>
-    </div >
+    </Navbar>
+    // </div >
   );
 };
 export default Header;
