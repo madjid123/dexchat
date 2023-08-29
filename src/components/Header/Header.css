@@ -35,6 +35,8 @@
   /* margin-block: 0.75rem; */
   /* margin-inline: 0.75rem; */
   /* margin: 2rem; */
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
