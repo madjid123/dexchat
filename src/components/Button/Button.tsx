@@ -27,10 +27,23 @@ const variants = {
 };
 
 export default styled(Button)`
-  border-radius: 1rem 0.5rem 1rem 0.5rem;
+  border-radius: 1rem 0.75rem 1rem 0.75rem;
   border-width : 2px;
-    ${(props) =>
-    props.variant === "danger" ? variants.danger : variants.primary}
+    ${(props) => {
+    let variant: string = variants.primary;
+    switch (props.variant) {
+      case "danger": {
+        variant = variants.danger
+        break
+      };
+      default: {
+        variant = variants.primary
+        break
+      };
+    }
+    return variant
+  }
+  }
   
 `;
 // i always feels like i am doing it the wrong way. what's wrong why do i even have to think like this
