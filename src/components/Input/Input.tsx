@@ -17,10 +17,10 @@ export default styled(Input)`
     width: 100%;
     color: ${(props) => (props.variant === "light" ? "#222" : "#ccc")};
     box-shadow:none;
-    border-width : 3px !important;
+    border-width : 2px !important;
     
     border-color : ${theme.borderColor} !important ;
-    border-radius : 1.5rem 0.5rem 1.5rem 0.5rem !important;
+    border-radius : 1.5rem 0.75rem 1.5rem 0.75rem !important;
     background-color: ${(props) =>
     props.variant === "light" ? "#FFFFFFE7" : "#60606031"} !important;
     }
