@@ -146,16 +146,17 @@ const Register = (props: RegisterProps) => {
   //   return <Navigate to="/login"></Navigate>;
   // }
   return (
-    <div className="my-container">
+    <div className="d-flex flex-column justify-content-between align-items-center w-100 h-100 p-2 gap-2  w-100 ">
       <Header show={true} handleShow={() => { }} />
-      <div className="form-mad ">
-        <form id="form" onSubmit={handleSubmit} className="d-flex justify-center flex-column gap-2" >
-          <h3>Register</h3>
-          {errors.server.length > 0 && <hr></hr> && (
-            <span className="error text-danger"> {errors.server.map((err) => (<><span>{err}</span><br></br></>))} </span>
-          )}
+      <div id="register" className="d-flex justify-content-center align-items-center h-100  w-100 row">
+        <form id="form" onSubmit={handleSubmit} className="col-12 col-lg-6 d-flex justify-content-center align-items-center  flex-column gap-3" >
+          <h3 className="display-6">Register</h3>
+          {
+            errors.server.length > 0 && <hr></hr> && (
+              <span className="error text-danger"> {errors.server.map((err) => (<><span>{err}</span><br></br></>))} </span>
+            )}
           <div className="form-group">
-            <label>Name</label>
+            <label className="px-3">Name</label>
             <Input
               name="username"
               type="text"
@@ -172,7 +173,7 @@ const Register = (props: RegisterProps) => {
           </div>
 
           <div className="form-group">
-            <label>Email</label>
+            <label className="px-3">Email</label>
             <Input
               name="email"
               type="email"
@@ -188,7 +189,7 @@ const Register = (props: RegisterProps) => {
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label className="px-3">Password</label>
             <Input
               name="password"
               type="password"
@@ -202,7 +203,7 @@ const Register = (props: RegisterProps) => {
               <span className="text-danger">{errors.password}</span>
             )}
           </div>
-          <div className="form-group my-1">
+          <div className="form-group my-1 d-flex gap-4  flex-column  ">
             <Button
               disabled={Valid === false}
               type="submit"
@@ -217,6 +218,7 @@ const Register = (props: RegisterProps) => {
             </p>
           </div>
         </form>
+        <img src="/back_items/9.png" className=" z-0 img-fluid  " style={{ zIndex: "-1", position: "fixed", bottom: "0", right: "0", width: "200px" }} />
       </div>
     </div>
   );
