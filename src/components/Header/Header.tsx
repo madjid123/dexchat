@@ -46,23 +46,13 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
       collapseOnSelect
       bg="tranparent"
       variant="dark"
-      className="Navbar sticky-top fixed-top  px-4 align-items-center d-flex justify-content-space-between"
+      className="Navbar sticky-top fixed-top w-100  px-4 align-items-center d-flex justify-content-space-between"
       expand="sm"
       sticky="top"
 
     >
 
       <div className="logo d-flex align-items-center gap-1">
-        {currentUser !== undefined &&
-          <NavbarToggle
-            aria-controls="basic-navbar-nav"
-            style={{ color: "white", margin: "0.25rem" }}
-            onClick={props.handleShow}
-          >
-
-            {/* <MenuApp /> */}
-          </NavbarToggle>
-        }
         <img src={DexLogo} width="24" height="28" alt="dexlogo" onClick={() => { navigate("/") }} />
       </div>
       <div className="menu d-flex ">
