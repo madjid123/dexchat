@@ -26,9 +26,6 @@ body .msgForm {
   border-radius: 1.5rem;
   background-color: rgba(46, 46, 54, 0);
   padding: 70px 30px;
-  width: 50%;
-  margin: auto;
   min-width: 270px;
   align-items: center;
-  margin-top: 15px;
 }
