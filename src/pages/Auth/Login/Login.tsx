@@ -6,6 +6,7 @@ import "./Login.css";
 import Input from "../../../components/Input/Input";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "../../../app/hooks";
+import Button from "../../../components/Button/Button";
 type LoginData = {
   [key: string]: string | any;
 };
@@ -53,12 +54,12 @@ const Login = (props: any) => {
   };
 
   return (
-    <div className="my-container">
+    <div className="d-flex flex-column justify-content-between align-items-center w-100 h-100 p-2 gap-2  ">
       <Header show={show} handleShow={handleShow} ></Header>
 
-      <div className="form-mad">
-        <form id="form" onSubmit={handleSubmit}>
-          <h3>Log in</h3>
+      <div className="form-mad row h-100  w-100 d-flex justify-content-center align-items-center  ">
+        <form id="form" className="col-sm-12 col-lg-6  h-75 d-flex flex-column justify-content-center justify-content-lg-start gap-4  align-items-center   " onSubmit={handleSubmit}>
+          <h3 className="display-6">Login</h3>
           {error.messages.length > 0 && <hr></hr> &&
             error.messages.map((error) => {
               return (
@@ -67,9 +68,8 @@ const Login = (props: any) => {
                 </>
               );
             })}
-          <hr></hr>
-          <div className="form-group">
-            <label>Username</label>
+          <div className="form-group d-flex flex-column gap-1">
+            <label className="px-3">Username</label>
             <Input
               name="username"
               type="text"
@@ -82,8 +82,8 @@ const Login = (props: any) => {
             />
           </div>
 
-          <div className="form-group">
-            <label>Password</label>
+          <div className="form-group d-flex flex-column gap-1 ">
+            <label className="px-3">Password</label>
             <Input
               name="password"
               type="password"
@@ -96,29 +96,17 @@ const Login = (props: any) => {
             />
           </div>
 
-          <div className="form-group">
-            <div className="control checkbox">
-              <input
-                type="checkbox"
-                // className="f"
-                id="customCheck1"
-                // variant="dark"
-                required
-              />
-              <label className="custom-control-label" htmlFor="customCheck1">
-                Remember me
-              </label>
-            </div>
-          </div>
 
-          <button
+
+          <Button
             disabled={notEmpty === false}
             type="submit"
-            className="btn btn-dark btn-lg btn-block"
+            className="btn btn-secondary   btn-lg btn-block"
+
           >
             Sign in
-          </button>
-          <p className="forgot-password text-right">Forgot password?</p>
+          </Button>
+          {/* <p className="forgot-password text-right">Forgot password?</p> */}
         </form>
       </div>
     </div>
