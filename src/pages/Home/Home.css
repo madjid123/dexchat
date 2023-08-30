@@ -61,3 +61,7 @@
   display: inline-block;
   font-weight: bold;
 }
+
+.features-list li {
+  padding: 0.75rem;
+}
