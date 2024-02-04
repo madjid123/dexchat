@@ -24,19 +24,17 @@
   /* margin-top: 2rem; */
   text-align: center;
   align-items: center;
-  box-shadow: 0 0 5px 1px hsla(0, 0%, 0%, 0.399);
+  /* box-shadow: 0 0 5px 1px hsla(0, 0%, 0%, 0.399); */
   border-radius: 1.5rem;
   /* background-color: #11111100 !important; */
   justify-content: space-between !important;
   /* backdrop-filter: blur(5rem); */
   backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.1);
+  /* background-color: rgba(0, 0, 0, 0.1); */
 }
 
 .header-nav {
-  /* margin-block: 0.75rem; */
-  /* margin-inline: 0.75rem; */
-  /* margin: 2rem; */
+ 
   backdrop-filter: blur(10px);
   background-color: rgba(0, 0, 0, 0.1);
 }
