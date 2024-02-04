@@ -1,101 +1,128 @@
-import { Navbar, NavDropdown, Dropdown } from "react-bootstrap";
+import { Navbar, NavDropdown } from "react-bootstrap";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router";
 import { logout, AuthSelector } from "../../features/user/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "./Header.css";
-import "./DropMenu.css"
-import { PersonCircle } from "react-bootstrap-icons"
-import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
-import DexLogo from "../../public/dexplanet.png"
-import { useAppDispatch } from "../../app/hooks";
-type HeaderProps = {
-  show: boolean
-  handleShow: () => void
 
-}
+import "./DropMenu.css";
+import {
+  ArrowBarDown,
+  ArrowDown,
+  MenuDown,
+  PersonCircle,
+} from "react-bootstrap-icons";
+import {
+  DropdownMenuContent,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+} from "../ui/dropdown-menu";
+import DexLogo from "../../public/dexplanet.png";
+import { useAppDispatch } from "../../app/hooks";
+import { Menu } from "lucide-react";
+import { useTabsContext } from "~/contexts/TabsContext";
+import { useSetCurrentMember } from "~/hooks/UserSpace/Conversation/useSetCurrentMemberName";
+import { setAllRooms } from "~/features/user/RoomsSlice";
+import {
+  clearAllMessages,
+  setRoom,
+} from "~/features/Conversation/MessagesSlice";
+type HeaderProps = {
+  show: boolean;
+  handleShow: () => void;
+};
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const dispatch = useAppDispatch();
   const { currentUser, isAuth } = useSelector(AuthSelector);
+  const { member, setMember } = useSetCurrentMember();
+  const { showSidebar, setShowSidebar } = useTabsContext();
   const navigate = useNavigate();
 
   const Logout = () => {
     dispatch(logout());
+    setMember(null);
+    dispatch(setAllRooms([]));
+    dispatch(clearAllMessages({}));
+    dispatch(setRoom(null));
     const newPath = "/login";
-    navigate(newPath)
+    navigate(newPath);
   };
   let buttons = <> </>;
 
   if (!isAuth)
     buttons = (
-      <div className="header-content">
-        <Button className="" href="/login">
-          Login
+      <div className="flex flex-wrap justify-center items-center text-xs md:text-base gap-2">
+        <Button className=" ">
+          <a href="/login">Login</a>
         </Button>
-        <Button className="mx-1" href="/register">
-          Register
+        <Button className="">
+          <a href="/register">Register</a>
         </Button>
       </div>
     );
 
-
-
   return (
-    // <div className="header-nav fixed-top  " >
-    <Navbar
-      collapseOnSelect
-      bg="tranparent"
-      variant="dark"
-      className="Navbar sticky-top fixed-top w-100  px-4 align-items-center d-flex justify-content-space-between"
-      expand="sm"
-      sticky="top"
-
+    <div
+      className=" sticky top-0  w-full p-4 rounded-xl  items-center  flex justify-between shadow-black/50 shadow-[0_2px_10px_0px] hover:shadow-primary-500/50 active:shadow-primary-500/50      backdrop-blur-md z-[1000] "
+      onFocus={(e) => {
+        // e.preventDefault();
+        console.log("header received focus event");
+        e.stopPropagation();
+      }}
+      onBlur={(e) => {
+        console.log("header received blur event");
+        e.stopPropagation();
+      }}
     >
-
-      <div className="logo d-flex align-items-center gap-1">
-        <img src={DexLogo} width="24" height="28" alt="dexlogo" onClick={() => { navigate("/") }} />
+      <div className="logo flex items-center gap-3 ">
+        {isAuth && (
+          <div className="md:hidden">
+            <Menu
+              className="fill-white text-white hover:text-slate-500"
+              onClick={() => setShowSidebar(!showSidebar)}
+            />
+          </div>
+        )}
+        <img
+          src={DexLogo}
+          width="24"
+          height="28"
+          alt="dexlogo"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+        <span className="text-white">DexChat</span>
       </div>
-      <div className="menu d-flex ">
-        <Navbar.Collapse area-label="basic-navbar-nav" className="" />
+      <div className="menu flex ">
         {currentUser !== undefined && (
-          <Dropdown
-            id="nav-dropdown-dark-example"
-            // menuVariant="dex"
-            // title={()}
-            align={{ md: "end" }}
-            className="text-white text-center d-flex justify-content-center"
-            style={{ display: "flex", justifyContent: "center", color: "white" }}
-          >
-            <Dropdown.Toggle id="" variant="" className="d-flex align-items-center p-2 dropdown-toggle-dex" as={"div"}>
-              <div className="flex justify-content-center ">
-
-                <PersonCircle />
-                <a className="text-white text-center text-decoration-none mx-2 justify-content-between" >
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className="">
+              <div className="flex justify-center items-center hover:bg-white/30 p-2 rounded-xl ">
+                <PersonCircle className="fill-white" />
+                <span className="text-white text-center no-underline  mx-2 justify-between">
                   {currentUser.username}
-                </a>
+                </span>
+                <ArrowDown className="fill-white font-bold" />
               </div>
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu variant="dex" style={{ color: "white!important" }} align="end">
-              <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Settings
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="" onClick={Logout} className="text-danger">
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className=" backdrop-blur-md z-[1001] text-zinc-300 border-0 rounded-xl">
+              <DropdownMenuLabel>Account</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <a href="#Profile">Profile</a>
+              </DropdownMenuItem>
+              <DropdownMenuItem>Setting</DropdownMenuItem>
+              <DropdownMenuItem onClick={Logout} className="text-red-400">
                 Logout
-              </NavDropdown.Item>
-            </Dropdown.Menu>
-
-          </Dropdown>
-        )
-        }
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
         {buttons}
-
       </div>
-
-    </Navbar>
-    // </div >
+    </div>
   );
 };
 export default Header;
