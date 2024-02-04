@@ -1,33 +1,28 @@
-import { useState, useEffect } from "react";
-import { Container, ListGroup, ListGroupItem, Spinner } from "react-bootstrap";
+import { ListGroup, Spinner } from "react-bootstrap";
 import Button from "../../Button/Button";
 import { useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
+import { Comment } from "react-loader-spinner";
 import {
   MessagesSelector,
   Message,
-  addMessage,
-  SendMessageToApi,
   setRoom,
 } from "../../../features/Conversation/MessagesSlice";
 import { useAppDispatch } from "../../../app/hooks";
-import {
-  MessageEndPointApi,
-} from "../../../services/MessageApi";
 import "./Conversation.css";
 import "react-bootstrap";
 import socket from "../../../utils/socket";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Input from "../../Input/Input";
-import {
-  Member,
-  Room,
-  RoomsSelectors,
-} from "../../../features/user/RoomsSlice";
-import { Dictionary } from "@reduxjs/toolkit";
-import { X, XCircleFill, XLg } from "react-bootstrap-icons";
-import useInfiniteScroll from 'react-infinite-scroll-hook'
-
+import Input from "~/components/Input/Input";
+import { X } from "react-bootstrap-icons";
+import { useSetCurrentMember } from "~/hooks/UserSpace/Conversation/useSetCurrentMemberName";
+import { useSendTypingSocketEvent } from "~/hooks/UserSpace/Conversation/useSendTypingSocketEvent";
+import { useOnMessageChanges } from "~/hooks/UserSpace/Conversation/useOnMessageChanges";
+import { useMessagesScrollPosition } from "~/hooks/UserSpace/Conversation/useMessagesScrollPositon";
+import { useFetchMessages } from "~/hooks/UserSpace/Conversation/useFetchMessages";
+import { SendHorizonal } from "lucide-react";
+import { useRef } from "react";
+import { useTabsContext } from "~/contexts/TabsContext";
 
 interface ConversationProps {
   closeConversation(): void;
@@ -36,159 +31,65 @@ interface ConversationProps {
 
 const Conversation = (props: ConversationProps) => {
   const { currentUser } = useSelector(AuthSelector);
-  const { messagesResponse, room } = useSelector(MessagesSelector);
-  const [member, setMember] = useState<Member | null>(null);
-  const [message, setMessage] = useState("" as string);
-  const [scrollPos, setScrollPos] = useState(0);
+  const { member, setMember } = useSetCurrentMember();
+  const { message, setMessage, onSubmitMessage } = useOnMessageChanges({
+    member,
+  });
+  const { showSidebar, setShowSidebar } = useTabsContext();
+  const scrollPosDivRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const [trigger, result] =
-    MessageEndPointApi.endpoints.getMessagesByRoomId.useLazyQuery({});
+  const { setScrollPos } = useMessagesScrollPosition({ scrollPosDivRef });
 
-  const onMessage = () => {
-    if (message === "") return;
-    if (socket.connected && currentUser !== undefined && room !== null && member !== null) {
-      const { _id, username } = currentUser;
-      const _message: Message = {
-        Receiver: {
-          username: member.username,
-          id: member._id,
-        },
-        Sender: {
-          username: username,
-          id: _id,
-        },
-        Room: {
-          id: room._id,
-        },
-        content: {
-          text: message,
-        },
-        SentAt: new Date(),
-      };
-      socket.emit("sendmsg", {
-        message: _message,
-      });
-      dispatch(addMessage(_message));
-      dispatch(SendMessageToApi({ message: _message, room_id: room._id }));
-      setMessage("");
-    }
-  };
-  useEffect(() => {
-    if (room !== null) {
-      socket.emit("sendsocket", { rooms: [room._id] })
-      room.members.map((Member) => {
-        if (currentUser && Member._id !== currentUser?._id) {
-          setMember(Member);
-        }
-      });
-    }
-  }, [room]);
-  useEffect(() => {
-    if (currentUser !== undefined) {
-      let user = {
-        ...currentUser,
-        id: currentUser?._id,
-      };
+  const { messagesResponse, fetchMessages } = useFetchMessages({
+    setScrollPos,
+    scrollPosDivRef,
+    member,
+  });
 
-      let ScroDiv = document.getElementById("scrollableDiv");
-      ScroDiv?.addEventListener("scroll", (e) => { });
-    }
-  }, [currentUser, dispatch, , socket]);
-  useEffect(() => {
-    let page = 1;
-
-    if (messagesResponse.messages.length > 0) {
-      // dispatch(setMessagesState(messages));
-    } else {
-      if (room !== null)
-        trigger({ room_id: room._id, page: 1 });
-    }
-    socket.on("typing", (args: string) => {
-    });
-  }, [room !== null]);
-  useEffect(() => {
-    if (member != null)
-      socket.volatile.emit("typing", {
-        Sender: currentUser?.username,
-        Receiver: member._id,
-      });
-  }, [currentUser?.username, member, message]);
-
-  const fetchMessages = () => {
-    let ScroDiv = document.getElementById("scrollableDiv");
-    if (ScroDiv?.scrollTop !== undefined) {
-      setScrollPos(ScroDiv?.scrollTop);
-    }
-    setTimeout(() => {
-      let page = messagesResponse.page;
-
-      if (page !== undefined && page + 1 > messagesResponse.pages) return;
-      else page += 1;
-      if (room != null)
-        trigger({ room_id: room._id, page: page });
-    }, 1000);
-  };
-  useEffect(() => {
-    let ScroDiv = document.getElementById("scrollableDiv");
-    ScroDiv?.scrollTo({
-      top: scrollPos,
-      left: 0,
-    });
-  }, [scrollPos, messagesResponse?.page]);
   return (
     <div
-      className="conversation"
-      onKeyPress={(e) => {
+      className="conversation   shadow-black h-full shadow-[0_0px_10px_0] hover:shadow-primary-500"
+      onKeyDown={(e) => {
         if (e.key === "Enter") {
-          onMessage();
+          onSubmitMessage();
+          setScrollPos(0);
         }
       }}
     >
       <div
         className="conversation-header"
         style={{
-          padding: "0.5rem",
+          padding: "1rem",
           borderRadius: "1.5rem 1.5rem 0.5rem 0.5rem",
         }}
       >
         <p></p>
-        <h2
-          style={{
-            position: "sticky",
-            width: "fit-content",
-          }}
-          className="m-0"
-        >
-          {
-            (room !== null && room.members.find((member) => {
-              if (currentUser)
-                return member._id != currentUser._id
-            })?.username)}
+        <h2 className="m-0 w-fit sticky">
+          {member !== null && member.username}
         </h2>
-        {(!props.isPage) ?
+        {!props.isPage ? (
           <Button
             onClick={() => {
               props.closeConversation();
-              dispatch(setRoom(null))
-              setMember(null)
+              dispatch(setRoom(null));
+              setMember(null);
+              setShowSidebar(!showSidebar);
             }}
             type="submit"
-            value="X"
+            // value="X"
+            className="!p-1"
             variant="danger"
           >
             <X />
           </Button>
-          : <p></p>
-        }
+        ) : (
+          <p></p>
+        )}
       </div>
       <div
         id="scrollableDiv"
-        style={{
-          // height: "100vh",
-          overflowY: "scroll",
-          display: "flex",
-          flexDirection: "column-reverse",
-        }}
+        ref={scrollPosDivRef}
+        className=" overflow-y-scroll flex flex-col-reverse "
         onScroll={(e) => {
           e.preventDefault();
         }}
@@ -200,23 +101,23 @@ const Conversation = (props: ConversationProps) => {
             messagesResponse.page < messagesResponse.pages ? true : false
           }
           loader={
-            <div
-              style={{
-                alignItems: "center",
-                textAlign: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Spinner animation="grow" variant="light" />
+            <div className="items-center text-center justify-center flex">
+              {/* <Spinner animation="grow" variant="light" /> */}
+              <Comment
+                wrapperClass="color-green-500 !fill-green-500"
+                backgroundColor="rgb(0,200,100)"
+                width={50}
+                height={50}
+              />
             </div>
           }
           endMessage={
             <div>
-              <hr></hr>
+              <div className="h-[1px]  bg-slate-600 "></div>
             </div>
           }
           scrollableTarget="scrollableDiv"
-          style={{ display: "flex", flexDirection: "column-reverse" }}
+          className="flex gap-2 flex-col-reverse"
           inverse={true}
           scrollThreshold={"80%"}
           onScroll={(e) => {
@@ -224,36 +125,54 @@ const Conversation = (props: ConversationProps) => {
             e.stopPropagation();
           }}
         >
-          <ListGroup id="scrollableDiv" style={{ height: "50vh" }}>
+          <div
+            id="scrollableDiv"
+            // style={{ height: "fit-content" }}
+            className="gap-2 flex flex-col w-full overflow-scroll "
+          >
             {messagesResponse.messages.map((msg: Message, index) => {
               return (
-                <ListGroup.Item
-                  variant="dark"
+                <div
+                  // variant="dark"
                   key={index}
-                  className="MessageItem"
+                  className="MessageItem "
                   style={{ backgroundColor: "inherit", border: "none" }}
                 >
-                  <div className="message">
+                  <div
+                    className={`message relative w-full 
+                        flex 
+                        px-2
+                        ${
+                          msg.Sender.username === currentUser?.username
+                            ? "justify-start "
+                            : "  justify-end "
+                        }
+                   `}
+                  >
                     <div
-                      className={
-                        msg.Sender.username === currentUser?.username
-                          ? "message-bull user-bull"
-                          : "message-bull member-bull"
-                      }
+                      className={`
+                        lg:max-w-[40%] w-fit rounded-[8px] p-2 flex items-end 
+                        text-xs
+                        ${
+                          msg.Sender.username === currentUser?.username
+                            ? " from-emerald-500 to-blue-500 bg-gradient-to-tr "
+                            : "bg-neutral-600  "
+                        }
+                      `}
                     >
                       <label>{msg.content.text}</label>
                     </div>
                     <br></br>
                   </div>
-                </ListGroup.Item>
+                </div>
               );
             })}
-          </ListGroup>
+          </div>
         </InfiniteScroll>
       </div>
       <footer className="footer">
         <Input
-          className="footer-input "
+          className="footer-input border-white/10 focus:border-tertiary-500  "
           onChange={(e: any) => {
             setMessage(e.target.value);
           }}
@@ -261,17 +180,16 @@ const Conversation = (props: ConversationProps) => {
           variant="dark"
         ></Input>
         <Button
-          className="footer-button px-3 mx-2"
+          className="footer-button !rounded-xl !px-2 md:px-3 mx-2"
           onClick={() => {
-            onMessage();
+            onSubmitMessage();
           }}
         >
-          Send
+          <SendHorizonal />
         </Button>
       </footer>
     </div>
-
   );
-}
+};
 export default Conversation;
 export const _socket = socket;
