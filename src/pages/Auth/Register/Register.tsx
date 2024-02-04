@@ -7,6 +7,7 @@ import "./Register.css";
 import Header from "../../../components/Header/Header";
 import Input from "../../../components/Input/Input";
 import Button from "../../../components/Button/Button";
+import Layout from "~/components/Layout/Layout";
 
 // Email Regular expression
 const EmailRegEx = RegExp(
@@ -15,17 +16,16 @@ const EmailRegEx = RegExp(
 
 type RegisterState = {
   [key: string]: string;
-  username: string
+  username: string;
   email: string;
   password: string;
-
 };
 type RegisterError = {
   [key: string]: string | Array<string>;
   username: string;
   email: string;
   password: string;
-  server: Array<string>
+  server: Array<string>;
 };
 type RegisterProps = any;
 
@@ -35,13 +35,11 @@ const Register = (props: RegisterProps) => {
     username: "",
     email: "",
     password: "",
-    server: []
+    server: [],
   } as RegisterError);
   // const [redirect, setRedirect] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [Valid, setValid] = useState(false);
-  const [show, setShow] = useState(false)
-  const handleShow = () => setShow(true)
 
   useEffect(() => {
     isValid();
@@ -58,9 +56,8 @@ const Register = (props: RegisterProps) => {
         console.log(response);
         if (response.status === 200) {
           if (response.data.response !== undefined) {
-            navigate("/login")
-          }
-          else {
+            navigate("/login");
+          } else {
           }
         }
       })
@@ -89,13 +86,13 @@ const Register = (props: RegisterProps) => {
       return errs;
     });
     ValidInput({ name, value });
-    isValid()
+    isValid();
   };
   useEffect(() => {
-    setErrors({ ...errors, server: [] } as RegisterError)
-  }, [state])
+    setErrors({ ...errors, server: [] } as RegisterError);
+  }, [state]);
 
-  const ValidInput = (target: any) => {
+  const ValidInput = (target: { name: string; value: string }) => {
     let Errors = { ...errors };
 
     switch (target.name) {
@@ -120,7 +117,6 @@ const Register = (props: RegisterProps) => {
       default:
         break;
     }
-    console.log(Errors)
     setErrors(Errors);
     isValid();
   };
@@ -146,17 +142,32 @@ const Register = (props: RegisterProps) => {
   //   return <Navigate to="/login"></Navigate>;
   // }
   return (
-    <div className="d-flex flex-column justify-content-between align-items-center w-100 h-100 p-2 gap-2  w-100 ">
-      <Header show={true} handleShow={() => { }} />
-      <div id="register" className="d-flex justify-content-center align-items-center h-100  w-100 row">
-        <form id="form" onSubmit={handleSubmit} className="col-12 col-lg-6 d-flex justify-content-center align-items-center  flex-column gap-3" >
-          <h3 className="display-6">Register</h3>
-          {
-            errors.server.length > 0 && <hr></hr> && (
-              <span className="error text-danger"> {errors.server.map((err) => (<><span>{err}</span><br></br></>))} </span>
-            )}
-          <div className="form-group">
-            <label className="px-3">Name</label>
+    // <div className="flex flex-col justify-between items-center p-2 gap-2  w-100 ">
+    //   <Header show={true} handleShow={() => {}} />
+    <Layout className="h-full">
+      <div
+        // id="register"
+        className="flex justify-center items-center h-full  w-full p-4 text-white"
+      >
+        <form
+          id="form"
+          onSubmit={handleSubmit}
+          className=" flex justify-center items-center  w-full lg:w-1/3  flex-col gap-3 p-4"
+        >
+          <h3 className="text-2xl">Register</h3>
+          {errors.server.length > 0 && <hr></hr> && (
+            <span className="error text-danger">
+              {" "}
+              {errors.server.map((err) => (
+                <>
+                  <span>{err}</span>
+                  <br></br>
+                </>
+              ))}{" "}
+            </span>
+          )}
+          <div className="flex flex-col gap-2 items-start justify-center">
+            <label className="px-4">Name</label>
             <Input
               name="username"
               type="text"
@@ -168,12 +179,14 @@ const Register = (props: RegisterProps) => {
               onClick={handleChange}
             />
             {errors.username.length > 0 && (
-              <span className="text-danger">{errors.username}</span>
+              <span className="text-red-400 px-2 text-sm text-center">
+                {errors.username}
+              </span>
             )}
           </div>
 
-          <div className="form-group">
-            <label className="px-3">Email</label>
+          <div className="flex flex-col gap-2 items-start justify-center">
+            <label className="px-4">Email</label>
             <Input
               name="email"
               type="email"
@@ -184,12 +197,13 @@ const Register = (props: RegisterProps) => {
               onClick={handleChange}
             />
             {errors.email.length > 0 && (
-              <span className="text-danger">{errors.email}</span>
+              <span className="text-red-400 px-2 text-sm text-center">
+                {errors.email}
+              </span>
             )}
           </div>
-
-          <div className="form-group">
-            <label className="px-3">Password</label>
+          <div className="flex flex-col gap-2 items-start justify-center">
+            <label className="px-4">Password</label>
             <Input
               name="password"
               type="password"
@@ -200,10 +214,12 @@ const Register = (props: RegisterProps) => {
               onClick={handleChange}
             />
             {errors.password.length > 0 && (
-              <span className="text-danger">{errors.password}</span>
+              <span className="text-red-400 px-2 text-sm text-center">
+                {errors.password}
+              </span>
             )}
           </div>
-          <div className="form-group my-1 d-flex gap-4  flex-column  ">
+          <div className="my-1 flex gap-4  flex-col  ">
             <Button
               disabled={Valid === false}
               type="submit"
@@ -212,15 +228,29 @@ const Register = (props: RegisterProps) => {
             >
               Register
             </Button>
-            <p className="forgot-password text-right my-1">
-
-              Already registered <Link to="/login">log in?</Link>
+            <p className="forgot-password text-center text-xs text-gray-500">
+              Already registered ? go to{" "}
+              <Link className=" text-emerald-500 hover:text-white" to="/login">
+                login
+              </Link>
             </p>
           </div>
         </form>
-        <img src="/back_items/9.png" className=" z-0 img-fluid  " style={{ zIndex: "-1", position: "fixed", bottom: "0", right: "0", width: "200px" }} />
+        <img
+          alt=""
+          src="/back_items/9.png"
+          className=" z-0 img-fluid  "
+          style={{
+            zIndex: "-1",
+            position: "fixed",
+            bottom: "0",
+            right: "0",
+            width: "200px",
+          }}
+        />
       </div>
-    </div>
+    </Layout>
+    // </div>
   );
 };
 
