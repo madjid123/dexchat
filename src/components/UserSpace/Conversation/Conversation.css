@@ -1,12 +1,13 @@
 .conversation {
   /* background-color: #343a4000; */
   display: flex;
-  max-height: inherit;
+  max-height: 100%;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   flex-direction: column;
-  width: 100%;
+  /* width: 100vw; */
+  /* height: 100vh; */
   text-align: center;
   color: #ffffff;
   border-radius: 1.5rem;
@@ -129,49 +130,37 @@ input:focus.footer-input {
 }
 
 .message .user-bull {
-  position: relative;
   left: 0;
-  width: fit-content;
-  width: -moz-fit-content;
-  max-width: 50%;
-  background: linear-gradient(90deg, rgb(0, 226, 139), rgba(0, 171, 250, 0.664));
+  font-size: 12px;
+  background: linear-gradient(90deg, rgb(0, 178, 110), rgba(0, 129, 189, 0.664));
   color: white;
-  /* background-color: rgba(52, 146, 146, 0.63); */
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
-  margin-inline: 0.5rem;
-  border-radius: 2rem 2rem 4rem 2rem;
 
 }
-
+.message .member-bull {
+  font-size: 12px;
+  right: 0;
+  @apply bg-slate-600 rounded-bl-3xl rounded-br-xl;
+}
+.message-bull {
+  
+  width: -moz-fit-content;
+  /* width: 100%; */
+  @apply lg:max-w-[30%];
+}
 .message .message-bull {
   position: relative;
-  width: fit-content;
-  width: -moz-fit-content;
+  /* width: fit-content; */
   box-shadow: 0 0 5px 1px rgba(17, 17, 17, 0.486);
   color: white;
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
-  margin-inline: 0.5rem;
+  /* padding-inline: 1rem;
+  padding-block: 0.5rem; */
 }
 
 li.MessageItem {
   list-style: none;
 }
 
-.message .member-bull {
-  position: relative;
 
-  right: 0px;
-  margin: auto;
-  margin-right: 0;
-  margin-bottom: 1rem;
-  background-color: rgb(139, 139, 139);
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
-  border-radius: 2rem 2rem 2rem 4rem;
-  right: 0.5rem
-}
 
 #scrollableDiv {
   overflow: auto;
