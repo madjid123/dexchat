@@ -7,10 +7,9 @@ import {
 	PayloadAction,
 } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState, store } from "../../app/store";
+import { RootState } from "../../app/store";
 // API URL of our app usually localhost:5000
 import URL from "../../URL";
-import { MessagesResponse } from "../Conversation/MessagesSlice";
 
 export interface Member {
 	username: string,
@@ -44,18 +43,18 @@ export const getRooms = createAsyncThunk("users/getRooms", async ({ id }: any, t
 		}
 
 	} catch (err: any) {
-		console.log(err)
+		console.error(err)
 		thunkAPI.rejectWithValue(`Failed to get Rooms : ${err.message} `);
 	}
 })
-const initialState: RoomsState = {
-	ids: [],
-	entities: {},
-	error: {
-		exist: false,
-		message: ""
-	}
-}
+// const initialState: RoomsState = {
+// 	ids: [],
+// 	entities: {},
+// 	error: {
+// 		exist: false,
+// 		message: ""
+// 	}
+// }
 const RoomsReducer = createSlice({
 	name: "rooms",
 	initialState: RoomsAdapter.getInitialState({
