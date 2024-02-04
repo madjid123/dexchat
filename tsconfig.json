@@ -4,25 +4,27 @@
       "node_modules/@types"
     ],
     "jsx": "preserve",
-    "target": "es5",
+    "target": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"]
+    },
   },
+  
   "include": [
     "src",
     "contexts/authentication"
