@@ -1,5 +1,5 @@
-import { createGlobalStyle, withTheme } from 'styled-components';
-import { ThemeProps } from './themes';
+import { createGlobalStyle, withTheme } from "styled-components";
+import { ThemeProps } from "./themes";
 
 type GlobalThemeProps = {
   theme: ThemeProps;
@@ -22,13 +22,13 @@ const globalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     outline: 0;
+    font-size: 8px !important;
   }
-
+ 
   body  {
     -webkit-font-smoothing: antialiased;
-    height: 100vh;
-    width: 50vw;
-    margin: 0 auto;
+    height: 100%;
+    margin: 0 ;
     background-color: ${({ theme }: GlobalThemeProps) => theme.background};
     display: flex;
     justify-content: center;
@@ -36,7 +36,7 @@ const globalStyle = createGlobalStyle`
   }
 
   h1 {
-    font-size: 3.375rem;
+    /* font-size: 3.375rem; */
     color: ${({ theme }: GlobalThemeProps) => theme.text};
   }
 
