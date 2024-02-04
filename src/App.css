@@ -2,16 +2,17 @@
 
 html,
 body,
-#app,
-#app>div {
+#app {
   height: 100%;
-  background: var(--background-color-dex);
-  background-size: cover;
+  /* background: var(--background-color-dex); */
+  /* background: linear-gradient(45deg , var(--background-color-dex),#30353a ); */
+  /* background-size: cover; */
+  font-size:16px !important;
   font-family: Poppins, sans-serif !important;
 }
 
 body>#root {
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 html {
@@ -28,23 +29,3 @@ html {
   width: 30%;
 }
 
-.box-flex {
-  display: flex;
-  height: 89%;
-}
-
-.bg-mydark {
-  background-color: #30353a;
-}
-
-:root {
-  --header-height: 14vh;
-  --background-color-dex: rgb(37, 38, 40);
-}
-
-@media only screen and (min-width: 768px) {
-
-  :root {
-    --header-height: 14vh;
-  }
-}
