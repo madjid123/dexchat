@@ -1,13 +1,9 @@
 import Conversation from "../../components/UserSpace/Conversation/Conversation";
 
-import React, { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { AuthSelector } from "../../features/user/authSlice";
-import {
-  getRooms,
-  RoomsSelectors,
-  RoomUpdate,
-} from "../../features/user/RoomsSlice";
+import { RoomsSelectors } from "../../features/user/RoomsSlice";
 import "./UserSpace.css";
 import socket from "../../utils/socket";
 import Header from "../../components/Header/Header";
@@ -17,18 +13,17 @@ import {
   setRoom,
 } from "../../features/Conversation/MessagesSlice";
 import SideTabs from "../../components/UserSpace/Tabs/Tabs";
-import { OffCanvas } from "../../components/UserSpace/OffCanvas/OffCanvas";
 import { useAppDispatch } from "../../app/hooks";
+import Layout from "~/components/Layout/Layout";
 
 const UserSpace = (props: any) => {
   // const [Member, setMember] = useState({} as any);
   const dispatch = useAppDispatch();
-  const { currentUser, isAuth } = useSelector(AuthSelector);
+  const { currentUser } = useSelector(AuthSelector);
   // const [clearMsgs, setClearMsgs] = useState(false);
   const [show, setShow] = useState(false);
   const rooms = useSelector(RoomsSelectors.selectAll);
   const { room } = useSelector(MessagesSelector);
-  const [headerHeight, setHeaderHeight] = useState(0);
   useEffect(() => {
     socket.connect();
     socket.emit("sendsocket", {
@@ -37,7 +32,7 @@ const UserSpace = (props: any) => {
       }),
       user: currentUser,
     });
-  }, [socket.disconnected, rooms]);
+  }, [rooms, currentUser]);
 
   const closeConvrstion = () => {
     // setMember({ _id: undefined });
@@ -46,35 +41,28 @@ const UserSpace = (props: any) => {
     // setClearMsgs(true);
   };
 
-  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
-    <div className="my-container">
-
-      <div>
-        <Header show={show} handleShow={handleShow}></Header>
-      </div>
-      {
-        currentUser !== undefined ? (
-          <div
-            className="main-box d-flex flex-column flex-row gap-2"
-
-          >
-            <SideTabs />
-            {/* <OffCanvas show={show} handleClose={handleClose}></OffCanvas> */}
-            {room !== null ? (
-
-              <Conversation closeConversation={closeConvrstion} isPage={false}></Conversation>
-            ) : (
-              <div></div>
-            )}
-          </div>
-
-        ) : (
-          <div></div>
-        )
-      }
-    </div >
+    // <div className="h-full flex flex-col justify-start items-center gap-2 p-2  ">
+    //   <Header show={show} handleShow={handleShow}></Header>
+    <Layout className="h-full">
+      {currentUser !== undefined ? (
+        <div className="flex flex-row p-2 gap-2 overflow-hidden h-full w-full ">
+          <SideTabs />
+          {room !== null ? (
+            <Conversation
+              closeConversation={closeConvrstion}
+              isPage={false}
+            ></Conversation>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      ) : (
+        <div></div>
+      )}
+      {/* </div> */}
+    </Layout>
   );
 };
 
