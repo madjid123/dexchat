@@ -2,9 +2,9 @@ import { Nav, Tab } from "react-bootstrap";
 import { Compass, People, PersonLinesFill } from "react-bootstrap-icons";
 import "./Tabs.css";
 import { Tabs, TabsContent, TabsList } from "~/components/ui/tabs";
+import { TabsTrigger } from "@radix-ui/react-tabs";
 import { useTabsContext } from "../../../contexts/TabsContext";
 import { useNavigate } from "react-router";
-import { TabsTrigger } from "@radix-ui/react-tabs";
 import Rooms from "../Rooms/Rooms";
 import { Discover } from "../Discover/Discover";
 import { Requests } from "../Requests/Requests";
@@ -15,7 +15,8 @@ const SideTabs: React.FC<SideTabsPropsType> = (props) => {
   return (
     <Tabs
       defaultValue={currentEventKey}
-      className={` ${showSidebar === true ? " w-full  " : " hidden md:flex   "} flex flex-row items-start justify-start gap-2 transition-all duration-500 md:translate-x-0  md:w-[400px] h-full text-white resize-x rounded-xl z-10 shadow-[0_2px_10px_0px] shadow-black hover:shadow-primary-500 focus:shadow-primary-500 `}
+      value={currentEventKey}
+      className={` ${showSidebar === true ? " w-full  " : " hidden md:flex   "} flex flex-row items-start justify-start gap-2 transition-all duration-500 md:translate-x-0  md:w-[400px] h-full text-white resize-x rounded-xl z-10 shadow-[0_0px_5px_0px]  shadow-primary-500/50 focus:shadow-primary-500 `}
     >
       <TabsList className="flex flex-col items-center p-2 justify-start bg-white/[5%] h-full flex-wrap gap-4">
         {tabsList.map((tabItem, index) => {
@@ -28,7 +29,7 @@ const SideTabs: React.FC<SideTabsPropsType> = (props) => {
             >
               {
                 <Icon
-                  className={`${currentEventKey == tabItem.value ? " text-primary-500" : ""} `}
+                  className={`${currentEventKey === tabItem.value ? " text-primary-500" : ""} `}
                 />
               }
               {/* {tabItem.name} */}
@@ -36,7 +37,7 @@ const SideTabs: React.FC<SideTabsPropsType> = (props) => {
           );
         })}
       </TabsList>
-      <div className={`w-full  h-full  `}>
+      <div className={`w-full  h-full p-4 `}>
         <TabsContent value="rooms">
           <Rooms />
         </TabsContent>
