@@ -4,6 +4,7 @@ import { Nav } from "react-bootstrap";
 import { Person, PersonCheckFill, PersonXFill } from "react-bootstrap-icons";
 import Button from "../../../components/Button/Button";
 import { useHandleRequestClick } from "~/hooks/UserSpace/Requests/useHandleRequestClick";
+import { UserCheck, UserCheck2, UserCircle, UserX } from "lucide-react";
 export const Requests = () => {
   const [pattern, setPattern] = useState("");
 
@@ -36,37 +37,35 @@ export const Requests = () => {
             <p className="text-success">Request is sent!</p>
           )}
         </div>
-        <div className=" flex flex-col">
+        <div className=" flex flex-col justify-center items-center w-full">
           {Requests.isSuccess &&
             Requests.data.map((JrReq, index) => {
               return (
-                <Nav.Item key={index}>
-                  <div className="flex items-center justify-between p-2">
-                    <div className="flex">
-                      <div className="mx-1">
-                        <Person />
-                      </div>
+                <div key={index} className="w-full">
+                  <div className="flex items-around justify-between gap-4 p-2">
+                    <div className="flex gap-2 items-center justify-center text-lg">
+                      <UserCircle />
                       <div>{JrReq.RequesterId.username}</div>
                     </div>
 
-                    <div className="text-warning mx-2 flex justify-around gap-2">
+                    <div className="text-warning mx-2 flex items-center  justify-around gap-2">
                       <Button
                         className={` `}
                         onClick={() => handleRequestClick(index, true)}
                         variant={""}
                       >
-                        <PersonCheckFill className="text" />
+                        <UserCheck className="text" size={16} />
                       </Button>
                       <Button
                         className={` `}
                         onClick={() => handleRequestClick(index, false)}
                         variant="danger"
                       >
-                        <PersonXFill className="text" />
+                        <UserX className="text" size={16} />
                       </Button>
                     </div>
                   </div>
-                </Nav.Item>
+                </div>
               );
             })}
           {Requests.isSuccess && Requests.data.length === 0 && (
