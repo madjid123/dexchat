@@ -23,6 +23,7 @@ import { useFetchMessages } from "~/hooks/UserSpace/Conversation/useFetchMessage
 import { SendHorizonal } from "lucide-react";
 import { useRef } from "react";
 import { useTabsContext } from "~/contexts/TabsContext";
+import React from "react";
 
 interface ConversationProps {
   closeConversation(): void;
@@ -45,10 +46,9 @@ const Conversation = (props: ConversationProps) => {
     scrollPosDivRef,
     member,
   });
-
   return (
     <div
-      className="conversation   shadow-black h-full shadow-[0_0px_10px_0] hover:shadow-primary-500"
+      className="conversation    h-full shadow-[0px_0px_10px_0px] shadow-primary-500/50"
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           onSubmitMessage();
@@ -86,6 +86,7 @@ const Conversation = (props: ConversationProps) => {
           <p></p>
         )}
       </div>
+
       <div
         id="scrollableDiv"
         ref={scrollPosDivRef}
@@ -127,6 +128,68 @@ const Conversation = (props: ConversationProps) => {
         >
           <div
             id="scrollableDiv"
+            className="gap-2 flex flex-col w-full overflow-scroll"
+          >
+            {messagesResponse.messages.map((msg: Message, index) => {
+              function manualDateFormat(date: Date) {
+                const day = date.getDate();
+                const month = date.getMonth() + 1; // Months are zero-based
+                const year = date.getFullYear();
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
+                return `${month}/${day}/${year}`;
+              }
+              const manualHourFormat = (date: Date) => {
+                const minutes = date.getMinutes().toString().padStart(2, "0");
+                return `${date.getHours()}:${minutes}`;
+              };
+
+              const prevMsg = messagesResponse.messages[index - 1];
+              const showHour =
+                !prevMsg ||
+                new Date(prevMsg.createdAt).getHours() !==
+                  new Date(msg.createdAt).getHours();
+              const showDate =
+                !prevMsg ||
+                new Date(prevMsg.createdAt).getDate() !==
+                  new Date(msg.createdAt).getDate();
+
+              return (
+                <React.Fragment key={index}>
+                  {showDate && (
+                    <div className="text-xs text-neutral-300">
+                      {manualDateFormat(new Date(msg.createdAt))}
+                    </div>
+                  )}
+                  {showHour && (
+                    <div className="text-xs text-neutral-400">
+                      {manualHourFormat(new Date(msg.createdAt))}
+                    </div>
+                  )}
+                  <div
+                    className={`message relative w-full flex px-2 ${
+                      msg.Sender.username === currentUser?.username
+                        ? "justify-start"
+                        : "justify-end"
+                    }`}
+                  >
+                    <div
+                      className={`lg:max-w-[40%] w-fit rounded-[8px] md:px-4 p-2 flex items-end text-xs ${
+                        msg.Sender.username === currentUser?.username
+                          ? "from-primary_to/50 to-primary_from/50 bg-gradient-to-r"
+                          : "bg-neutral-500/40"
+                      }`}
+                    >
+                      <label>{msg.content.text}</label>
+                    </div>
+                    <br />
+                  </div>
+                </React.Fragment>
+              );
+            })}
+          </div>
+          {/* <div
+            id="scrollableDiv"
             // style={{ height: "fit-content" }}
             className="gap-2 flex flex-col w-full overflow-scroll "
           >
@@ -151,12 +214,12 @@ const Conversation = (props: ConversationProps) => {
                   >
                     <div
                       className={`
-                        lg:max-w-[40%] w-fit rounded-[8px] p-2 flex items-end 
+                        lg:max-w-[40%] w-fit rounded-[8px] md:px-4 p-2 flex items-end 
                         text-xs
                         ${
                           msg.Sender.username === currentUser?.username
-                            ? " from-emerald-500 to-blue-500 bg-gradient-to-tr "
-                            : "bg-neutral-600  "
+                            ? " from-primary_to/50 to-primary_from/50 bg-gradient-to-r "
+                            : "bg-neutral-500/40  "
                         }
                       `}
                     >
@@ -167,7 +230,7 @@ const Conversation = (props: ConversationProps) => {
                 </div>
               );
             })}
-          </div>
+          </div> */}
         </InfiniteScroll>
       </div>
       <footer className="footer">
@@ -180,7 +243,7 @@ const Conversation = (props: ConversationProps) => {
           variant="dark"
         ></Input>
         <Button
-          className="footer-button !rounded-xl !px-2 md:px-3 mx-2"
+          className="rounded-lg !p-1.5 !px-3 md:px-3 mx-2 !bg-emerald-500  hover:shadow-white/70 shadow-md !text-white fill-white"
           onClick={() => {
             onSubmitMessage();
           }}
