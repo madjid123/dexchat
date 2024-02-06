@@ -28,13 +28,15 @@ export const useFetchMessages = ({
       console.log(scrollPosDivRef.current.scrollTop);
       setScrollPos(scrollPosDivRef.current.scrollTop);
     }
+    let currentScrollPos = scrollPosDivRef.current?.scrollTop;
     setTimeout(() => {
       let page = messagesResponse.page;
 
       if (page !== undefined && page + 1 > messagesResponse.pages) return;
       else page += 1;
       if (room != null) trigger({ room_id: room._id, page: page });
-    }, 1000);
+      setScrollPos(currentScrollPos as number);
+    }, 2000);
   };
   return { messagesResponse, fetchMessages };
 };
