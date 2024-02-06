@@ -5,7 +5,7 @@ import {
   useLazyGetAllUsersQuery,
   useLazyJoinRequestQuery,
   useLazyJoinRemoveQuery,
-  User,
+  User as UserType,
 } from "../../../services/searchApi";
 import { store } from "../../../app/store";
 import "./Discover.css";
@@ -15,9 +15,12 @@ import { Nav } from "react-bootstrap";
 import { Person, PersonDashFill, PersonPlusFill } from "react-bootstrap-icons";
 import Button from "../../../components/Button/Button";
 import { useHandleRequest } from "~/hooks/UserSpace/Discover/useHandleRequest";
+import { Loader, User, UserPlus, UserPlusIcon, UserX } from "lucide-react";
+import { Navigate } from "react-router";
+import { useTabsContext } from "~/contexts/TabsContext";
 export const Discover = () => {
   const [pattern, setPattern] = useState("");
-
+  const { setEventKey } = useTabsContext();
   const handleChange = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const target = e.target as HTMLInputElement;
@@ -29,12 +32,11 @@ export const Discover = () => {
     });
   return (
     <div className="flex flex-col items-center gap-2">
-      <h3>Discover new users</h3>
+      <h3>Discover</h3>
       <div className="flex flex-col  gap-2">
         <div className="flex-row gap-4 flex">
           <Input
             placeholder="Search for new contact"
-            style={{ width: "90%", fontSize: "12px", outline: "none" }}
             variant="dark"
             value={pattern}
             onChange={handleChange}
@@ -52,13 +54,13 @@ export const Discover = () => {
         </div>
         <div className="px- flex flex-col justify-start h-fit">
           {discoverRooms.isSuccess &&
-            discoverRooms.data.map((user: User, index) => {
+            discoverRooms.data.map((user: UserType, index) => {
               return (
                 <Nav.Item key={index} className="nav-item-dex">
                   <div className="flex items-center justify-between  p-2">
                     <div className="flex jusifiy-center items-center gap-1">
                       <div className="">
-                        <Person />
+                        <User />
                       </div>
                       <div>{user.username}</div>
                     </div>
@@ -71,19 +73,21 @@ export const Discover = () => {
                           variant={`${user.pendingRequest ? "danger" : ""}`}
                         >
                           {!user.pendingRequest ? (
-                            <PersonPlusFill className="text" />
+                            <UserPlus className="text" size={16} />
                           ) : (
-                            <PersonDashFill
-                              className="text"
-                              onClick={() => {}}
-                            />
+                            <UserX className="text" size={16} />
                           )}
                         </Button>
                       )}
                       {user.to && (
-                        <p className="!text-yellow-500">
-                          has a request for You
-                        </p>
+                        <Button
+                          className="!text-yellow-500 border-2 !border-yellow-500 rounded-md p-1 hover:!bg-yellow-500 hover:!text-white"
+                          onClick={() => {
+                            setEventKey("requests");
+                          }}
+                        >
+                          <Loader size={16} />
+                        </Button>
                       )}
                     </div>
                   </div>
