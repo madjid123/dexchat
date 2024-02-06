@@ -13,8 +13,8 @@ type LoginData = {
 };
 const Login = (props: any) => {
   const [data, setData] = useState({
-    username: "test",
-    password: "mcqzqr",
+    username: "",
+    password: "",
   } as LoginData);
   const [notEmpty, setNotEmpty] = useState(false);
   const [isformChanged, setIsFormChanged] = useState(false);
