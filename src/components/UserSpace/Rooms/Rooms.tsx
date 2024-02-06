@@ -74,7 +74,7 @@ const Rooms = ({ isPage = false }: RoomsProps) => {
                     <div
                       // href={`/room/${Room._id}`}
                       // to={`/room/${Room._id}`}
-                      className={`${member !== null && member._id === room_friend._id ? "bg-gradient-to-r from-purple-500/70  to-blue-500/70" : ""} hover:text-gray-400 hover:bg-gray-700 justify-start items-center flex p-2 rounded-[8px]`}
+                      className={`${member !== null && member._id === room_friend._id ? "bg-gradient-to-r from-primary_from/50 to-primary_to/50    hover:text-black " : " hover:text-white"} hover:bg-primary-500  justify-start items-center flex p-2 rounded-[8px]`}
                       key={index}
                       onClick={() => {
                         // if (room === null) dispatch(setRoom(Room));
