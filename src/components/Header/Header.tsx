@@ -65,7 +65,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 
   return (
     <div
-      className=" sticky top-0  w-full p-4 rounded-xl  items-center  flex justify-between shadow-black/50 shadow-[0_2px_10px_0px] hover:shadow-primary-500/50 active:shadow-primary-500/50      backdrop-blur-md z-[1000] "
+      className=" sticky top-0  w-full p-4 rounded-xl  items-center  flex justify-between  shadow-[0_2px_10px_0px] shadow-primary-500/50 active:shadow-primary-500/50      backdrop-blur-md z-[1000] "
       onFocus={(e) => {
         // e.preventDefault();
         console.log("header received focus event");
