@@ -42,7 +42,7 @@ export const useOnMessageChanges = ({ member }: { member: Member | null }) => {
           text: message,
         },
         SentAt: new Date(),
-        createdAt: new Date(Date.UTC(1982, 1, 2)),
+        createdAt: new Date(),
       };
       socket.emit("sendmsg", {
         message: _message,
