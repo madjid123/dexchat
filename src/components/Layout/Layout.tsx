@@ -12,7 +12,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
   return (
     <div
       className={cn(
-        "flex flex-col justify-between h-full p-2  gap-2  from-neutral-900 to-slate-800 bg-gradient-to-br text-primary-foreground bg-no-repeat bg-cover bg-center  ",
+        "flex flex-col justify-between h-full     from-neutral-900 to-slate-800 bg-gradient-to-br text-primary-foreground bg-no-repeat bg-cover bg-center  ",
 
         props.className
       )}
