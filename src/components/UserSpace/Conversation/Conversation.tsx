@@ -48,7 +48,7 @@ const Conversation = (props: ConversationProps) => {
   });
   return (
     <div
-      className="conversation    h-full shadow-[0px_0px_10px_0px] shadow-primary-500/50"
+      className="conversation    h-full shadow-[0px_0px_10px_0px] shadow-primary-500/50 hover:shadow-primary-500/90"
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           onSubmitMessage();
@@ -148,11 +148,11 @@ const Conversation = (props: ConversationProps) => {
               const showHour =
                 !prevMsg ||
                 new Date(prevMsg.createdAt).getHours() !==
-                  new Date(msg.createdAt).getHours();
+                new Date(msg.createdAt).getHours();
               const showDate =
                 !prevMsg ||
                 new Date(prevMsg.createdAt).getDate() !==
-                  new Date(msg.createdAt).getDate();
+                new Date(msg.createdAt).getDate();
 
               return (
                 <React.Fragment key={index}>
@@ -167,18 +167,16 @@ const Conversation = (props: ConversationProps) => {
                     </div>
                   )}
                   <div
-                    className={`message relative w-full flex px-2 ${
-                      msg.Sender.username === currentUser?.username
-                        ? "justify-start"
-                        : "justify-end"
-                    }`}
+                    className={`message relative w-full flex px-2 ${msg.Sender.username === currentUser?.username
+                      ? "justify-start"
+                      : "justify-end"
+                      }`}
                   >
                     <div
-                      className={`lg:max-w-[40%] w-fit rounded-[8px] md:px-4 p-2 flex items-end text-xs ${
-                        msg.Sender.username === currentUser?.username
-                          ? "from-primary_to/50 to-primary_from/50 bg-gradient-to-r"
-                          : "bg-neutral-500/40"
-                      }`}
+                      className={`lg:max-w-[40%] w-fit rounded-[8px] md:px-4 p-2 flex items-end text-xs ${msg.Sender.username === currentUser?.username
+                        ? "from-primary_to/50 to-primary_from/50 bg-gradient-to-r"
+                        : "bg-neutral-500/40"
+                        }`}
                     >
                       <label>{msg.content.text}</label>
                     </div>
