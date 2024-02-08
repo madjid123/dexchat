@@ -27,6 +27,7 @@ export const store = configureStore({
       .concat(MessageEndPointApi.middleware)
       .concat(SearchEndPointAPI.middleware);
   },
+  devTools: process.env.NODE_ENV !== "production",
 });
 setupListeners(store.dispatch);
 export const persistor = persistStore(store);
