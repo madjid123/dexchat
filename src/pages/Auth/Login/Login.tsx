@@ -21,16 +21,20 @@ const Login = (props: any) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isAuth, error } = useSelector(AuthSelector);
-
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
+  const [useDemo, setUseDemo] = useState(false);
+  useEffect(() => {
+    if (useDemo) {
+      setData({ username: "test", password: "mcqzqr" });
+      setIsFormChanged(true);
+    }
+  }, [useDemo]);
   const isFormValid = useCallback((): boolean => {
     if (data.username.length > 0 && data.password.length > 0) {
       return true;
     }
 
     return false;
-  }, [data.username.length, data.password.length]);
+  }, [data]);
   useEffect(() => {
     isFormValid() === true && isformChanged
       ? setNotEmpty(true)
@@ -58,15 +62,15 @@ const Login = (props: any) => {
   };
 
   return (
-    // <div className="flex flex-col justify-start items-center w-full h-full p-2 gap-2  text-white">
+    // <div className="flex flex-col items-center justify-start w-full h-full gap-2 p-2 text-white">
     //   <Header show={show} handleShow={handleShow}></Header>
-    <Layout className="h-full text-white justify-center items-center ">
-      <div className="row h-full p-4 w-full  lg:w-1/2 flex justify-center items-center text-white">
+    <Layout className="items-center justify-center h-full text-white ">
+      <div className="flex items-center justify-center w-full h-full p-4 text-white row lg:w-1/2">
         <form
-          className=" w-full p-4 md:p-8 lg:p-8 h-4/5 flex flex-col justify-center  gap-4  items-center shadow-lg border-2 border-gray-700 shadow-gray-600/50 rounded-xl"
+          className="flex flex-col items-center justify-center w-full gap-4 p-4 border-2 border-gray-700 shadow-lg  md:p-8 lg:p-8 h-4/5 shadow-gray-600/50 rounded-xl"
           onSubmit={handleSubmit}
         >
-          <h3 className=" text-2xl">Login</h3>
+          <h3 className="text-2xl ">Login</h3>
           {error.messages.length > 0 && <hr></hr> &&
             error.messages.map((error) => {
               return (
@@ -75,7 +79,16 @@ const Login = (props: any) => {
                 </>
               );
             })}
-          <div className="form-group flex flex-col gap-1">
+          <div className="flex flex-col gap-1 form-group">
+            <label className="px-3">Use test user</label>
+            <input
+              type="checkbox"
+              name="useDemo"
+              onChange={() => setUseDemo(!useDemo)}
+              className="p-4 fill-red-500"
+            />
+          </div>
+          <div className="flex flex-col gap-1 form-group">
             <label className="px-3">Username</label>
             <Input
               name="username"
@@ -89,7 +102,7 @@ const Login = (props: any) => {
             />
           </div>
 
-          <div className="form-group flex flex-col gap-1 ">
+          <div className="flex flex-col gap-1 form-group ">
             <label className="px-3">Password</label>
             <Input
               name="password"
@@ -106,11 +119,11 @@ const Login = (props: any) => {
           <Button
             disabled={notEmpty === false}
             type="submit"
-            className="btn btn-secondary   btn-lg btn-block"
+            className="btn btn-secondary btn-lg btn-block"
           >
             Sign in
           </Button>
-          {/* <p className="forgot-password text-right">Forgot password?</p> */}
+          {/* <p className="text-right forgot-password">Forgot password?</p> */}
         </form>
       </div>
       {/* </div> */}
