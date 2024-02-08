@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import { TabsProvider } from "./providers/TabsProvider";
 import { createRoot } from "react-dom/client";
+
 const container = document.getElementById("app");
 const root = createRoot(container!);
 root.render(
