@@ -1,4 +1,4 @@
-import { MessageCircle, BookUser, Compass, Settings } from "lucide-react";
+import { MessageCircle, BookUser, Compass, Settings, UserSquare2 } from "lucide-react";
 export const tabsList = [
   {
     name: "Rooms",
@@ -16,8 +16,8 @@ export const tabsList = [
     Icon: Compass,
   },
   {
-    name: "Settings",
-    value: "settings",
-    Icon: Settings,
+    name: "Change Profile",
+    value: "profile",
+    Icon: UserSquare2,
   },
 ];
