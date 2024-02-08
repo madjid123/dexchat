@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 export interface CurrentUser {
   _id: string;
   username: string;
+  image?: string;
   email: string;
 }
 export interface AuthState {
@@ -77,7 +78,7 @@ export const CheckisAuth = createAsyncThunk(
   "users/isAauth",
   async (opt, thunkAPI) => {
     try {
-      const response = await axios.get(API_URL + "/auth/login", {
+      const response = await axios.get(API_URL + "/auth/", {
         withCredentials: true,
       });
       if (response.status === 200) {
@@ -122,7 +123,7 @@ const AuthReducer = createSlice({
       .addCase(logout.fulfilled, (state, { payload }) => {
         return initialState;
       })
-      .addCase(logout.rejected, (state, { payload }) => {})
+      .addCase(logout.rejected, (state, { payload }) => { })
       .addCase(CheckisAuth.fulfilled, (state, { payload }) => {
         if (!payload.username) return initialState;
         state.isAuth = true;
