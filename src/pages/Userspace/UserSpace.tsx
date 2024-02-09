@@ -15,6 +15,7 @@ import {
 import SideTabs from "../../components/UserSpace/Tabs/Tabs";
 import { useAppDispatch } from "../../app/hooks";
 import Layout from "~/components/Layout/Layout";
+import Hero from "~/components/UserSpace/Hero";
 
 const UserSpace = (props: any) => {
   // const [Member, setMember] = useState({} as any);
@@ -55,7 +56,9 @@ const UserSpace = (props: any) => {
               isPage={false}
             ></Conversation>
           ) : (
-            <div></div>
+            <div className="hidden md:flex w-full items-center justify-center h-full ">
+            <Hero />
+            </div>
           )}
         </div>
       ) : (
