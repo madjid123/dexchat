@@ -19,6 +19,6 @@ export const useTriggerFirstMessagesPage = ({
     if (messagesResponse.messages.length > 0) return;
     trigger({ room_id: room._id, page: 1 });
     // }
-    socket.on("typing", (args: string) => {});
-  }, [member]);
+    socket.on("typing", (args: string) => { });
+  }, []);
 };
