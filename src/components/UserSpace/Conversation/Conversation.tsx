@@ -1,26 +1,21 @@
-import { ListGroup, Spinner } from "react-bootstrap";
 import Button from "../../Button/Button";
 import { useSelector } from "react-redux";
 import { AuthSelector } from "../../../features/user/authSlice";
 import { Comment } from "react-loader-spinner";
 import {
-  MessagesSelector,
   Message,
-  setRoom,
+  setRoom
 } from "../../../features/Conversation/MessagesSlice";
 import { useAppDispatch } from "../../../app/hooks";
 import "./Conversation.css";
-import "react-bootstrap";
 import socket from "../../../utils/socket";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Input from "~/components/Input/Input";
-import { X } from "react-bootstrap-icons";
 import { useSetCurrentMember } from "~/hooks/UserSpace/Conversation/useSetCurrentMemberName";
-import { useSendTypingSocketEvent } from "~/hooks/UserSpace/Conversation/useSendTypingSocketEvent";
 import { useOnMessageChanges } from "~/hooks/UserSpace/Conversation/useOnMessageChanges";
 import { useMessagesScrollPosition } from "~/hooks/UserSpace/Conversation/useMessagesScrollPositon";
 import { useFetchMessages } from "~/hooks/UserSpace/Conversation/useFetchMessages";
-import { SendHorizonal } from "lucide-react";
+import { SendHorizonal, X } from "lucide-react";
 import { useRef } from "react";
 import { useTabsContext } from "~/contexts/TabsContext";
 import React from "react";
@@ -64,12 +59,13 @@ const Conversation = (props: ConversationProps) => {
         }}
       >
         <p></p>
-        <h2 className="m-0 w-fit sticky">
+        <h2 className="sticky m-0 w-fit">
           {member !== null && member.username}
         </h2>
         {!props.isPage ? (
           <Button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
               props.closeConversation();
               dispatch(setRoom(null));
               setMember(null);
@@ -80,7 +76,7 @@ const Conversation = (props: ConversationProps) => {
             className="!p-1"
             variant="danger"
           >
-            <X />
+            <X size={16} className="w-4 font-bold" strokeWidth={4} />
           </Button>
         ) : (
           <p></p>
@@ -90,7 +86,7 @@ const Conversation = (props: ConversationProps) => {
       <div
         id="scrollableDiv"
         ref={scrollPosDivRef}
-        className=" overflow-y-scroll flex flex-col-reverse "
+        className="flex flex-col-reverse overflow-y-scroll "
         onScroll={(e) => {
           e.preventDefault();
         }}
@@ -102,7 +98,7 @@ const Conversation = (props: ConversationProps) => {
             messagesResponse.page < messagesResponse.pages ? true : false
           }
           loader={
-            <div className="items-center text-center justify-center flex">
+            <div className="flex items-center justify-center text-center">
               {/* <Spinner animation="grow" variant="light" /> */}
               <Comment
                 wrapperClass="color-green-500 !fill-green-500"
@@ -118,7 +114,7 @@ const Conversation = (props: ConversationProps) => {
             </div>
           }
           scrollableTarget="scrollableDiv"
-          className="flex gap-2 flex-col-reverse"
+          className="flex flex-col-reverse gap-2"
           inverse={true}
           scrollThreshold={"80%"}
           onScroll={(e) => {
@@ -128,7 +124,7 @@ const Conversation = (props: ConversationProps) => {
         >
           <div
             id="scrollableDiv"
-            className="gap-2 flex flex-col w-full overflow-scroll"
+            className="flex flex-col w-full gap-2 overflow-scroll"
           >
             {messagesResponse.messages.map((msg: Message, index) => {
               function manualDateFormat(date: Date) {
@@ -186,54 +182,12 @@ const Conversation = (props: ConversationProps) => {
               );
             })}
           </div>
-          {/* <div
-            id="scrollableDiv"
-            // style={{ height: "fit-content" }}
-            className="gap-2 flex flex-col w-full overflow-scroll "
-          >
-            {messagesResponse.messages.map((msg: Message, index) => {
-              return (
-                <div
-                  // variant="dark"
-                  key={index}
-                  className="MessageItem "
-                  style={{ backgroundColor: "inherit", border: "none" }}
-                >
-                  <div
-                    className={`message relative w-full 
-                        flex 
-                        px-2
-                        ${
-                          msg.Sender.username === currentUser?.username
-                            ? "justify-start "
-                            : "  justify-end "
-                        }
-                   `}
-                  >
-                    <div
-                      className={`
-                        lg:max-w-[40%] w-fit rounded-[8px] md:px-4 p-2 flex items-end 
-                        text-xs
-                        ${
-                          msg.Sender.username === currentUser?.username
-                            ? " from-primary_to/50 to-primary_from/50 bg-gradient-to-r "
-                            : "bg-neutral-500/40  "
-                        }
-                      `}
-                    >
-                      <label>{msg.content.text}</label>
-                    </div>
-                    <br></br>
-                  </div>
-                </div>
-              );
-            })}
-          </div> */}
+
         </InfiniteScroll>
       </div>
       <footer className="footer">
         <Input
-          className="footer-input border-white/10 focus:border-tertiary-500  "
+          className="footer-input border-white/10 focus:border-tertiary-500 "
           onChange={(e: any) => {
             setMessage(e.target.value);
           }}
