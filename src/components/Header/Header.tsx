@@ -1,17 +1,10 @@
-import { Navbar, NavDropdown } from "react-bootstrap";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router";
 import { logout, AuthSelector } from "../../features/user/authSlice";
 import { useSelector } from "react-redux";
 import "./Header.css";
-import API_URL from "~/URL"
+import API_URL from "~/URL";
 import "./DropMenu.css";
-import {
-  ArrowBarDown,
-  ArrowDown,
-  MenuDown,
-  PersonCircle,
-} from "react-bootstrap-icons";
 import {
   DropdownMenuContent,
   DropdownMenu,
@@ -20,8 +13,9 @@ import {
   DropdownMenuLabel,
 } from "../ui/dropdown-menu";
 import DexLogo from "../../public/dexplanet.png";
+import Avatar from "avvvatars-react";
 import { useAppDispatch } from "../../app/hooks";
-import { Menu, UserCircle } from "lucide-react";
+import { ArrowDown, Menu } from "lucide-react";
 import { useTabsContext } from "~/contexts/TabsContext";
 import { useSetCurrentMember } from "~/hooks/UserSpace/Conversation/useSetCurrentMemberName";
 import { setAllRooms } from "~/features/user/RoomsSlice";
@@ -29,6 +23,8 @@ import {
   clearAllMessages,
   setRoom,
 } from "~/features/Conversation/MessagesSlice";
+import { useState } from "react";
+import ImageWithFallbackOnError from "../imageWithFallbackOnError";
 type HeaderProps = {
   show: boolean;
   handleShow: () => void;
@@ -37,6 +33,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const dispatch = useAppDispatch();
   const { currentUser, isAuth } = useSelector(AuthSelector);
   const { member, setMember } = useSetCurrentMember();
+  const [showIcon, setShowIcon] = useState(false)
   const { showSidebar, setShowSidebar } = useTabsContext();
   const navigate = useNavigate();
 
@@ -94,11 +91,13 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="">
                 <div className="flex items-center justify-center p-2 hover:bg-white/30 rounded-xl ">
-                  {currentUser.image ? (<img src={`${API_URL}/${currentUser.image}`} className="w-6 h-6 border rounded-sm border-primary-500" /> || <UserCircle />) : <PersonCircle className="fill-white" />}
+                  {<ImageWithFallbackOnError value={currentUser.username} src={`${API_URL}/${currentUser.image}`} alt="avatar" height={20} width={20} className="w-6 h-6 border rounded-md border-neutral-700" fallback={
+                    <Avatar value={currentUser.username} style="shape" size={20} radius={4} />
+                  } />}
                   <span className="justify-between mx-2 text-center text-white no-underline">
                     {currentUser.username}
                   </span>
-                  <ArrowDown className="font-bold fill-white" />
+                  <ArrowDown className="w-5 font-bold text-white" />
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className=" backdrop-blur-md z-[1001] text-zinc-300 border-0 rounded-xl">
