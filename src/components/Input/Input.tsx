@@ -24,7 +24,6 @@ const StyledInput = styled.input.attrs((props: StyledInputProps) => props)`
     color: white !important;
   }
   width: 100%;
-  margin: 0.25rem;
   border-style: solid;
   border-radius: 8px;
   padding-block: 0.5rem;
@@ -42,9 +41,9 @@ const Input: FC<InputProps> = (props) => {
         props.className
       )}
 
-      // variant={props.variant}
-      // placeholder={props.placeholder}
-      // onChange={props.onChange}
+    // variant={props.variant}
+    // placeholder={props.placeholder}
+    // onChange={props.onChange}
     />
   );
 };
