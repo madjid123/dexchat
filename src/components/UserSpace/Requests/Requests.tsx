@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Input from "../../../components/Input/Input";
-import { Nav } from "react-bootstrap";
-import { Person, PersonCheckFill, PersonXFill } from "react-bootstrap-icons";
 import Button from "../../../components/Button/Button";
 import { useHandleRequestClick } from "~/hooks/UserSpace/Requests/useHandleRequestClick";
 import { UserCheck, UserCheck2, UserCircle, UserX } from "lucide-react";
+import ImageWithFallbackOnError from "~/components/imageWithFallbackOnError";
+import API_URL from "~/URL";
 export const Requests = () => {
   const [pattern, setPattern] = useState("");
 
@@ -18,8 +18,8 @@ export const Requests = () => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <h3 className="text font-bold">Requests</h3>
-      <div className="flex-col flex justify-start items-center gap-1 ">
+      <h3 className="font-bold text">Requests</h3>
+      <div className="flex flex-col items-center justify-start w-full gap-1 ">
         <Input
           placeholder="Search in incoming requests"
           style={{ width: "90%", fontSize: "12px" }}
@@ -37,18 +37,24 @@ export const Requests = () => {
             <p className="text-success">Request is sent!</p>
           )}
         </div>
-        <div className=" flex flex-col justify-center items-center w-full">
+        <div className="flex flex-col items-center justify-center w-full ">
           {Requests.isSuccess &&
             Requests.data.map((JrReq, index) => {
               return (
                 <div key={index} className="w-full">
-                  <div className="flex items-around justify-between gap-4 p-2">
-                    <div className="flex gap-2 items-center justify-center text-lg">
-                      <UserCircle />
-                      <div>{JrReq.RequesterId.username}</div>
-                    </div>
+                  <div className="flex justify-between gap-4 p-3  items-around hover:bg-primary-500 rounded-md ">
+                    <div className="flex items-center justify-start p-1 gap-2">
 
-                    <div className="text-warning mx-2 flex items-center  justify-around gap-2">
+                      <ImageWithFallbackOnError
+                        src={`${API_URL}/${JrReq.RequesterId.image}`}
+                        alt={`${JrReq.RequesterId.username}'s avatar`}
+                        width={500} height={500}
+                        value={JrReq.RequesterId.username}
+                        className="w-8 h-8 border rounded-md border-neutral-700"
+                      />
+                      <span>{JrReq.RequesterId.username}</span>
+                    </div>
+                    <div className="flex items-center justify-around gap-2  text-warning">
                       <Button
                         className={` `}
                         onClick={() => handleRequestClick(index, true)}
