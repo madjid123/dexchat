@@ -7,6 +7,7 @@ export type User = {
   _id: string;
   username: string;
   email: string;
+  image?: string;
   pendingRequest: boolean;
   to: boolean;
 };
@@ -17,6 +18,7 @@ export type JoinRoomRequest = {
     _id: string;
     username: string;
     email: string;
+    image?: string;
   };
   State: string;
 };
