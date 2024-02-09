@@ -14,6 +14,7 @@ import URL from "../../URL";
 export interface Member {
 	username: string,
 	_id: string,
+	image?: string,
 	email: string
 }
 export interface Room {
