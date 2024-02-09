@@ -1,6 +1,5 @@
 import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from "react";
 import styled from "styled-components";
-// import { Button } from "react-bootstrap";
 
 const borderColor = "#30c982";
 const dangerBorderColor = "#fd5d57";
