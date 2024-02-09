@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Input from "../../../components/Input/Input";
 import {
-  SearchEndPointAPI,
-  useLazyGetAllUsersQuery,
-  useLazyJoinRequestQuery,
-  useLazyJoinRemoveQuery,
-  User as UserType,
+  User as UserType
 } from "../../../services/searchApi";
-import { store } from "../../../app/store";
 import "./Discover.css";
-import { useSelector } from "react-redux";
-import { AuthSelector } from "../../../features/user/authSlice";
-import { Nav } from "react-bootstrap";
-import { Person, PersonDashFill, PersonPlusFill } from "react-bootstrap-icons";
 import Button from "../../../components/Button/Button";
 import { useHandleRequest } from "~/hooks/UserSpace/Discover/useHandleRequest";
-import { Loader, User, UserPlus, UserPlusIcon, UserX } from "lucide-react";
-import { Navigate } from "react-router";
+import { Loader, User, UserPlus, UserX } from "lucide-react";
 import { useTabsContext } from "~/contexts/TabsContext";
+import ImageWithFallbackOnError from "~/components/imageWithFallbackOnError";
+import API_URL from "~/URL";
 export const Discover = () => {
   const [pattern, setPattern] = useState("");
   const { setEventKey } = useTabsContext();
@@ -33,8 +25,8 @@ export const Discover = () => {
   return (
     <div className="flex flex-col items-center gap-2">
       <h3>Discover</h3>
-      <div className="flex flex-col  gap-2">
-        <div className="flex-row gap-4 flex">
+      <div className="flex flex-col w-full gap-2">
+        <div className="flex flex-row gap-4">
           <Input
             placeholder="Search for new contact"
             variant="dark"
@@ -52,17 +44,22 @@ export const Discover = () => {
             )}
           </div>
         </div>
-        <div className="px- flex flex-col justify-start h-fit">
+        <div className="flex flex-col justify-start px- h-fit">
           {discoverRooms.isSuccess &&
             discoverRooms.data.map((user: UserType, index) => {
               return (
-                <Nav.Item key={index} className="nav-item-dex">
-                  <div className="flex items-center justify-between  p-2">
-                    <div className="flex jusifiy-center items-center gap-1">
-                      <div className="">
-                        <User />
-                      </div>
-                      <div>{user.username}</div>
+                <div key={index} className="nav-item-dex">
+                  <div className="flex items-center justify-between p-2 hover:bg-primary-500 rounded-md ">
+                    <div className="flex items-center justify-start p-1 gap-2 w-full ">
+
+                      <ImageWithFallbackOnError
+                        src={`${API_URL}/${user.image}`}
+                        alt={`${user.username}'s avatar`}
+                        width={500} height={500}
+                        value={user.username}
+                        className="w-8 h-8 border rounded-md border-neutral-700"
+                      />
+                      <span>{user.username}</span>
                     </div>
 
                     <div className="!text-yellow-500 mx-2">
@@ -91,7 +88,7 @@ export const Discover = () => {
                       )}
                     </div>
                   </div>
-                </Nav.Item>
+                </div>
               );
             })}
         </div>
