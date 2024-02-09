@@ -98,13 +98,13 @@ const Register = (props: RegisterProps) => {
     switch (target.name) {
       case "username": {
         Errors.username =
-          target.value.length < 3 ? "Name must be at least 3 characters !" : "";
+          target.value.length < 3 ? "Username must be at least 3 characters !" : "";
         break;
       }
       case "email": {
         Errors.email = EmailRegEx.test(target.value)
           ? ""
-          : "Incorrect email format !";
+          : "Incorrect Email format !";
         break;
       }
       case "password": {
@@ -152,7 +152,7 @@ const Register = (props: RegisterProps) => {
         <form
           id="form"
           onSubmit={handleSubmit}
-          className=" flex justify-center items-center  w-full lg:w-1/3  flex-col gap-3 p-4"
+          className="flex flex-col items-center justify-center w-full lg:w-fit  gap-5 p-4    md:p-8 lg:p-32 lg:py-16 h-full lg:h-fit shadow-primary-500/40 hover:shadow-primary-500 shadow-[0px_0px_10px_0px] rounded-xl"
         >
           <h3 className="text-2xl">Register</h3>
           {errors.server.length > 0 && <hr></hr> && (
@@ -167,19 +167,19 @@ const Register = (props: RegisterProps) => {
             </span>
           )}
           <div className="flex flex-col gap-2 items-start justify-center">
-            <label className="px-4">Name</label>
+            <label className="px-4">Username</label>
             <Input
               name="username"
               type="text"
               className="form-control"
-              placeholder="Name"
+              placeholder="Enter your username"
               variant="dark"
               onChange={handleChange}
               value={state.username}
               onClick={handleChange}
             />
             {errors.username.length > 0 && (
-              <span className="text-red-400 px-2 text-sm text-center">
+              <span className="text-red-400 px-2 text-sm text-center text-wrap max-w-full ">
                 {errors.username}
               </span>
             )}
@@ -191,7 +191,7 @@ const Register = (props: RegisterProps) => {
               name="email"
               type="email"
               className="form-control"
-              placeholder="Enter email"
+              placeholder="Enter your email"
               variant="dark"
               onChange={handleChange}
               onClick={handleChange}
@@ -208,7 +208,7 @@ const Register = (props: RegisterProps) => {
               name="password"
               type="password"
               className="form-control"
-              placeholder="Enter password"
+              placeholder="Enter your password"
               variant="dark"
               onChange={handleChange}
               onClick={handleChange}
