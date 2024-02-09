@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import authReducer from "../features/user/authSlice";
 import RoomsReducer from "../features/user/RoomsSlice";
 import MessagesReducer from "../features/Conversation/MessagesSlice";
+import ProfileReducer from "../features/user/profileSlice";
 import { MessageEndPointApi } from "../services/MessageApi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { SearchEndPointAPI } from "../services/searchApi";
@@ -19,6 +20,7 @@ export const store = configureStore({
     AuthReducer,
     RoomsReducer,
     MessagesReducer,
+    ProfileReducer,
     [MessageEndPointApi.reducerPath]: MessageEndPointApi.reducer,
     [SearchEndPointAPI.reducerPath]: SearchEndPointAPI.reducer,
   },
@@ -37,6 +39,7 @@ type RootStateType = {
   AuthReducer: ReturnType<typeof AuthReducer>;
   RoomsReducer: ReturnType<typeof RoomsReducer>;
   MessagesReducer: ReturnType<typeof MessagesReducer>;
+  ProfileReducer: ReturnType<typeof ProfileReducer>;
   [MessageEndPointApi.reducerPath]: ReturnType<
     typeof MessageEndPointApi.reducer
   >;
