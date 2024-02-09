@@ -26,6 +26,9 @@ const Login = (props: any) => {
     if (useDemo) {
       setData({ username: "test", password: "mcqzqr" });
       setIsFormChanged(true);
+    } else {
+      setData({ username: "", password: "" });
+      setIsFormChanged(false);
     }
   }, [useDemo]);
   const isFormValid = useCallback((): boolean => {
@@ -65,12 +68,12 @@ const Login = (props: any) => {
     // <div className="flex flex-col items-center justify-start w-full h-full gap-2 p-2 text-white">
     //   <Header show={show} handleShow={handleShow}></Header>
     <Layout className="items-center justify-center h-full text-white ">
-      <div className="flex items-center justify-center w-full h-full p-4 text-white row lg:w-1/2">
+      <div className="flex items-center justify-center w-full h-full p-4 text-white row lg:w-fit lg:h-full">
         <form
-          className="flex flex-col items-center justify-center w-full gap-4 p-4 border-2 border-gray-700 shadow-lg  md:p-8 lg:p-8 h-4/5 shadow-gray-600/50 rounded-xl"
+          className="flex flex-col items-center justify-center w-full  gap-5 p-4    md:p-8 lg:p-32 lg:py-16 h-full lg:h-fit shadow-primary-500/40 hover:shadow-primary-500 shadow-[0px_0px_10px_0px] rounded-xl"
           onSubmit={handleSubmit}
         >
-          <h3 className="text-2xl ">Login</h3>
+          <h3 className="text-2xl p-2 ">Login</h3>
           {error.messages.length > 0 && <hr></hr> &&
             error.messages.map((error) => {
               return (
@@ -79,13 +82,14 @@ const Login = (props: any) => {
                 </>
               );
             })}
-          <div className="flex flex-col gap-1 form-group">
+          <div className="flex flex-row justify-between items-center gap-1 form-group ">
             <label className="px-3">Use test user</label>
             <input
               type="checkbox"
               name="useDemo"
               onChange={() => setUseDemo(!useDemo)}
-              className="p-4 fill-red-500"
+              className=" rounded-md checked:bg-primary-500 bg-neutral-800 p-2 h-4 w-4 focus:bg-neutral-400 no-underline focus:outline-none"
+
             />
           </div>
           <div className="flex flex-col gap-1 form-group">
