@@ -1,16 +1,13 @@
-import { Nav, Tab } from "react-bootstrap";
-import { Compass, People, PersonLinesFill } from "react-bootstrap-icons";
 import "./Tabs.css";
 import { Tabs, TabsContent, TabsList } from "~/components/ui/tabs";
 import { TabsTrigger } from "@radix-ui/react-tabs";
 import { useTabsContext } from "../../../contexts/TabsContext";
-import { useNavigate } from "react-router";
 import Rooms from "../Rooms/Rooms";
 import { Discover } from "../Discover/Discover";
 import { Requests } from "../Requests/Requests";
 import { tabsList } from "./tabsList";
 import { Profile } from "~/components/Profile/Profile";
-import { Resizable } from "re-resizable"
+import { Resizable } from "re-resizable";
 import { useState } from "react";
 type SideTabsPropsType = {};
 const SideTabs: React.FC<SideTabsPropsType> = (props) => {
