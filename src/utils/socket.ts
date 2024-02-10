@@ -1,5 +1,6 @@
 import io from "socket.io-client"
-const socket = io("localhost:5001", {
+import API_URL from "~/URL"
+const socket = io(API_URL + ":5001", {
 	transports: ['websocket'],
 	upgrade: false
 })
