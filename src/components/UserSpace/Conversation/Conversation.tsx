@@ -16,9 +16,9 @@ import { useOnMessageChanges } from "~/hooks/UserSpace/Conversation/useOnMessage
 import { useMessagesScrollPosition } from "~/hooks/UserSpace/Conversation/useMessagesScrollPositon";
 import { useFetchMessages } from "~/hooks/UserSpace/Conversation/useFetchMessages";
 import { SendHorizonal, X } from "lucide-react";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useTabsContext } from "~/contexts/TabsContext";
-import React from "react";
+
 
 interface ConversationProps {
   closeConversation(): void;

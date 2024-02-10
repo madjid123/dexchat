@@ -63,7 +63,7 @@ const Register = (props: RegisterProps) => {
       })
       .catch((error) => {
         error.response.data.errors.filter((error: any) => {
-          let Errors = { ...errors };
+          const Errors = { ...errors };
           Errors.server.push(error.msg as string);
           setErrors(Errors);
           return null;
@@ -71,7 +71,7 @@ const Register = (props: RegisterProps) => {
       });
   };
   const handleChange = (e: React.SyntheticEvent) => {
-    var fields = { ...state };
+    let fields = { ...state };
     fields = { ...fields };
 
     const target = e.target as HTMLTextAreaElement;
@@ -93,7 +93,7 @@ const Register = (props: RegisterProps) => {
   }, [state]);
 
   const ValidInput = (target: { name: string; value: string }) => {
-    let Errors = { ...errors };
+    const Errors = { ...errors };
 
     switch (target.name) {
       case "username": {
@@ -129,7 +129,7 @@ const Register = (props: RegisterProps) => {
       : setValid(false);
   };
   const Submit = () => {
-    let Errors = { ...errors };
+    const Errors = { ...errors };
     if (!state.username) Errors.username = "You must provide a username ";
 
     if (!state.email) Errors.email = "You must provide an email";

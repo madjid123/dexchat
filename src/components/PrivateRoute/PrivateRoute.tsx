@@ -1,7 +1,6 @@
 import { Children, ReactNode, useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router";
-import { CurrentUser } from "../../features/user/authSlice";
-import { AuthSelector } from "../../features/user/authSlice";
+import { CurrentUser , AuthSelector } from "../../features/user/authSlice";
 import { useSelector } from "react-redux";
 type PrivateRouteProps = {
   children: ReactNode;

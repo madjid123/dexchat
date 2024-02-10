@@ -20,9 +20,9 @@ export const useHandleRequest = ({ pattern }: { pattern: string }) => {
     }
   }, [currentUser, pattern, trigger]);
   const handleRequestClick = (index: number) => {
-    var user_id: string;
-    var user: User;
-    var pendingRequest: boolean;
+    let user_id: string;
+    let user: User;
+    let pendingRequest: boolean;
     if (discoverRooms.data === undefined) return;
     user = discoverRooms.data[index];
     user_id = user._id;

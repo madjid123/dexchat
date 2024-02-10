@@ -100,7 +100,7 @@ const MessagesReducer = createSlice({
           state.messagesResponse = action.payload.messagesResponse;
           state.room = action.payload.room;
         } else {
-          let payload: MessagesState = action.payload;
+          var payload: MessagesState = action.payload;
           payload.messagesResponse.messages = [
             ...payload.messagesResponse.messages,
             ...state.messagesResponse.messages,

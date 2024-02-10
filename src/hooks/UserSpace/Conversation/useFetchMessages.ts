@@ -28,7 +28,7 @@ export const useFetchMessages = ({
       console.log(scrollPosDivRef.current.scrollTop);
       setScrollPos(scrollPosDivRef.current.scrollTop);
     }
-    let currentScrollPos = scrollPosDivRef.current?.scrollTop;
+    const currentScrollPos = scrollPosDivRef.current?.scrollTop;
     setTimeout(() => {
       let page = messagesResponse.page;
 

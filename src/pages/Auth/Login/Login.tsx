@@ -55,7 +55,7 @@ const Login = (props: any) => {
   };
   const handleChange = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    let Data = { ...data };
+    const Data = { ...data };
     const target = e.target as HTMLTextAreaElement;
     const { name, value } = target;
 

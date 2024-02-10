@@ -12,7 +12,7 @@ export const useMessagesScrollPosition = ({
   useEffect(() => {
     if (scrollPosDivRef.current === null) return;
     // let ScroDiv = document.getElementById("scrollableDiv");
-    let ScroDiv = scrollPosDivRef.current;
+    const ScroDiv = scrollPosDivRef.current;
     ScroDiv.scrollTo({
       top: scrollPos,
       left: 0,
