@@ -23,13 +23,13 @@ const SideTabs: React.FC<SideTabsPropsType> = (props) => {
       }}
       // minWidth={320}
       // maxWidth={"50%"}
-      className="max-w-full md:w-[512px] md:max-w-[50%]   md:min-w-[420px]"
+      className={`${showSidebar === true ? " w-full md:auto  " : " hidden md:flex "} max-w-full md:w-[512px] md:max-w-[50%]   md:min-w-[420px]`}
     // className={` ${showSidebar === true ? " w-full md:auto  " : " hidden md:flex   "} flex flex-row items-start justify-start gap-2 transition-all duration-500 md:translate-x-0    h-full text-white  rounded-xl z-10 shadow-[0_0px_10px_0px]  shadow-primary-500/50 hover:shadow-primary-500/90 focus:shadow-primary-500 `}
     >
       <Tabs
         defaultValue={currentEventKey}
         value={currentEventKey}
-        className={` ${showSidebar === true ? " w-full md:auto  " : " hidden md:flex   "} flex flex-row items-start justify-start gap-2 transition-all duration-500 md:translate-x-0    h-full text-white  rounded-xl z-10 shadow-[0_0px_10px_0px]  shadow-primary-500/50 hover:shadow-primary-500/90 focus:shadow-primary-500 `}
+        className={`  flex flex-row items-start justify-start gap-2 transition-all duration-500 md:translate-x-0    h-full text-white  rounded-xl z-10 shadow-[0_0px_10px_0px]  shadow-primary-500/50 hover:shadow-primary-500/90 focus:shadow-primary-500 `}
       >
         <TabsList className="flex flex-col items-center p-2 justify-start bg-white/[5%] h-full flex-wrap gap-4">
           {tabsList.map((tabItem, index) => {
@@ -66,7 +66,7 @@ const SideTabs: React.FC<SideTabsPropsType> = (props) => {
           </TabsContent>
         </div>
       </Tabs>
-    </Resizable>
+    </Resizable >
   );
 };
 export default SideTabs;
