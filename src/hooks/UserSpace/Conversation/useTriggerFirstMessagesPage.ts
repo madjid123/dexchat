@@ -21,4 +21,10 @@ export const useTriggerFirstMessagesPage = ({
     // }
     socket.on("typing", (args: string) => { });
   }, []);
+  useEffect(() => {
+    if (room === null) return;
+    if (messagesResponse.messages.length > 0) return;
+    trigger({ room_id: room._id, page: 1 });
+
+  }, [member, room])
 };
