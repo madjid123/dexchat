@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { store } from "../app/store";
-import { Room, setAllRooms } from "../features/user/RoomsSlice";
-import URL from "../URL";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { store } from '../app/store';
+import { Room, setAllRooms } from '../features/user/RoomsSlice';
+import URL from '../URL';
 
 export type User = {
   _id: string;
@@ -24,18 +24,18 @@ export type JoinRoomRequest = {
 };
 
 export const SearchEndPointAPI = createApi({
-  reducerPath: "SearchEndPointAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include" }),
-  tagTypes: ["Search"],
+  reducerPath: 'SearchEndPointAPI',
+  baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: 'include' }),
+  tagTypes: ['Search'],
   endpoints: (builder) => ({
     getAllUsers: builder.query<
       User[],
       { user_id: string; pattern: string; requests: string }
     >({
       query: (args) => ({
-        url: `search/${args.user_id}/getallusers?pattern=${args.pattern}${args.requests === "true" ? "&requests=true" : ""}`,
+        url: `search/${args.user_id}/getallusers?pattern=${args.pattern}${args.requests === 'true' ? '&requests=true' : ''}`,
       }),
-      transformResponse: ({ users }: { users: User[] }, meta) => {
+      transformResponse: ({ users }: { users: User[] }) => {
         return users;
       },
     }),
@@ -43,7 +43,7 @@ export const SearchEndPointAPI = createApi({
       query: (args) => ({
         url: `user/${args.user_id}/rooms?pattern=${args.pattern}`,
       }),
-      transformResponse: (rawResult: any, meta) => {
+      transformResponse: (rawResult: any) => {
         return rawResult.Rooms as Room[];
       },
       onQueryStarted: async (arg, api) => {
@@ -60,8 +60,8 @@ export const SearchEndPointAPI = createApi({
       query: (args) => ({
         url: `join_room/${args.user_id}/getrequests`,
       }),
-      transformResponse: (data, meta) => {
-        return (data as any).joinRoomRequests as JoinRoomRequest[];
+      transformResponse: (data: { joinRoomRequests: JoinRoomRequest[] }) => {
+        return data.joinRoomRequests;
       },
     }),
     joinRequest: builder.query<any, { user_id: string; other_user_id: string }>(
@@ -69,7 +69,7 @@ export const SearchEndPointAPI = createApi({
         query: (args) => ({
           url: `join_room/${args.user_id}/request/${args.other_user_id}`,
         }),
-      }
+      },
     ),
     joinReject: builder.query<any, { user_id: string; other_user_id: string }>({
       query: (args) => ({
@@ -84,7 +84,7 @@ export const SearchEndPointAPI = createApi({
     joinRemove: builder.query<any, { user_id: string; other_user_id: string }>({
       query: (args) => ({
         url: `join_room/${args.user_id}/remove/${args.other_user_id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
   }),
