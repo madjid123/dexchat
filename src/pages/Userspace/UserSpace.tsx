@@ -6,7 +6,6 @@ import { AuthSelector } from "../../features/user/authSlice";
 import { RoomsSelectors } from "../../features/user/RoomsSlice";
 import "./UserSpace.css";
 import socket from "../../utils/socket";
-import Header from "../../components/Header/Header";
 import {
   clearAllMessages,
   MessagesSelector,
@@ -57,7 +56,7 @@ const UserSpace = (props: any) => {
             ></Conversation>
           ) : (
             <div className="hidden md:flex w-full items-center justify-center h-full ">
-            <Hero />
+              <Hero />
             </div>
           )}
         </div>
