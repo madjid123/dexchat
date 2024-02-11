@@ -1,17 +1,18 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   Message,
   addMessage,
   MessagesState,
-} from "../features/Conversation/MessagesSlice";
-import URL from "../URL";
-import { store } from "../app/store";
-import socket from "../utils/socket";
+} from '../features/Conversation/MessagesSlice';
+import URL from '../URL';
+import { store } from '../app/store';
+import socket from '../utils/socket';
+import { Room } from '~/features/user/RoomsSlice';
 
 export const MessageEndPointApi = createApi({
-  reducerPath: "messagesApi",
-  baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: "include" }),
-  tagTypes: ["Message"],
+  reducerPath: 'messagesApi',
+  baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: 'include' }),
+  tagTypes: ['Message'],
 
   endpoints: (builder) => ({
     getMessagesByRoomId: builder.query<
@@ -21,25 +22,25 @@ export const MessageEndPointApi = createApi({
       query: (args) => ({
         url: `messages/room/${args.room_id}?page=${args.page}`,
       }),
-      transformResponse: (rawResult, meta) => {
+      transformResponse: (rawResult) => {
         const result = rawResult as MessagesState;
 
         return result;
       },
 
       keepUnusedDataFor: 30,
-      onQueryStarted: async (arg, api) => {
+      onQueryStarted: async () => {
         try {
         } catch (err) {
           console.error(err);
         }
       },
-      onCacheEntryAdded: async (arg, api) => {
+      onCacheEntryAdded: async (args, api) => {
         // create a websocket connection when the cache subscription starts
         try {
           socket.connect();
           await api.cacheDataLoaded;
-          const room = store.getState().MessagesReducer.room;
+          const room: Room | null = store.getState().MessagesReducer.room;
           const listener = (data: { message: Message; room: string }) => {
             api.updateCachedData((draft) => {
               if (room !== null && room._id !== data.room) return;
