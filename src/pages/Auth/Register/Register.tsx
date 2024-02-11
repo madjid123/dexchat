@@ -1,17 +1,17 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import API_URL from "../../../URL";
-import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import API_URL from '../../../URL';
+import { Link, useNavigate } from 'react-router-dom';
 
-import "./Register.css";
-import Header from "../../../components/Header/Header";
-import Input from "../../../components/Input/Input";
-import Button from "../../../components/Button/Button";
-import Layout from "~/components/Layout/Layout";
+import './Register.css';
+import Header from '../../../components/Header/Header';
+import Input from '../../../components/Input/Input';
+import Button from '../../../components/Button/Button';
+import Layout from '~/components/Layout/Layout';
 
 // Email Regular expression
 const EmailRegEx = RegExp(
-  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
 );
 
 type RegisterState = {
@@ -32,9 +32,9 @@ type RegisterProps = any;
 const Register = (props: RegisterProps) => {
   const [state, setState] = useState({} as RegisterState);
   const [errors, setErrors] = useState({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: '',
     server: [],
   } as RegisterError);
   // const [redirect, setRedirect] = useState(false);
@@ -51,12 +51,12 @@ const Register = (props: RegisterProps) => {
 
     if (!Valid) return;
     axios
-      .post(API_URL + "/register", data)
+      .post(API_URL + '/register', data)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
           if (response.data.response !== undefined) {
-            navigate("/login");
+            navigate('/login');
           } else {
           }
         }
@@ -81,7 +81,7 @@ const Register = (props: RegisterProps) => {
     const { name, value } = target;
 
     setErrors((errs) => {
-      errs[target.name] = "";
+      errs[target.name] = '';
       errs.server = [];
       return errs;
     });
@@ -96,22 +96,24 @@ const Register = (props: RegisterProps) => {
     const Errors = { ...errors };
 
     switch (target.name) {
-      case "username": {
+      case 'username': {
         Errors.username =
-          target.value.length < 3 ? "Username must be at least 3 characters !" : "";
+          target.value.length < 3
+            ? 'Username must be at least 3 characters !'
+            : '';
         break;
       }
-      case "email": {
+      case 'email': {
         Errors.email = EmailRegEx.test(target.value)
-          ? ""
-          : "Incorrect Email format !";
+          ? ''
+          : 'Incorrect Email format !';
         break;
       }
-      case "password": {
+      case 'password': {
         Errors.password =
           target.value.length < 6
-            ? "Password must be at least 6 characters !"
-            : "";
+            ? 'Password must be at least 6 characters !'
+            : '';
         break;
       }
       default:
@@ -130,11 +132,11 @@ const Register = (props: RegisterProps) => {
   };
   const Submit = () => {
     const Errors = { ...errors };
-    if (!state.username) Errors.username = "You must provide a username ";
+    if (!state.username) Errors.username = 'You must provide a username ';
 
-    if (!state.email) Errors.email = "You must provide an email";
+    if (!state.email) Errors.email = 'You must provide an email';
 
-    if (!state.password) Errors.password = "You must provide a password";
+    if (!state.password) Errors.password = 'You must provide a password';
     setErrors(Errors);
   };
 
@@ -157,13 +159,13 @@ const Register = (props: RegisterProps) => {
           <h3 className="text-2xl">Register</h3>
           {errors.server.length > 0 && <hr></hr> && (
             <span className="error text-danger">
-              {" "}
+              {' '}
               {errors.server.map((err) => (
                 <>
                   <span>{err}</span>
                   <br></br>
                 </>
-              ))}{" "}
+              ))}{' '}
             </span>
           )}
           <div className="flex flex-col gap-2 items-start justify-center">
@@ -186,7 +188,9 @@ const Register = (props: RegisterProps) => {
           </div>
 
           <div className="flex flex-col gap-2 items-start justify-center">
-            <label className="px-4">Email</label>
+            <label className="px-4" aria-controls="">
+              Email
+            </label>
             <Input
               name="email"
               type="email"
@@ -229,7 +233,7 @@ const Register = (props: RegisterProps) => {
               Register
             </Button>
             <p className="forgot-password text-center text-xs text-gray-500">
-              Already registered ? go to{" "}
+              Already registered ? go to{' '}
               <Link className=" text-emerald-500 hover:text-white" to="/login">
                 login
               </Link>
@@ -241,11 +245,11 @@ const Register = (props: RegisterProps) => {
           src="/back_items/9.png"
           className=" z-0 img-fluid  "
           style={{
-            zIndex: "-1",
-            position: "fixed",
-            bottom: "0",
-            right: "0",
-            width: "200px",
+            zIndex: '-1',
+            position: 'fixed',
+            bottom: '0',
+            right: '0',
+            width: '200px',
           }}
         />
       </div>
