@@ -1,25 +1,22 @@
 // React
-import { Route, Navigate, Routes } from "react-router-dom";
-import {} from "react-router";
-import { Fragment, useEffect, useState } from "react";
+import { Route, Navigate, Routes } from 'react-router-dom';
+import {} from 'react-router';
+import { Fragment, useEffect } from 'react';
 
 //Redux
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "./app/hooks";
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from './app/hooks';
 // Components
-import Register from "./pages/Auth/Register/Register";
-import Login from "./pages/Auth/Login/Login";
-import UserSpace from "./pages/Userspace/UserSpace";
+import Register from './pages/Auth/Register/Register';
+import Login from './pages/Auth/Login/Login';
+import UserSpace from './pages/Userspace/UserSpace';
 // Styling
 // import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import Appcss from "./App.css";
-import "./tailwind.css";
-import { AuthSelector, CheckisAuth } from "~/features/user/authSlice";
-import { Home } from "~/pages/Home/Home";
-import PrivateRoute from "~/components/PrivateRoute/PrivateRoute";
-import { Layout } from "~/components/Layout/Layout";
-import { MyTabsContext } from "./contexts/TabsContext";
+import './App.css';
+import './tailwind.css';
+import { AuthSelector, CheckisAuth } from '~/features/user/authSlice';
+import { Home } from '~/pages/Home/Home';
+import PrivateRoute from '~/components/PrivateRoute/PrivateRoute';
 const App = () => {
   const dispatch = useAppDispatch();
   const AuthState = useSelector(AuthSelector);
@@ -35,7 +32,7 @@ const App = () => {
           path="/user"
           element={
             <PrivateRoute>
-              <UserSpace />{" "}
+              <UserSpace />{' '}
             </PrivateRoute>
           }
         ></Route>
