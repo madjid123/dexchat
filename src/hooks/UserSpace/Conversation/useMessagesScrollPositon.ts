@@ -1,6 +1,6 @@
-import { RefObject, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { MessagesSelector } from "~/features/Conversation/MessagesSlice";
+import { RefObject, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { MessagesSelector } from '~/features/Conversation/MessagesSlice';
 type useMessageScrollPositionProps = {
   scrollPosDivRef: RefObject<HTMLDivElement>;
 };
@@ -17,6 +17,6 @@ export const useMessagesScrollPosition = ({
       top: scrollPos,
       left: 0,
     });
-  }, [scrollPos, scrollPosDivRef]);
+  }, [scrollPos, scrollPosDivRef, messagesResponse]);
   return { scrollPos, setScrollPos };
 };
