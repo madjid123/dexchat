@@ -1,10 +1,9 @@
-import "./Home.css";
-import Header from "../../components/Header/Header";
-import { AuthSelector } from "../../features/user/authSlice";
-import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router";
-import { useState } from "react";
-import Layout from "~/components/Layout/Layout";
+import './Home.css';
+import { AuthSelector } from '../../features/user/authSlice';
+import { useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router';
+import { useState } from 'react';
+import Layout from '~/components/Layout/Layout';
 export const Home = () => {
   const { isAuth } = useSelector(AuthSelector);
   const [show, setShow] = useState(false);
@@ -21,7 +20,7 @@ export const Home = () => {
           <div className="m-0 px-4 md:px-1  flex  md:flex-row flex-col  md:items-center md:justify-center  h-full    ">
             <div className="intro-text sm:m-0 gap-2   sm:p-0  md:w-1/2">
               <h1 className=" text-5xl  gradient-text">
-                Your Ultimate Real-Time Chat website{" "}
+                Your Ultimate Real-Time Chat website{' '}
               </h1>
               <h3 className="text-2xl">Communicate, Share and interact</h3>
               <p className="text-base text-wrap">
@@ -31,14 +30,14 @@ export const Home = () => {
                 more interactive, and more efficient. Say goodbye to delayed
                 responses and hello to instant, seamless conversations.
               </p>
-              <div style={{ display: "flex", justifyContent: "center" }}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <button
                   onClick={() => {
-                    navigate("/register");
+                    navigate('/register');
                   }}
                   className="landing-button"
                 >
-                  {" "}
+                  {' '}
                   Join Us Now!
                 </button>
               </div>
@@ -61,10 +60,10 @@ export const Home = () => {
               src="/landing/illust5.png"
               width={256}
               height={256}
-              className="  flex  justify-center items-center aspect-square w-full h-full  "
+              className="  flex  justify-center items-center aspect-square w-full h-full md:w-[512px]  "
               // style={{ maxWidth: "50vw", minWidth: "40%" }}
             />
-            <ul className="features-list gap-5" style={{ fontSize: "16px" }}>
+            <ul className="features-list gap-5" style={{ fontSize: '16px' }}>
               <li>
                 <b>Instant Messaging:</b> Experience lightning-fast
                 conversations with friends, colleagues, or clients. DexChat's
