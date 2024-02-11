@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
-import Header from "~/components/Header/Header";
-import { login, AuthSelector } from "~/features/user/authSlice";
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import Header from '~/components/Header/Header';
+import { login, AuthSelector } from '~/features/user/authSlice';
 // import "./Login.css";
-import Input from "~/components/Input/Input";
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "~/app/hooks";
-import Button from "~/components/Button/Button";
-import { Layout } from "~/components/Layout/Layout";
+import Input from '~/components/Input/Input';
+import { useNavigate } from 'react-router';
+import { useAppDispatch } from '~/app/hooks';
+import Button from '~/components/Button/Button';
+import { Layout } from '~/components/Layout/Layout';
 type LoginData = {
   [key: string]: string | any;
 };
 const Login = (props: any) => {
   const [data, setData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   } as LoginData);
   const [notEmpty, setNotEmpty] = useState(false);
   const [isformChanged, setIsFormChanged] = useState(false);
@@ -24,10 +24,10 @@ const Login = (props: any) => {
   const [useDemo, setUseDemo] = useState(false);
   useEffect(() => {
     if (useDemo) {
-      setData({ username: "test", password: "mcqzqr" });
+      setData({ username: 'test', password: 'mcqzqr' });
       setIsFormChanged(true);
     } else {
-      setData({ username: "", password: "" });
+      setData({ username: '', password: '' });
       setIsFormChanged(false);
     }
   }, [useDemo]);
@@ -48,7 +48,7 @@ const Login = (props: any) => {
     e.preventDefault();
     dispatch(login({ username: data.username, password: data.password }));
     if (isAuth) {
-      navigate("/rooms");
+      navigate('/rooms');
     }
     setIsFormChanged(false);
     setNotEmpty(false);
@@ -89,7 +89,6 @@ const Login = (props: any) => {
               name="useDemo"
               onChange={() => setUseDemo(!useDemo)}
               className=" rounded-md checked:bg-primary-500 bg-neutral-800 p-2 h-4 w-4 focus:bg-neutral-400 no-underline focus:outline-none"
-
             />
           </div>
           <div className="flex flex-col gap-1 form-group">
