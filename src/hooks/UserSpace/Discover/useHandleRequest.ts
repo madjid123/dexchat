@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { store } from "~/app/store";
-import { useAuthSelector } from "~/features/user/authSlice";
+import { useEffect } from 'react';
+import { store } from '~/app/store';
+import { useAuthSelector } from '~/features/user/authSlice';
 import {
   SearchEndPointAPI,
   User,
   useLazyGetAllUsersQuery,
   useLazyJoinRemoveQuery,
   useLazyJoinRequestQuery,
-} from "~/services/searchApi";
+} from '~/services/searchApi';
 
 export const useHandleRequest = ({ pattern }: { pattern: string }) => {
   const { currentUser } = useAuthSelector();
@@ -16,7 +16,7 @@ export const useHandleRequest = ({ pattern }: { pattern: string }) => {
   const [trigger, discoverRooms] = useLazyGetAllUsersQuery();
   useEffect(() => {
     if (currentUser !== undefined) {
-      trigger({ pattern: pattern, user_id: currentUser._id, requests: "" });
+      trigger({ pattern: pattern, user_id: currentUser._id, requests: '' });
     }
   }, [currentUser, pattern, trigger]);
   const handleRequestClick = (index: number) => {
@@ -42,17 +42,17 @@ export const useHandleRequest = ({ pattern }: { pattern: string }) => {
       }
       store.dispatch(
         SearchEndPointAPI.util.updateQueryData(
-          "getAllUsers",
+          'getAllUsers',
           {
             user_id: currentUser._id,
-            pattern: "",
-            requests: "",
+            pattern: '',
+            requests: '',
           },
           (draftUsers) => {
             draftUsers[index].pendingRequest = pendingRequest;
             return draftUsers;
-          }
-        )
+          },
+        ),
       );
     }
   };
