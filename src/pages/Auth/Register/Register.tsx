@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "~/config/axios"
 import React, { useEffect, useState } from 'react';
-import API_URL from '../../../URL';
+const API_URL = import.meta.env.VITE_API_URL;
 import { Link, useNavigate } from 'react-router-dom';
 
 import './Register.css';
