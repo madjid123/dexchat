@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import Input from "../../../components/Input/Input";
-import {
-  User as UserType
-} from "../../../services/searchApi";
-import "./Discover.css";
-import Button from "../../../components/Button/Button";
-import { useHandleRequest } from "~/hooks/UserSpace/Discover/useHandleRequest";
-import { Loader, User, UserPlus, UserX } from "lucide-react";
-import { useTabsContext } from "~/contexts/TabsContext";
-import ImageWithFallbackOnError from "~/components/imageWithFallbackOnError";
-import API_URL from "~/URL";
+import React, { useState } from 'react';
+import Input from '../../../components/Input/Input';
+import { User as UserType } from '../../../services/searchApi';
+import './Discover.css';
+import Button from '../../../components/Button/Button';
+import { useHandleRequest } from '~/hooks/UserSpace/Discover/useHandleRequest';
+import { Loader, User, UserPlus, UserX } from 'lucide-react';
+import { useTabsContext } from '~/contexts/TabsContext';
+import ImageWithFallbackOnError from '~/components/imageWithFallbackOnError';
+const API_URL = import.meta.env.VITE_API_URL;
 export const Discover = () => {
-  const [pattern, setPattern] = useState("");
+  const [pattern, setPattern] = useState('');
   const { setEventKey } = useTabsContext();
   const handleChange = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -51,11 +49,11 @@ export const Discover = () => {
                 <div key={index} className="nav-item-dex">
                   <div className="flex items-center justify-between p-2 hover:bg-primary-500 rounded-md ">
                     <div className="flex items-center justify-start p-1 gap-2 w-full ">
-
                       <ImageWithFallbackOnError
                         src={`${API_URL}/${user.image}`}
                         alt={`${user.username}'s avatar`}
-                        width={500} height={500}
+                        width={500}
+                        height={500}
                         value={user.username}
                         className="w-8 h-8 border rounded-md border-neutral-700"
                       />
@@ -67,7 +65,7 @@ export const Discover = () => {
                         <Button
                           className={` `}
                           onClick={() => handleRequestClick(index)}
-                          variant={`${user.pendingRequest ? "danger" : ""}`}
+                          variant={`${user.pendingRequest ? 'danger' : ''}`}
                         >
                           {!user.pendingRequest ? (
                             <UserPlus className="text" size={16} />
@@ -80,7 +78,7 @@ export const Discover = () => {
                         <Button
                           className="!text-yellow-500 border-2 !border-yellow-500 rounded-md p-1 hover:!bg-yellow-500 hover:!text-white"
                           onClick={() => {
-                            setEventKey("requests");
+                            setEventKey('requests');
                           }}
                         >
                           <Loader size={16} />
