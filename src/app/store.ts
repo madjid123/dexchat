@@ -13,7 +13,7 @@ const persistConfig = {
   storage,
 };
 const AuthReducer = persistReducer(persistConfig, authReducer);
-
+const searchAPIReducerPath = SearchEndPointAPI.reducerPath
 export const store = configureStore({
   reducer: {
     // persistedReducer,
@@ -22,6 +22,7 @@ export const store = configureStore({
     MessagesReducer,
     ProfileReducer,
     [MessageEndPointApi.reducerPath]: MessageEndPointApi.reducer,
+    searchAPIReducerPath: SearchEndPointAPI.reducer,
     [SearchEndPointAPI.reducerPath]: SearchEndPointAPI.reducer,
   },
   middleware: (getDefaultMiddleware) => {
@@ -34,18 +35,21 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 export const persistor = persistStore(store);
 export type AppDispatch = typeof store.dispatch;
+const MessageEndPointAPIPath = MessageEndPointApi.reducerPath
+const SearchEndPointAPIPath = SearchEndPointAPI.reducerPath
 // export type RootState = ReturnType<typeof store.getState>;
-type RootStateType = {
-  AuthReducer: ReturnType<typeof AuthReducer>;
-  RoomsReducer: ReturnType<typeof RoomsReducer>;
-  MessagesReducer: ReturnType<typeof MessagesReducer>;
-  ProfileReducer: ReturnType<typeof ProfileReducer>;
-  [MessageEndPointApi.reducerPath]: ReturnType<
-    typeof MessageEndPointApi.reducer
-  >;
-  [SearchEndPointAPI.reducerPath]: ReturnType<typeof SearchEndPointAPI.reducer>;
-};
-export type RootState = RootStateType;
+// type RootStateType = {
+//   AuthReducer: ReturnType<typeof AuthReducer>;
+//   RoomsReducer: ReturnType<typeof RoomsReducer>;
+//   MessagesReducer: ReturnType<typeof MessagesReducer>;
+//   ProfileReducer: ReturnType<typeof ProfileReducer>;
+//   MessageEndPointAPIPath : ReturnType<
+//     typeof MessageEndPointApi.reducer
+//   >;
+//   [(SearchEndPointAPI.reducerPath as string)]: ReturnType<typeof SearchEndPointAPI.reducer>;
+// };
+// export type RootState = RootStateType;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
