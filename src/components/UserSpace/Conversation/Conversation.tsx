@@ -188,7 +188,7 @@ const Conversation = (props: ConversationProps) => {
       <footer className="footer">
         <Input
           className="footer-input border-white/10 focus:border-tertiary-500 "
-          onChange={(e: any) => {
+          onChange={(e ) => {
             setMessage(e.target.value);
           }}
           value={message}
