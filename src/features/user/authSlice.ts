@@ -1,10 +1,10 @@
-import { createSlice, createAsyncThunk, Reducer } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
-import { RootState } from "../../app/store";
-
+import { createSlice, createAsyncThunk, Reducer } from '@reduxjs/toolkit';
+import axios from "~/config/axios"
+import { RootState, store } from '../../app/store';
+import { AxiosError } from 'axios';
 // API URL of our app usually localhost:5000
-import API_URL from "../../URL";
-import { useSelector } from "react-redux";
+const API_URL = import.meta.env.VITE_API_URL;
+import { useSelector } from 'react-redux';
 
 export interface CurrentUser {
   _id: string;
@@ -17,37 +17,44 @@ export interface AuthState {
   isAuth: boolean;
   error: AuthError;
   currentUser?: CurrentUser;
+  token: string;
 }
 interface AuthError {
   messages: string[];
 }
-
+const token = localStorage.getItem('token') || '';
 export const initialState = {
   isLoading: false,
   isAuth: false,
   currentUser: undefined,
+  token: token,
   error: { messages: [] },
 } as AuthState;
 // implement the login logic for our chat app using thunks in redux
 export const login = createAsyncThunk(
-  "users/Login",
+  'users/Login',
   async ({ username, password }: any, thunkAPI) => {
     try {
       const response = await axios({
-        method: "post",
+        method: 'post',
         url: `${API_URL}/auth/login`,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
         withCredentials: true,
+
         data: {
           username: username,
           password: password,
         },
       });
       if (response.status === 200) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-        localStorage.setItem("isAuth", "true");
+        // localStorage.setItem('user', JSON.stringify(response.data));
+        // localStorage.setItem('isAuth', 'true');
+        const data = await thunkAPI.dispatch(CheckisAuth());
+        localStorage.setItem('token', response.data.token);
+
         return response.data;
       }
     } catch (e) {
@@ -56,30 +63,41 @@ export const login = createAsyncThunk(
         return thunkAPI.rejectWithValue([...err.response.data] as string[]);
       else return thunkAPI.rejectWithValue([err.message] as string[]);
     }
-  }
+  },
 );
-export const logout = createAsyncThunk("users/logout", async (opt, thunk) => {
+export const logout = createAsyncThunk('users/logout', async (opt, thunkAPI) => {
   try {
-    const response = await axios.get(API_URL + "/auth/logout", {
+    console.log("logout")
+    const response = await axios.get(API_URL + '/auth/logout', {
       withCredentials: true,
+headers: {
+          Authorization:
+            'Bearer ' + (thunkAPI.getState() as RootState).AuthReducer.token,
+        },
     });
     if (response.status === 200) {
-      localStorage.removeItem("user");
-      localStorage.removeItem("isAuth");
-      return initialState;
+      localStorage.removeItem('user');
+      localStorage.removeItem('isAuth');
+      localStorage.removeItem('token');
+      const initState = {...initialState, token :""} 
+      return initState;
     }
   } catch (err: any) {
     console.error(err);
-    thunk.rejectWithValue(err.response.data);
+    thunkAPI.rejectWithValue(err.response.data);
   }
 });
 
 export const CheckisAuth = createAsyncThunk(
-  "users/isAauth",
+  'users/isAauth',
   async (opt, thunkAPI) => {
     try {
-      const response = await axios.get(API_URL + "/auth/", {
+      const response = await axios.get(API_URL + '/auth/', {
         withCredentials: true,
+        headers: {
+          Authorization:
+            'Bearer ' + (thunkAPI.getState() as RootState).AuthReducer.token,
+        },
       });
       if (response.status === 200) {
         return response.data;
@@ -89,13 +107,15 @@ export const CheckisAuth = createAsyncThunk(
     } catch (e) {
       const err = e as AxiosError;
       console.error(err);
+      const res = await thunkAPI.dispatch(logout())
+      console.log(res)
       return thunkAPI.rejectWithValue(initialState);
     }
-  }
+  },
 );
 
 const AuthReducer = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     clearErrors: (state, action) => {
@@ -109,6 +129,7 @@ const AuthReducer = createSlice({
     builder
       .addCase(login.fulfilled, (state, { payload }) => {
         state.currentUser = payload;
+        state.token = localStorage.getItem("token")!
         state.isAuth = true;
         state.isLoading = false;
       })
@@ -121,15 +142,19 @@ const AuthReducer = createSlice({
         state.isLoading = true;
       })
       .addCase(logout.fulfilled, (state, { payload }) => {
-        return initialState;
+        return payload;
       })
-      .addCase(logout.rejected, (state, { payload }) => { })
+      .addCase(logout.rejected, (state, { payload }) => {})
       .addCase(CheckisAuth.fulfilled, (state, { payload }) => {
         if (!payload.username) return initialState;
         state.isAuth = true;
         state.currentUser = payload as CurrentUser;
+
+        localStorage.setItem('user', JSON.stringify(payload));
+        localStorage.setItem('isAuth', 'true');
       })
-      .addCase(CheckisAuth.rejected, (state, { payload }) => {
+      .addCase(CheckisAuth.rejected, (state, { payload}) => {
+        // console.log("rejected")
         return initialState;
       });
   },
