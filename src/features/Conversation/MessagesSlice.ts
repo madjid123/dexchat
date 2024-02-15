@@ -3,13 +3,13 @@ import {
   createAsyncThunk,
   Reducer,
   PayloadAction,
-} from "@reduxjs/toolkit";
-import { MessageEndPointApi } from "../../services/MessageApi";
-import { RootState } from "../../app/store";
-import axios from "axios";
-import URL from "../../URL";
-import { Room } from "../user/RoomsSlice";
-import { useSelector } from "react-redux";
+} from '@reduxjs/toolkit';
+import { MessageEndPointApi } from '../../services/MessageApi';
+import { RootState } from '../../app/store';
+import axios from 'axios';
+const API_URL : string = import.meta.env.VITE_API_URL || "http://localhost:5000";
+import { Room } from '../user/RoomsSlice';
+import { useSelector } from 'react-redux';
 
 export interface Message {
   Sender: {
@@ -53,10 +53,14 @@ const initialState: MessagesState = {
 export const SendMessageToApi = createAsyncThunk<
   void,
   { message: Message; room_id: string }
->("message/send", async ({ message, room_id }) => {
+>('message/send', async ({ message, room_id },thunkAPI) => {
   try {
-    await axios.post(URL + "/room/" + room_id + "/send/message", message, {
+    await axios.post(API_URL + '/room/' + room_id + '/send/message', message, {
       withCredentials: true,
+headers: {
+          Authorization:
+            'Bearer ' + (thunkAPI.getState() as RootState).AuthReducer.token,
+        },
     });
   } catch (err) {
     const error = err as Error;
@@ -65,10 +69,11 @@ export const SendMessageToApi = createAsyncThunk<
 });
 
 const MessagesReducer = createSlice({
-  name: "messages",
+  name: 'messages',
   initialState,
   reducers: {
     addMessage: (state, { payload }: { payload: Message }) => {
+      console.log("payload", payload)
       state.messagesResponse.messages = [
         ...state.messagesResponse.messages,
         payload,
@@ -98,7 +103,7 @@ const MessagesReducer = createSlice({
       (state, action) => {
         if (state.messagesResponse.messages.length === 0) {
           state.messagesResponse = action.payload.messagesResponse;
-          state.room = action.payload.room;
+          // state.room = state.room !== null ? action.payload.room :state.room;
         } else {
           var payload: MessagesState = action.payload;
           payload.messagesResponse.messages = [
@@ -108,14 +113,14 @@ const MessagesReducer = createSlice({
 
           return payload;
         }
-      }
+      },
     );
     bulider.addMatcher(
       MessageEndPointApi.endpoints.getMessagesByRoomId.matchRejected,
       (state, action) => {
         if (action.error.message !== undefined)
           state.errors.push(action.error.message);
-      }
+      },
     );
   },
 });
