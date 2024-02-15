@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 import tailwindcssThemer from "tailwindcss-themer";
-import colors from "tailwindcss/colors";
-import resize from "tailwindcss/lib/plugin/resize"
-module.exports = {
+import tailwindAnimate from  "tailwindcss-animate"
+import tailwindcssForms from     "@tailwindcss/forms"
+export default {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -110,9 +110,11 @@ module.exports = {
     },
   },
   plugins: [
-    require("tailwindcss-animate"),
+    // require("tailwindcss-animate"),
+    tailwindAnimate,
     // resize(),
-    require("@tailwindcss/forms"),
+    // require("@tailwindcss/forms"),
+    tailwindcssForms(),
     tailwindcssThemer({
       themes: [
         {
