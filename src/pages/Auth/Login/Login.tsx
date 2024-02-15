@@ -78,7 +78,8 @@ const Login = (props: any) => {
             error.messages.map((error) => {
               return (
                 <>
-                  <span className="error text-danger"> {error} </span> <br></br>
+                  <span className="error text-red-400"> {error} </span>{' '}
+                  <br></br>
                 </>
               );
             })}
