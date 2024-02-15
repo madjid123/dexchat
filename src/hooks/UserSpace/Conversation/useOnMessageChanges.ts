@@ -19,6 +19,7 @@ export const useOnMessageChanges = ({ member }: { member: Member | null }) => {
   const { room } = useSelector(MessagesSelector);
   const onSubmitMessage = () => {
     if (message === "") return;
+    socket.connect()
     if (
       socket.connected &&
       currentUser !== undefined &&
