@@ -25,6 +25,7 @@ export const updateUserInfo = createAsyncThunk(
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${(thunkAPI.getState() as RootState).AuthReducer.token}`
         },
         data: cleanUserInfo,
       });
