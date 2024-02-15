@@ -1,30 +1,30 @@
-import Button from "../Button/Button";
-import { useNavigate } from "react-router";
-import { logout, AuthSelector } from "../../features/user/authSlice";
-import { useSelector } from "react-redux";
-import "./Header.css";
-import API_URL from "~/URL";
-import "./DropMenu.css";
+import Button from '../Button/Button';
+import { useNavigate } from 'react-router';
+import { logout, AuthSelector } from '../../features/user/authSlice';
+import { useSelector } from 'react-redux';
+import './Header.css';
+const API_URL = import.meta.env.VITE_API_URL;
+import './DropMenu.css';
 import {
   DropdownMenuContent,
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuLabel,
-} from "../ui/dropdown-menu";
-import DexLogo from "../../public/dexplanet.png";
-import Avatar from "avvvatars-react";
-import { useAppDispatch } from "../../app/hooks";
-import { ArrowDown, Menu } from "lucide-react";
-import { useTabsContext } from "~/contexts/TabsContext";
-import { useSetCurrentMember } from "~/hooks/UserSpace/Conversation/useSetCurrentMemberName";
-import { setAllRooms } from "~/features/user/RoomsSlice";
+} from '../ui/dropdown-menu';
+import DexLogo from '../../public/dexplanet.png';
+import Avatar from 'avvvatars-react';
+import { useAppDispatch } from '../../app/hooks';
+import { ArrowDown, Menu } from 'lucide-react';
+import { useTabsContext } from '~/contexts/TabsContext';
+import { useSetCurrentMember } from '~/hooks/UserSpace/Conversation/useSetCurrentMemberName';
+import { setAllRooms } from '~/features/user/RoomsSlice';
 import {
   clearAllMessages,
   setRoom,
-} from "~/features/Conversation/MessagesSlice";
-import { useState } from "react";
-import ImageWithFallbackOnError from "../imageWithFallbackOnError";
+} from '~/features/Conversation/MessagesSlice';
+import { useState } from 'react';
+import ImageWithFallbackOnError from '../imageWithFallbackOnError';
 type HeaderProps = {
   show: boolean;
   handleShow: () => void;
@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const dispatch = useAppDispatch();
   const { currentUser, isAuth } = useSelector(AuthSelector);
   const { member, setMember } = useSetCurrentMember();
-  const [showIcon, setShowIcon] = useState(false)
+  const [showIcon, setShowIcon] = useState(false);
   const { showSidebar, setShowSidebar } = useTabsContext();
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
     dispatch(setAllRooms([]));
     dispatch(clearAllMessages({}));
     dispatch(setRoom(null));
-    const newPath = "/login";
+    const newPath = '/login';
     navigate(newPath);
   };
   let buttons = <> </>;
@@ -62,10 +62,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 
   return (
     <div className="w-full p-2">
-      <div
-        className=" sticky top-0  w-full p-4 rounded-xl  items-center  flex justify-between  shadow-[0_0px_10px_0px] shadow-primary-500/50 hover:shadow-primary-500/90 active:shadow-primary-500/50 hover:shadow-primary-500/90     backdrop-blur-md z-[1000] "
-
-      >
+      <div className=" sticky top-0  w-full p-4 rounded-xl  items-center  flex justify-between  shadow-[0_0px_10px_0px] shadow-primary-500/50 hover:shadow-primary-500/90 active:shadow-primary-500/50 hover:shadow-primary-500/90     backdrop-blur-md z-[1000] ">
         <div className="flex items-center gap-3 logo ">
           {isAuth && (
             <div className="md:hidden">
@@ -80,8 +77,9 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
             width="24"
             height="28"
             alt="dexlogo"
+            className='hover:fill-white'
             onClick={() => {
-              navigate("/");
+              navigate('/');
             }}
           />
           <span className="text-white">DexChat</span>
@@ -91,9 +89,24 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="">
                 <div className="flex items-center justify-center p-2 hover:bg-white/30 rounded-xl ">
-                  {<ImageWithFallbackOnError value={currentUser.username} src={`${API_URL}/${currentUser.image}`} alt="avatar" height={20} width={20} className="w-6 h-6 border rounded-md border-neutral-700" fallback={
-                    <Avatar value={currentUser.username} style="shape" size={20} radius={4} />
-                  } />}
+                  {
+                    <ImageWithFallbackOnError
+                      value={currentUser.username}
+                      src={`${API_URL}/${currentUser.image}`}
+                      alt="avatar"
+                      height={20}
+                      width={20}
+                      className="w-6 h-6 border rounded-md border-neutral-700"
+                      fallback={
+                        <Avatar
+                          value={currentUser.username}
+                          style="shape"
+                          size={20}
+                          radius={4}
+                        />
+                      }
+                    />
+                  }
                   <span className="justify-between mx-2 text-center text-white no-underline">
                     {currentUser.username}
                   </span>
