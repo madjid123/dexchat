@@ -1,7 +1,7 @@
 // React
 import { Route, Navigate, Routes } from 'react-router-dom';
 import {} from 'react-router';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 //Redux
 import { useSelector } from 'react-redux';
@@ -24,6 +24,11 @@ const App = () => {
   useEffect(() => {
     dispatch(CheckisAuth());
   }, [isAuth, dispatch]);
+  const isMounted = useState(false);
+  useEffect(()=>{
+    isMounted[1](true)
+  },[])
+  if(!isMounted[0]) return null
   return (
     // <ThemeProvider theme={darkTheme}>
     <Fragment>
