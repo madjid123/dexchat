@@ -19,9 +19,7 @@ export const useSetCurrentMember = () => {
     } else {
       setMember(null);
     }
-    return () => {
-      setMember(null);
-    };
+  
   }, [room, currentUser]);
   return { member, setMember };
 };
