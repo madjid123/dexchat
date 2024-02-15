@@ -55,7 +55,7 @@ const UserSpace = (props: any) => {
               isPage={false}
             ></Conversation>
           ) : (
-            <div className="hidden md:flex w-full items-center justify-center h-full ">
+            <div className="md:flex w-full items-center justify-center h-full ">
               <Hero />
             </div>
           )}
