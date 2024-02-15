@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import Input from "../../../components/Input/Input";
-import Button from "../../../components/Button/Button";
-import { useHandleRequestClick } from "~/hooks/UserSpace/Requests/useHandleRequestClick";
-import { UserCheck, UserCheck2, UserCircle, UserX } from "lucide-react";
-import ImageWithFallbackOnError from "~/components/imageWithFallbackOnError";
-import API_URL from "~/URL";
+import React, { useState } from 'react';
+import Input from '../../../components/Input/Input';
+import Button from '../../../components/Button/Button';
+import { useHandleRequestClick } from '~/hooks/UserSpace/Requests/useHandleRequestClick';
+import { UserCheck, UserCheck2, UserCircle, UserX } from 'lucide-react';
+import ImageWithFallbackOnError from '~/components/imageWithFallbackOnError';
+const API_URL = import.meta.env.VITE_API_URL;
 export const Requests = () => {
-  const [pattern, setPattern] = useState("");
+  const [pattern, setPattern] = useState('');
 
   const { Requests, handleRequestClick, AcceptRequestResponse } =
     useHandleRequestClick({ pattern });
@@ -22,7 +22,7 @@ export const Requests = () => {
       <div className="flex flex-col items-center justify-start w-full gap-1 ">
         <Input
           placeholder="Search in incoming requests"
-          style={{ width: "90%", fontSize: "12px" }}
+          style={{ width: '90%', fontSize: '12px' }}
           variant="dark"
           value={pattern}
           onChange={handlePatternChange}
@@ -44,11 +44,11 @@ export const Requests = () => {
                 <div key={index} className="w-full">
                   <div className="flex justify-between gap-4 p-3  items-around hover:bg-primary-500 rounded-md ">
                     <div className="flex items-center justify-start p-1 gap-2">
-
                       <ImageWithFallbackOnError
                         src={`${API_URL}/${JrReq.RequesterId.image}`}
                         alt={`${JrReq.RequesterId.username}'s avatar`}
-                        width={500} height={500}
+                        width={500}
+                        height={500}
                         value={JrReq.RequesterId.username}
                         className="w-8 h-8 border rounded-md border-neutral-700"
                       />
@@ -58,7 +58,7 @@ export const Requests = () => {
                       <Button
                         className={` `}
                         onClick={() => handleRequestClick(index, true)}
-                        variant={""}
+                        variant={''}
                       >
                         <UserCheck className="text" size={16} />
                       </Button>
