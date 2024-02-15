@@ -4,14 +4,24 @@ import {
   addMessage,
   MessagesState,
 } from '../features/Conversation/MessagesSlice';
-import URL from '../URL';
-import { store } from '../app/store';
+const API_URL = import.meta.env.VITE_API_URL;
+import { RootState, store } from '../app/store';
 import socket from '../utils/socket';
 import { Room } from '~/features/user/RoomsSlice';
 
 export const MessageEndPointApi = createApi({
   reducerPath: 'messagesApi',
-  baseQuery: fetchBaseQuery({ baseUrl: URL, credentials: 'include' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: API_URL, credentials: 'include',
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).AuthReducer.token
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`)
+      }
+      return headers
+
+    },
+  }),
   tagTypes: ['Message'],
 
   endpoints: (builder) => ({
@@ -35,14 +45,14 @@ export const MessageEndPointApi = createApi({
           console.error(err);
         }
       },
-      onCacheEntryAdded: async (args, api) => {
+      onCacheEntryAdded: async (_, api) => {
         // create a websocket connection when the cache subscription starts
         try {
           socket.connect();
           await api.cacheDataLoaded;
           const room: Room | null = store.getState().MessagesReducer.room;
           const listener = (data: { message: Message; room: string }) => {
-            api.updateCachedData((draft) => {
+            api.updateCachedData((_) => {
               if (room !== null && room._id !== data.room) return;
               // draft.messagesResponse.messages.push(data.message)
               store.dispatch(addMessage(data.message));
