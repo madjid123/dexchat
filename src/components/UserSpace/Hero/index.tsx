@@ -1,7 +1,7 @@
 import { useTabsContext } from "~/contexts/TabsContext";
 
 const Hero = () => {
-    const { setEventKey } = useTabsContext();
+    const { setEventKey,setShowSidebar } = useTabsContext();
     return (
         <div className="w-full " id="hero">
             <div id="hero_content" className="flex flex-col items-center justify-center p-8 gap-2  lg:gap-4 text-wrap ">
@@ -16,7 +16,7 @@ const Hero = () => {
                     What are you waiting for ?
                 </h3>
                 <h2 className="hover:text-primary-200 text-center text-4xl font-bold  text-transparent bg-clip-text bg-gradient-to-tr from-primary-500 to-tertiary-500"
-                    onClick={() => setEventKey("rooms")}
+                    onClick={() => {setEventKey("rooms");setShowSidebar(true)} }
                 >
                     Start chatting with your friends now!
                 </h2>
@@ -24,7 +24,7 @@ const Hero = () => {
                     Or
                 </h3>
                 <button
-                    onClick={() => setEventKey("discover")}
+                    onClick={() => {setEventKey("discover") ;setShowSidebar(true)}}
                     className="bg-gradient-to-r  from-primary-500 font-bold text-xl  via-[#C200B1] to-[#009E82] hover:bg-background hover:from-transparent hover:to-transparent  hover:bg-secondary-500 hover:text-neutral-600  text-white px-4 py-2 rounded-md hover:shadow-[0px_0px_100px_10px] hover:shadow-primary-500 ">
                     Discover
                 </button>
