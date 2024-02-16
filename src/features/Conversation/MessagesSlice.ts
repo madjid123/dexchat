@@ -73,7 +73,6 @@ const MessagesReducer = createSlice({
   initialState,
   reducers: {
     addMessage: (state, { payload }: { payload: Message }) => {
-      console.log("payload", payload)
       state.messagesResponse.messages = [
         ...state.messagesResponse.messages,
         payload,

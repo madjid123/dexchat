@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 const API_URL = import.meta.env.VITE_API_URL;
+
 const socket = io(API_URL, {
   transports: ['websocket'],
   upgrade: false,
@@ -9,4 +10,5 @@ const socket = io(API_URL, {
   }
 });
 socket.connect();
+
 export default socket;

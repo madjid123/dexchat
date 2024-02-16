@@ -5,6 +5,7 @@ import { AxiosError } from 'axios';
 // API URL of our app usually localhost:5000
 const API_URL = import.meta.env.VITE_API_URL;
 import { useSelector } from 'react-redux';
+import socket from '~/utils/socket';
 
 export interface CurrentUser {
   _id: string;
@@ -54,7 +55,7 @@ export const login = createAsyncThunk(
         // localStorage.setItem('isAuth', 'true');
         const data = await thunkAPI.dispatch(CheckisAuth());
         localStorage.setItem('token', response.data.token);
-
+      
         return response.data;
       }
     } catch (e) {
@@ -100,6 +101,10 @@ export const CheckisAuth = createAsyncThunk(
         },
       });
       if (response.status === 200) {
+          socket.io.opts.query = {
+          token: (thunkAPI.getState() as RootState).AuthReducer.token,
+        };
+        socket.connect()
         return response.data;
       } else {
         return thunkAPI.rejectWithValue(initialState);

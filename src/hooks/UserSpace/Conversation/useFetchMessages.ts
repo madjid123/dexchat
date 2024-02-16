@@ -20,10 +20,7 @@ export const useFetchMessages = ({
   const [trigger] =
     MessageEndPointApi.endpoints.getMessagesByRoomId.useLazyQuery({});
   const fetchMessages = () => {
-    // let ScroDiv = document.getElementById("scrollableDiv");
-    // if (ScroDiv?.scrollTop !== undefined) {
-    //   setScrollPos(ScroDiv?.scrollTop);
-    // }
+   
     if (scrollPosDivRef.current !== null) {
       setScrollPos(scrollPosDivRef.current.scrollTop);
     }
@@ -36,7 +33,6 @@ export const useFetchMessages = ({
       if (room != null) trigger({ room_id: room._id, page: page });
       setScrollPos(currentScrollPos as number);
     }, 2000);
-    console.log("fetched som messages")
   };
   return { messagesResponse, fetchMessages };
 };
