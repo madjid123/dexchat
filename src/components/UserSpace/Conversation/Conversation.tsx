@@ -43,7 +43,7 @@ const Conversation = (props: ConversationProps) => {
   });
   return (
     <div
-      className="conversation    h-full shadow-[0px_0px_10px_0px] shadow-primary-500/50 hover:shadow-primary-500/90"
+      className="conversation    h-full shadow-[0px_0px_10px_0px] shadow-primary-700/50 hover:shadow-primary-700/90"
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           onSubmitMessage();

@@ -25,7 +25,7 @@ const Hero = () => {
                 </h3>
                 <button
                     onClick={() => {setEventKey("discover") ;setShowSidebar(true)}}
-                    className="bg-gradient-to-r  from-primary-500 font-bold text-xl  via-[#C200B1] to-[#009E82] hover:bg-background hover:from-transparent hover:to-transparent  hover:bg-secondary-500 hover:text-neutral-600  text-white px-4 py-2 rounded-md hover:shadow-[0px_0px_100px_10px] hover:shadow-primary-500 ">
+                    className="bg-gradient-to-r  from-primary-500 font-bold text-xl  via-[#C200B1] to-[#009E82] hover:bg-background hover:from-transparent hover:to-transparent  hover:bg-secondary-500 hover:text-neutral-600  text-white px-4 py-2 rounded-md hover:shadow-[0px_0px_100px_10px] hover:shadow-primary-700 ">
                     Discover
                 </button>
             </div>

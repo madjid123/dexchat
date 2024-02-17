@@ -154,7 +154,7 @@ const Register = (props: RegisterProps) => {
         <form
           id="form"
           onSubmit={handleSubmit}
-          className="flex flex-col items-center justify-center w-full lg:w-fit  gap-5 p-4    md:p-8 lg:p-32 lg:py-16 h-full lg:h-fit shadow-primary-500/40 hover:shadow-primary-500 shadow-[0px_0px_10px_0px] rounded-xl"
+          className="flex flex-col items-center justify-center w-full lg:w-fit  gap-5 p-4    md:p-8 lg:p-32 lg:py-16 h-full lg:h-fit shadow-primary-700/40 hover:shadow-primary-700 shadow-[0px_0px_10px_0px] rounded-xl"
         >
           <h3 className="text-2xl">Register</h3>
           {errors.server.length > 0 && <hr></hr> && (

@@ -61,11 +61,11 @@ export const Profile = () => {
                     ? URL.createObjectURL(selectedFile)
                     : `${API_URL}/${currentUser?.image}`
                 }
-                className=" w-32 h-32 rounded-md    group-hover:bg-primary-500/50 group-hover:shadow-[0_0px_10px_0px] group-hover:shadow-primary-500/50"
+                className=" w-32 h-32 rounded-md    group-hover:bg-primary-500/50 group-hover:shadow-[0_0px_10px_0px] group-hover:shadow-primary-700/50"
                 alt="New Avatar"
                 fallback={
                   <Image
-                    className="font-thin rounded-md group-hover:bg-primary-500/50 group-hover:shadow-[0_0px_10px_0px] group-hover:shadow-primary-500/50 text-neutral-300"
+                    className="font-thin rounded-md group-hover:bg-primary-500/50 group-hover:shadow-[0_0px_10px_0px] group-hover:shadow-primary-700/50 text-neutral-300"
                     strokeWidth={1}
                     size="128"
                   />

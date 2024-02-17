@@ -70,7 +70,7 @@ const Login = (props: any) => {
     <Layout className="items-center justify-center h-full text-white ">
       <div className="flex items-center justify-center w-full h-full p-4 text-white row lg:w-fit lg:h-full">
         <form
-          className="flex flex-col items-center justify-center w-full  gap-5 p-4    md:p-8 lg:p-32 lg:py-16 h-full lg:h-fit shadow-primary-500/40 hover:shadow-primary-500 shadow-[0px_0px_10px_0px] rounded-xl"
+          className="flex flex-col items-center justify-center w-full  gap-5 p-4    md:p-8 lg:p-32 lg:py-16 h-full lg:h-fit shadow-primary-700/40 hover:shadow-primary-700 shadow-[0px_0px_10px_0px] rounded-xl"
           onSubmit={handleSubmit}
         >
           <h3 className="text-2xl p-2 ">Login</h3>

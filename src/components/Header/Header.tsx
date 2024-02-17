@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
 
   return (
     <div className="w-full p-2">
-      <div className=" sticky top-0  w-full p-4 rounded-xl  items-center  flex justify-between  shadow-[0_0px_10px_0px] shadow-primary-500/50 hover:shadow-primary-500/90 active:shadow-primary-500/50 hover:shadow-primary-500/90     backdrop-blur-md z-[1000] ">
+      <div className=" sticky top-0  w-full p-4 rounded-xl  items-center  flex justify-between  shadow-[0_0px_10px_0px] shadow-primary-700/50 hover:shadow-primary-700/90 active:shadow-primary-700/50 hover:shadow-primary-700/90     backdrop-blur-md z-[1000] ">
         <div className="flex items-center gap-3 logo ">
           {isAuth && (
             <div className="md:hidden">
