@@ -17,18 +17,23 @@ import './tailwind.css';
 import { AuthSelector, CheckisAuth } from '~/features/user/authSlice';
 import { Home } from '~/pages/Home/Home';
 import PrivateRoute from '~/components/PrivateRoute/PrivateRoute';
+import { Layout } from 'lucide-react';
+const API_URL = import.meta.env.VITE_API_URL;
 const App = () => {
   const dispatch = useAppDispatch();
   const AuthState = useSelector(AuthSelector);
-  const { isAuth } = AuthState;
+  const { isAuth,  } = AuthState;
   useEffect(() => {
     dispatch(CheckisAuth());
   }, [isAuth, dispatch]);
   const isMounted = useState(false);
   useEffect(()=>{
-    isMounted[1](true)
+    const data = dispatch(CheckisAuth())
+    data.then((res)=>{
+    isMounted[1](true)})
   },[])
-  if(!isMounted[0]) return null
+  if(!isMounted[0]) return <div className='flex flex-col items-center justify-center w-full h-full text-2xl font-bold text-white bg-center bg-no-repeat bg-cover from-neutral-900 to-slate-800 bg-gradient-to-br text-primary-foreground ' 
+  > ...Waiting for backend server to start </div>
   return (
     // <ThemeProvider theme={darkTheme}>
     <Fragment>
