@@ -96,7 +96,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
                       alt="avatar"
                       height={20}
                       width={20}
-                      className="w-6 h-6 border rounded-md border-neutral-700"
+                      className="w-5 h-5 border rounded-md border-neutral-700"
                       fallback={
                         <Avatar
                           value={currentUser.username}
