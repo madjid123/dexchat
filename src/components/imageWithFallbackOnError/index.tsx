@@ -27,7 +27,7 @@ export const ImageWithFallbackOnError: React.FC<Props> = (props) => {
       ) : props.fallback ? (
         Fallback
       ) : (
-        <Avvvatars radius={8} value={props.value} size={32}></Avvvatars>
+        <Avvvatars radius={8} value={props.value} size={32} ></Avvvatars>
       )}
     </label>
   );
